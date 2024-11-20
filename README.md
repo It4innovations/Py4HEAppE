@@ -1,93 +1,160 @@
-# Py4HEAppE
+<img align="right" width="35%" src="docs/imgs/logo.png?sanitize=true">
+
+# Py4HEAppE (Python for HEAppE Middleware)
+
+Py4HEAppE simplifies access to the [HEAppE](https://heappe.eu) features by providing a high-level Python interface that abstracts away the complexities of direct API interactions. This allows users to focus on their core tasks without worrying about the underlying details of API communication. It can be usable in <b>two modes</b> depends what the end-user needs:
+- HEAppE CLI Commands
+- HEAppE API Wrapper Library
+
+## Key Benefits
+
+### Ease of Use:
+Py4HEAppE provides a straightforward and intuitive interface for interacting with the HEAppE API. Users can perform complex operations with simple function calls.
+
+### Abstraction: 
+The library abstracts the intricacies of the HEAppE API, allowing users to work with high-level concepts and operations.
+
+### Efficiency: 
+By using Py4HEAppE, users can quickly integrate HEAppE functionalities into their Python applications, reducing development time and effort.
+
+### Consistency:
+The library ensures consistent and reliable communication with the HEAppE API, handling errors and edge cases gracefully.
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+### Prerequisites
+
+* Python (version 3.11)
+* Access to Deployed HEAppE instance (HEAppE instance URL and HPC project identificator)
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone -b develop https://code.it4i.cz/ADAS-Private/HEAppE/clientapplications/Py4HEAppE.git
+   ```
+2. Go to cloned dir
+   ```sh
+   cd Py4HEAppE
+   ```
+3. Install Py4HEAppE and dependencies
+    ```
+    pip install .
+    ```
 
 
+<b>Note:</b> In some cases, you can obtain a warning message like this <b>"WARNING: The script py4heappe.exe is installed in 'C:\Users\user\AppData\Roaming\Python\Python311\Scripts' which is not on PATH.</b>" If you obtained a similar warning message, it is necessary to add the mentioned path into your operation system <b>PATH</b> variable or use a path with an executable file (i.e. C:\Users\user\AppData\Roaming\Python\Python311\Scripts\py4heappe.exe).
 
-## Getting started
+## HEAppE CLI
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+The HEAppE CLI (Command Line Interface) provides a convenient way to interact with the HEAppE Middleware directly from your terminal. It allows users to perform various operations such as authentication, job management, and information retrieval without needing to write any code. This makes it an ideal tool for end-users who need to manage HEAppE Instance efficiently.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+### Usage
+For using HEAppE CLI it is neeaded to initializing Py4HEAppE for usage with a specific HEAppE Instance (It is necessary to call for the first usage). Command requires <b>HPC project accounting string</b> and <b>HEAppE Instance URL</b>.
 
-## Add your files
-
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
-
+```shell
+# Initial Setup
+py4heappe Config Init
 ```
-cd existing_repo
-git remote add origin https://code.it4i.cz/ADAS-Private/HEAppE/clientapplications/Py4HEAppE.git
-git branch -M main
-git push -uf origin main
+
+All mentioned functions are aggregated to the specific groups available from CLI. To do so, type the following to provide help on how to use managers via CLI.
+
+```shell
+# List of available groups
+py4heappe --help 
 ```
 
-## Integrate with your tools
+Available groups: 
 
-- [ ] [Set up project integrations](https://code.it4i.cz/ADAS-Private/HEAppE/clientapplications/Py4HEAppE/-/settings/integrations)
+```shell
+# Authentication Group
+py4heappe Auth --help 
 
-## Collaborate with your team
+# Command Template Management Group
+py4heappe CmdTemplateMgmt --help 
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+# Information Group
+py4heappe Info --help 
 
-## Test and Deploy
+# Report Group
+py4heappe Report --help 
+```
 
-Use the built-in continuous integration in GitLab.
+<b>Note:</b> On Windows operation system need to use <b>"py4heappe.exe"</b> instead of <b>"py4heappe"</b>.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+## HEAppE API Wrapper Library
 
-***
+In this mode, the Py4HEAppE package is used as a wrapper for HEAppE API specification. It allows users to perform various operations from <b>HEAppE API</b>, such as authentication, job management, and information retrieval, without needing to write their API wrapper code. It can be easily integrated with internal <b>Python</b> projects that HEAppE Middleware wants to be used. More information about usability can be found in the section below.
+ 
+### Usage
+ 
+It is required to specify following modules in "requirements.txt" file.
+ 
+```text
+paramiko==3.5.0
+scp==0.15.0
+urllib3==2.2.3
+py4heappe @ git+https://github.com/It4innovations/Py4HEAppE.git
+```
 
-# Editing this README
+The code snapshot illustrated an example of "how to" obtain cluster information from the HEAppE Instance. For more detailed examples of basic HPC workflow, please refer to the [example.py](docs/examples/example.py) file.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```python
+import json
+import os
+import time
+from io import StringIO
+from pathlib import Path
+ 
+import py4heappe.core as hp
+ 
+print("\nFetching cluster info...")
+lac_body = {
+    "_preload_content": False
+}
+ 
+ciEndpoint = hp.ClusterInformationApi(api_instance)
+r = ciEndpoint.heappe_cluster_information_list_available_clusters_get(**lac_body)
+r_data = json.loads(r.data)
+print(json.dumps(r_data, indent = 3))
+```
 
-## Suggestions for a good README
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
+<!-- LICENSE -->
 ## License
-For open source projects, say how it is licensed.
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Distributed under the MIT License. See [LICENSE](LICENSE.txt) for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Requirements
+
+This section contains dependencies and tools that are required for Py4HEAppE.
+
+### Packages
+
+- [Paramiko (3.5.0)](https://pypi.org/project/paramiko/3.5.0/)
+- [Scp (0.15.0)](https://pypi.org/project/scp/0.15.0/)
+- [Urllib3 (2.2.3)](https://pypi.org/project/urllib3/2.2.3/)
+- [Certifi (2024.8.30)](https://pypi.org/project/certifi/2024.8.30/)
+- [Six (1.16.0)](https://pypi.org/project/six/1.16.0/)
+- [Typer (0.13.1)](https://pypi.org/project/typer/0.9.0/)
+- [Python-dotenv (1.0.1)](https://pypi.org/project/python-dotenv/1.0.1/)
+- [Validators (0.34.0)](https://pypi.org/project/validators/0.34.0/)
+- [Py4Lexis (2.2.3)](https://opencode.it4i.eu/lexis-platform/clients/py4lexis)
+
+### Tools
+
+The API Wrapper was partly generated by [online tool](https://editor.swagger.io).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Acknowledgement
+
+e-Infra CZ
+This work was supported by the Ministry of Education, Youth and Sports of the Czech Republic through the e-INFRA CZ (ID:90254)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

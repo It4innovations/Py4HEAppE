@@ -1,0 +1,132 @@
+import json
+import typer
+
+import py4heappe.cli.configuration as configuration
+import py4heappe.core.base.utils as utils
+import py4heappe.core as heappeCore
+
+from py4heappe.core.base import exceptions
+from py4heappe.core  import rest 
+from py4lexis.session import LexisSession
+
+
+app = typer.Typer(name="HEAppEAuthCLI", no_args_is_help=True, pretty_exceptions_short=True)
+
+@app.command(name="Username/Password")
+def authentication_credentials():
+    """Credentials Authentication Method"""
+    try:
+        utils.print_and_log("Authentication through Credentials")
+        client = configuration.get_api_instance()
+        username = typer.prompt("Enter your username")
+        password = typer.prompt("Enter your password", hide_input=True)
+        cred = {
+            "_preload_content": False,
+            "body": {
+                "Credentials": {
+                    "Username": username,
+                    "Password": password
+                }
+            }
+        }
+
+        response = heappeCore.UserAndLimitationManagementApi(client).heappe_user_and_limitation_management_authenticate_user_password_post(**cred)
+        session_code = json.loads(response.data)      
+        utils.print_and_log("User was authenticated.")
+        utils.store_session(session_code)
+
+    except rest.ApiException as exception:
+        try:
+            response_data = json.loads(exception.body)
+            raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
+        except json.JSONDecodeError:
+            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+
+    except exceptions.Py4HEAppEAPIInternalException as exception:
+         raise exceptions.Py4HEAppEException(exception.message) from None
+
+    except exceptions.Py4HEAppEInternalException as exception:
+         raise exceptions.Py4HEAppEException(exception.message) from None 
+    
+    except Exception:
+        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+
+@app.command(name="Open-Id")
+def authentication_openid():
+    """Open-Id Token Authentication Method"""
+    try:
+        utils.print_and_log("Authentication through Open-Id token")
+        client = configuration.get_api_instance()
+        openIdToken = typer.prompt("Enter your Open-Id token")
+        cred = {
+            "_preload_content": False,
+            "body": {
+                "Credentials": {
+                    "Username": None,
+                    "OpenIdAccessToken": openIdToken
+                }
+            }
+        }
+
+        response = heappeCore.UserAndLimitationManagementApi(client).heappe_user_and_limitation_management_authenticate_user_open_id_post(**cred)
+        session_code = json.loads(response.data)
+        utils.print_and_log("User was authenticated.")
+        utils.store_session(session_code)
+
+    except rest.ApiException as exception:
+        try:
+            response_data = json.loads(exception.body)
+            raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
+        except json.JSONDecodeError:
+            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+
+    except exceptions.Py4HEAppEAPIInternalException as exception:
+         raise exceptions.Py4HEAppEException(exception.message) from None
+
+    except exceptions.Py4HEAppEInternalException as exception:
+         raise exceptions.Py4HEAppEException(exception.message) from None 
+    
+    except Exception:
+        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+
+@app.command(name="LEXIS")
+def authentication_lexis(useCredentials:bool = typer.Option(default=False, help='Use Credentials for authentication to LEXIS')):
+    """LEXIS Token Authentication Method"""
+    try:
+        utils.print_and_log("Authentication through LEXIS")
+        client = configuration.get_api_instance()
+        session = LexisSession(login_method='credentials' if useCredentials else 'url')
+        cred = {
+            "_preload_content": False,
+            "body": {
+                "Credentials": {
+                    "Username": None,
+                    "OpenIdAccessToken": session.get_access_token()
+                }
+            }
+        }
+
+        response = heappeCore.UserAndLimitationManagementApi(client).heappe_user_and_limitation_management_authenticate_lexis_token_post(**cred)
+        session_code = json.loads(response.data)
+        utils.print_and_log("User was authenticated.")
+        utils.store_session(session_code)  
+
+    except rest.ApiException as exception:
+        try:
+            response_data = json.loads(exception.body)
+            raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
+        except json.JSONDecodeError:
+            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+
+    except exceptions.Py4HEAppEAPIInternalException as exception:
+         raise exceptions.Py4HEAppEException(exception.message) from None
+
+    except exceptions.Py4HEAppEInternalException as exception:
+         raise exceptions.Py4HEAppEException(exception.message) from None 
+    
+    except Exception:
+        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+
+
+if __name__ == '__main__':
+    app()
