@@ -26,6 +26,7 @@ The library ensures consistent and reliable communication with the HEAppE API, h
 ### Prerequisites
 
 * Python (version 3.11)
+* Pip (package installer)
 * Access to Deployed HEAppE instance (HEAppE instance URL and HPC project identificator)
 
 ### Installation
@@ -58,26 +59,26 @@ For using HEAppE CLI it is neeaded to initializing Py4HEAppE for usage with a sp
 py4heappe Config Init
 ```
 
-All mentioned functions are aggregated to the specific groups available from CLI. To do so, type the following to provide help on how to use managers via CLI.
+All mentioned functions are aggregated to CLI's specific <b>commands groups (commands aggregations)</b>. To do so, type the following to provide help on how to use managers via CLI.
 
 ```shell
-# List of available groups
+# List of commands groups (commands aggregations)
 py4heappe --help 
 ```
 
-Available groups: 
+Available Commands Groups (commands aggregations): 
 
 ```shell
-# Authentication Group
+# Authentication commands group
 py4heappe Auth --help 
 
-# Command Template Management Group
+# Command Template Management commands group
 py4heappe CmdTemplateMgmt --help 
 
-# Information Group
+# Information commands group
 py4heappe Info --help 
 
-# Report Group
+# Report commands group
 py4heappe Report --help 
 ```
 
