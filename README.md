@@ -56,7 +56,7 @@ For using HEAppE CLI it is neeaded to initializing Py4HEAppE for usage with a sp
 
 ```shell
 # Initial Setup
-py4heappe Config Init
+py4heappe Conf Init
 ```
 
 All mentioned functions are aggregated to CLI's specific <b>commands groups (commands aggregations)</b>. To do so, type the following to provide help on how to use managers via CLI.
@@ -73,7 +73,7 @@ Available Commands Groups (commands aggregations):
 py4heappe Auth --help 
 
 # Command Template Management commands group
-py4heappe CmdTemplateMgmt --help 
+py4heappe CmdTemp --help 
 
 # Information commands group
 py4heappe Info --help 

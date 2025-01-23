@@ -14,9 +14,9 @@ app = typer.Typer(name="HEAppECommandTemplateCLI", no_args_is_help=True, pretty_
 
 @app.command(name="List")
 def get_command_templates_for_project():
-    """List Command Templates for configured HPC Project"""
+    """List all command templates"""
     try:      
-        utils.print_and_log("Listing Command Templates for configured HPC Project ...") 
+        utils.print_and_log("Fetching command templates of a configured HEAppE project …") 
         projectId : int = infoCLI.get_hpc_project()["Id"]
         parameters = {
             "_preload_content": False,
@@ -26,7 +26,7 @@ def get_command_templates_for_project():
 
         response = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_templates_get(**parameters)
         commandTemplates =  json.loads(response.data)
-        print(f"\nCommand Templates for HPC project {projectId}:")
+        print(f"\nList of command templates for HEAppE project {projectId}:")
         print(json.dumps(commandTemplates, indent = 3))
         
     except rest.ApiException as exception:
@@ -34,7 +34,7 @@ def get_command_templates_for_project():
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -46,15 +46,15 @@ def get_command_templates_for_project():
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
 @app.command("Create")
-def create_command_template(Name:str = typer.Option(..., help='Command Template Name'),
-                           desc:str = typer.Option(..., help='Command Template Description'),
-                           extAllocCommand:str = typer.Option(None, help='Command Template Extended Allocation Command'),
-                           execScript:str = typer.Option(..., help='Path to executable file/script for Command Template'),
-                           prepScript:str = typer.Option(None, help='Path to preparation executable script for Command Template or Specific Bash Commands (ml mpi;cp ...)'),
-                           clusterNodeTypeId:int = typer.Option(..., help='Cluster Node Type Identifier')):
-    """Create Command Template for configured HPC Project"""
+def create_command_template(Name:str = typer.Option(..., help='Name'),
+                           desc:str = typer.Option(..., help='Description'),
+                           extAllocCommand:str = typer.Option(None, help='Extended allocation command'),
+                           execScript:str = typer.Option(..., help='Path to executable file/script'),
+                           prepScript:str = typer.Option(None, help='Path to preparation script or specific prerequisites/module loads'),
+                           clusterNodeTypeId:int = typer.Option(..., help='Cluster node type identifier')):
+    """Create new command template"""
     try:
-        utils.print_and_log("Creating Command Template for configured HPC Project ...")
+        utils.print_and_log("Creating new command template …")
         body = {
             "_preload_content": False,
             "body": {
@@ -72,14 +72,14 @@ def create_command_template(Name:str = typer.Option(..., help='Command Template 
 
         response = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_post(**body)
         commandTemplateId =  json.loads(response.data)["Id"]
-        utils.print_and_log(f"\nCommand Template was created (Id: {commandTemplateId})")
+        utils.print_and_log(f"\nCommand template was created (Id: {commandTemplateId})")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -91,16 +91,16 @@ def create_command_template(Name:str = typer.Option(..., help='Command Template 
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
 @app.command("Modify")
-def modify_command_template(id:int = typer.Option(..., help='Command Template Identifier'),
-                            Name:str = typer.Option(..., help='Command Template Name'),
-                            desc:str = typer.Option(..., help='Command Template Description'),
-                            extAllocCommand:str = typer.Option(None, help='Command Template Extended Allocation Command'),
-                            execScript:str = typer.Option(..., help='Path to executable file/script for Command Template'),
-                            prepScript:str = typer.Option(None, help='Path to preparation executable script for Command Template or Specific Bash Commands (ml mpi;cp ...)'),
-                            clusterNodeTypeId:int = typer.Option(None, help='Cluster Node Type Identifier')):
-    """Modify Command Template for configured HPC Project"""
+def modify_command_template(id:int = typer.Option(..., help='Id (Command template)'),
+                            Name:str = typer.Option(..., help='Name'),
+                            desc:str = typer.Option(..., help='Description'),
+                            extAllocCommand:str = typer.Option(None, help='Extended allocation command'),
+                            execScript:str = typer.Option(..., help='Path to executable file/script'),
+                            prepScript:str = typer.Option(None, help='Path to preparation script or specific prerequisites/module loads'),
+                            clusterNodeTypeId:int = typer.Option(None, help='Cluster node type identifier')):
+    """Modify existing command template"""
     try:
-        utils.print_and_log("Modification Command Template for configured HPC Project ...")
+        utils.print_and_log("Modifying the command template …")
         body = {
             "_preload_content": False,
             "body": {
@@ -117,14 +117,14 @@ def modify_command_template(id:int = typer.Option(..., help='Command Template Id
         }
 
         _ = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_put(**body)
-        utils.print_and_log(f"\nCommand Template was modified.")
+        utils.print_and_log(f"\nCommand template was modified.")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -136,10 +136,10 @@ def modify_command_template(id:int = typer.Option(..., help='Command Template Id
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
 @app.command("Remove")
-def remove_command_template(id:int = typer.Option(..., help='Command Template Identifier')):
-    """Remove Command Template for configured HPC Project"""
+def remove_command_template(id:int = typer.Option(..., help='Id (Command template)')):
+    """Remove existing command template"""
     try:
-        utils.print_and_log("Removing Command Template for configured HPC Project ...")
+        utils.print_and_log("Removing the command template …")
         body = {
             "_preload_content": False,
             "body": {
@@ -149,14 +149,14 @@ def remove_command_template(id:int = typer.Option(..., help='Command Template Id
         }
         
         _ = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_remove_command_template_delete(**body)
-        utils.print_and_log("\nCommand Template was removed.")
+        utils.print_and_log("\nCommand template was removed.")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -168,15 +168,15 @@ def remove_command_template(id:int = typer.Option(..., help='Command Template Id
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
 @app.command("CreateFromGeneric")
-def create_command_template_from_generic(id:str = typer.Option(..., help='Generic Command Template Identifier'),
-                                         name:str = typer.Option(..., help='Command Template Name'),
-                                         desc:str = typer.Option(..., help='Command Template Description'),
-                                         extAllocCommand:str = typer.Option(None, help='Command Template Extended Allocation Command'),
-                                         execScript:str = typer.Option(..., help='Path to executable file for Command Template'),
-                                         prepScript:str = typer.Option(None, help='Path to preparation executable script for Command Template or Specific Bash Commands (ml mpi;cp ...)')):
-    """Create Command Template from Generic Command Template"""
+def create_command_template_from_generic(id:str = typer.Option(..., help='Id (Generic command template)'),
+                                         name:str = typer.Option(..., help='Name'),
+                                         desc:str = typer.Option(..., help='Description'),
+                                         extAllocCommand:str = typer.Option(None, help='Extended allocation command'),
+                                         execScript:str = typer.Option(..., help='Path to executable file/script'),
+                                         prepScript:str = typer.Option(None, help='Path to preparation script or specific prerequisites/module loads')):
+    """Create new static command template from a generic one"""
     try:
-        utils.print_and_log("Creating Command Template from Generic Command Template ...")
+        utils.print_and_log("Creating new static command template from a generic one …")
         body = {
             "_preload_content": False,
             "body": {
@@ -194,7 +194,7 @@ def create_command_template_from_generic(id:str = typer.Option(..., help='Generi
         response = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_from_generic_post(**body)
         jsonData =  json.loads(response.data)
         commandTemplateId= jsonData["Id"]
-        utils.print_and_log(f"\nCommand Template was created (Id: {commandTemplateId}):")
+        utils.print_and_log(f"\nCommand template was created (Id: {commandTemplateId}):")
         print(json.dumps(jsonData, indent = 3))
 
     except rest.ApiException as exception:
@@ -202,7 +202,7 @@ def create_command_template_from_generic(id:str = typer.Option(..., help='Generi
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -214,15 +214,15 @@ def create_command_template_from_generic(id:str = typer.Option(..., help='Generi
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
 @app.command("ModifyFromGeneric")
-def modify_command_template_from_generic(id:int = typer.Option(..., help='Command Template Identifier'),
-                                         name:str = typer.Option(..., help='Command Template Name'),
-                                         desc:str = typer.Option(..., help='Command Template Description'),
-                                         extAllocCommand:str = typer.Option(None, help='Command Template Extended Allocation Command'),
-                                         execScript:str = typer.Option(..., help='Path to executable file/script for Command Template'),
-                                         prepScript:str = typer.Option(None, help='Path to preparation executable script for Command Template or Specific Bash Commands (ml mpi;cp ...)')):
-    """Modify Command Template from Generic Command Template"""
+def modify_command_template_from_generic(id:int = typer.Option(..., help='Id (Generic command template)'),
+                                         name:str = typer.Option(..., help='Name'),
+                                         desc:str = typer.Option(..., help='Description'),
+                                         extAllocCommand:str = typer.Option(None, help='Extended allocation command'),
+                                         execScript:str = typer.Option(..., help='Path to executable file/script'),
+                                         prepScript:str = typer.Option(None, help='Path to preparation script or specific prerequisites/module loads')):
+    """Modify existing command template created from a generic one"""
     try:
-        utils.print_and_log("Modification Command Template from Generic Command Template ...")
+        utils.print_and_log("Modifying the command template …")
         body = {
             "_preload_content": False,
             "body": {
@@ -238,14 +238,14 @@ def modify_command_template_from_generic(id:int = typer.Option(..., help='Comman
         }
 
         _ = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_from_generic_put(**body)
-        utils.print_and_log(f"\nCommand Template was modified.")
+        utils.print_and_log(f"\nCommand template was modified.")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -257,13 +257,13 @@ def modify_command_template_from_generic(id:int = typer.Option(..., help='Comman
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
 @app.command("CreateParameter")
-def create_command_template_parameter(uniqueName:str = typer.Option(..., help='Command Template Parameter Identifier (Name)'),
-                                     query:str = typer.Option(None, help='Command Template Parameter Query'),
-                                     desc:str = typer.Option(..., help='Command Template Parameter Description'),
-                                     cmdTemplateId:int = typer.Option(..., help='Command Template Identifier')):
-    "Create Command Template Parameter"
+def create_command_template_parameter(uniqueName:str = typer.Option(..., help='Identifier (Name)'),
+                                     query:str = typer.Option(None, help='Query'),
+                                     desc:str = typer.Option(..., help='Description'),
+                                     cmdTemplateId:int = typer.Option(..., help='Id (Command template)')):
+    "Create new command template parameter"
     try:
-        utils.print_and_log("Creating Command Template Parameter ...")
+        utils.print_and_log("Creating command template parameter …")
         body = {
             "_preload_content": False,
             "body": {
@@ -277,14 +277,14 @@ def create_command_template_parameter(uniqueName:str = typer.Option(..., help='C
 
         response = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_parameter_post(**body)
         commandTemplateParameterId =  json.loads(response.data)["Id"]
-        utils.print_and_log(f"\nCommand Template Parameter was created (Id: {commandTemplateParameterId})")
+        utils.print_and_log(f"\nCommand template parameter was created  (Id: {commandTemplateParameterId})")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -296,13 +296,13 @@ def create_command_template_parameter(uniqueName:str = typer.Option(..., help='C
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
 @app.command("ModifyParameter")
-def modify_command_template_parameter(id:int = typer.Option(..., help='Command Template Parameter Identifier'),
-                                      uniqueName:str = typer.Option(..., help='Command Template Parameter Identifier (Name)'),
-                                      query:str = typer.Option(None, help='Command Template Parameter Query'),
-                                      desc:str = typer.Option(..., help='Command Template Parameter Description')):
-    "Modify Command Template Parameter"
+def modify_command_template_parameter(id:int = typer.Option(..., help='Id (Command template parameter)'),
+                                      uniqueName:str = typer.Option(..., help='Identifier (Name)'),
+                                      query:str = typer.Option(None, help='Query'),
+                                      desc:str = typer.Option(..., help='Description')):
+    "Modify existing command template parameter"
     try:
-        utils.print_and_log("Modification Command Template Parameter")
+        utils.print_and_log("Modifying the selected command template parameter …")
         body = {
             "_preload_content": False,
             "body": {
@@ -315,14 +315,14 @@ def modify_command_template_parameter(id:int = typer.Option(..., help='Command T
         }
 
         _ = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_parameter_put(**body)
-        utils.print_and_log(f"\nCommand Template Parameter was modified.")
+        utils.print_and_log(f"\nCommand template parameter was modified.")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -334,10 +334,10 @@ def modify_command_template_parameter(id:int = typer.Option(..., help='Command T
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
 @app.command("RemoveParameter")
-def remove_command_template_parameter(id:int = typer.Option(..., help='Command Template Parameter Identifier')):
-    "Remove Command Template Parameter"
+def remove_command_template_parameter(id:int = typer.Option(..., help='Id (Command template parameter)')):
+    "Remove existing command template parameter"
     try:
-        utils.print_and_log("Removing Command Template Parameter ...")
+        utils.print_and_log("Removing the command template parameter …")
         body = {
             "_preload_content": False,
             "body": {
@@ -347,14 +347,14 @@ def remove_command_template_parameter(id:int = typer.Option(..., help='Command T
         }
 
         _ = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_parameter_delete(**body)
-        utils.print_and_log("\nCommand Template Parameter was removed.")
+        utils.print_and_log("\nCommand template parameter was removed.")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None

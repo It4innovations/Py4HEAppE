@@ -13,7 +13,7 @@ app = typer.Typer(name="HEAppEInfoCLI", no_args_is_help=True, pretty_exceptions_
 
 def get_hpc_project():
     try:
-        utils.print_and_log("Fetching computational project...")
+        utils.print_and_log("Fetching computational project …")
         parameters = {
             "_preload_content": False,
             "SessionCode": utils.load_stored_session()
@@ -31,7 +31,7 @@ def get_hpc_project():
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIInternalException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEInternalException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEInternalException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
     
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEInternalException(exception.message) from None 
@@ -41,9 +41,9 @@ def get_hpc_project():
     
 @app.command(name="Version")
 def get_api_version():
-    """Get HEAppE version information"""
+    """Version information"""
     try:
-        utils.print_and_log("Fetching HEAppE API version information ...")
+        utils.print_and_log("Fetching HEAppE API version information …")
         parameters = {
             "_preload_content": False,
             "SessionCode": utils.load_stored_session()
@@ -58,7 +58,7 @@ def get_api_version():
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
@@ -66,24 +66,24 @@ def get_api_version():
     except Exception:
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
-@app.command(name="Cluster")
+@app.command(name="ClusterInfo")
 def get_cluster_information():
-    """Get Cluster Information"""
+    """Cluster information"""
     try:
-        utils.print_and_log("Fetching cluster information ...")
+        utils.print_and_log("Fetching cluster information …")
         parameters = {
             "_preload_content": False
         }    
 
         response= heappeCore.ClusterInformationApi(configuration.get_api_instance()).heappe_cluster_information_list_available_clusters_get(**parameters)
-        print(f"\nCluster Information:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nCluster information:\n{json.dumps(json.loads(response.data), indent = 3)}")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
@@ -91,12 +91,12 @@ def get_cluster_information():
     except Exception:
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
-@app.command("ListParamsFromGenericCmdTemplate")
-def get_parameters_from_generic_cmd_template_script(id:int = typer.Option(..., help='Command Template Identifier'),
-                                                    userScriptPath:str = typer.Option(None, help='Path to executable file of Generic Command Template')):
-    """List Parameters from Generic Command Template script"""
+@app.command("ListParamsFromGeneric")
+def get_parameters_from_generic_cmd_template_script(id:int = typer.Option(..., help='Id (Command template)'),
+                                                    userScriptPath:str = typer.Option(None, help='Path to executable file/script')):
+    """List command template parameters from generic command template"""
     try:
-        utils.print_and_log("Listing Parameters from Generic Command Template script ...")
+        utils.print_and_log("Fetching command template parameters from generic command template …")
         body = {
             "_preload_content": False,
             "body": {
@@ -108,14 +108,14 @@ def get_parameters_from_generic_cmd_template_script(id:int = typer.Option(..., h
         }
 
         response = heappeCore.ClusterInformationApi(configuration.get_api_instance()).heappe_cluster_information_request_command_template_parameters_name_post(**body)
-        print(f"\nParameters for Command Template:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nCommand template parameters:\n{json.dumps(json.loads(response.data), indent = 3)}")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -127,10 +127,10 @@ def get_parameters_from_generic_cmd_template_script(id:int = typer.Option(..., h
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
     
 @app.command(name="ClusterNodeUsage")
-def get_cluster_node_usage(clusterNodeId :int = typer.Option(default=...,  help='Cluster Node Type Identifier')):
-    """Get Cluster Node Usage Information"""
+def get_cluster_node_usage(clusterNodeId :int = typer.Option(default=...,  help='Id (Cluster node type)')):
+    """Cluster node usage information"""
     try:
-        utils.print_and_log("Fetching HPC Cluster Node information ...")
+        utils.print_and_log("Fetching cluster information …")
         parameters = {
             "_preload_content": False,
             "ClusterNodeId": clusterNodeId,
@@ -139,14 +139,14 @@ def get_cluster_node_usage(clusterNodeId :int = typer.Option(default=...,  help=
         }    
     
         response= heappeCore.ClusterInformationApi(configuration.get_api_instance()).heappe_cluster_information_current_cluster_node_usage_get(**parameters)
-        print(f"\nCluster Node Usage:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nCluster node type usage:\n{json.dumps(json.loads(response.data), indent = 3)}")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None

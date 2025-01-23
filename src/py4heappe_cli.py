@@ -8,12 +8,12 @@ import py4heappe.cli.job_management as job_management
 import py4heappe.cli.report as report
 
 app = typer.Typer(no_args_is_help=True, pretty_exceptions_short=True, pretty_exceptions_show_locals=False)
-app.add_typer(configuration.app, name="Config", help="HEAppE Configuration")
-app.add_typer(auth.app, name="Auth", help="HEAppE Authentication Methods")
-app.add_typer(command_template.app, name="CmdTemplateMgmt", help="HEAppE Command Templates Management")
-app.add_typer(information.app, name="Info", help="HEAppE Information")
+app.add_typer(configuration.app, name="Conf", help="Configuration options")
+app.add_typer(auth.app, name="Auth", help="Authentication methods")
+app.add_typer(command_template.app, name="CmdTemp", help="Command templates management")
+app.add_typer(information.app, name="Info", help="Information")
 #app.add_typer(job_management.app, name="JobMgmt", help="HEAppE Job Management")
-app.add_typer(report.app, name="Report", help="HEAppE Reporting Methods")
+app.add_typer(report.app, name="Report", help="Reporting and usage")
 
 def main():
     app()

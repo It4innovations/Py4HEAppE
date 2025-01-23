@@ -13,21 +13,21 @@ from py4lexis.session import LexisSession
 
 app = typer.Typer(name="HEAppEAuthCLI", no_args_is_help=True, pretty_exceptions_short=True)
 
-@app.command(name="Username/Password")
+@app.command(name="UserPass")
 def authentication_credentials():
-    """Credentials Authentication Method"""
+    """Username and password authentication"""
     try:
-        utils.print_and_log("Authentication through Credentials")
+        utils.print_and_log("Username and password authentication")
         client = configuration.get_api_instance()
         if "CREDENTIALS_USERNAME" in os.environ:
             username = os.environ["CREDENTIALS_USERNAME"]
         else:
-            username = typer.prompt("Enter your username")
+            username = typer.prompt("Username:")
 
         if "CREDENTIALS_PASSWORD" in os.environ:
             password = os.environ["CREDENTIALS_PASSWORD"]
         else:
-            password = typer.prompt("Enter your password", hide_input=True)
+            password = typer.prompt("Password:", hide_input=True)
 
         cred = {
             "_preload_content": False,
@@ -49,7 +49,7 @@ def authentication_credentials():
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -60,16 +60,16 @@ def authentication_credentials():
     except Exception:
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
-@app.command(name="Open-Id")
+@app.command(name="OpenId")
 def authentication_openid():
-    """Open-Id Token Authentication Method"""
+    """OpenID authentication"""
     try:
-        utils.print_and_log("Authentication through Open-Id token")
+        utils.print_and_log("OpenID authentication")
         client = configuration.get_api_instance()
         if "CREDENTIALS_TOKEN" in os.environ:
             openIdToken = os.environ["CREDENTIALS_TOKEN"]
         else:
-            openIdToken = typer.prompt("Enter your Open-Id token")
+            openIdToken = typer.prompt("OpenID token:")
 
         cred = {
             "_preload_content": False,
@@ -91,7 +91,7 @@ def authentication_openid():
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -102,11 +102,11 @@ def authentication_openid():
     except Exception:
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
-@app.command(name="LEXIS")
+@app.command(name="Lexis")
 def authentication_lexis(useCredentials:bool = typer.Option(default=False, help='Use Credentials for authentication to LEXIS')):
-    """LEXIS Token Authentication Method"""
+    """LEXIS token authentication"""
     try:
-        utils.print_and_log("Authentication through LEXIS")
+        utils.print_and_log("LEXIS AAI authentication")
         client = configuration.get_api_instance()
         session = LexisSession(login_method='credentials' if useCredentials else 'url')
         cred = {
@@ -129,7 +129,7 @@ def authentication_lexis(useCredentials:bool = typer.Option(default=False, help=
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None

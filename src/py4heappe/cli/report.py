@@ -14,23 +14,23 @@ app = typer.Typer(name="ReportCLI", no_args_is_help=True, pretty_exceptions_show
 
 @app.command(name="GroupList")
 def list_groups():
-    """List groups where the user is assigned"""
+    """List associated user groups"""
     try:
-        utils.print_and_log("Listing groups where the user is assigned ...") 
+        utils.print_and_log("Listing groups where the user is assigned …") 
         parameters = {
             "_preload_content": False,
             "SessionCode": utils.load_stored_session()
         }
 
         response = heappeCore.JobReportingApi(configuration.get_api_instance()).heappe_job_reporting_list_adaptor_user_groups_get(**parameters)
-        print(f"\nAssigned Groups:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nAssociated user groups:\n{json.dumps(json.loads(response.data), indent = 3)}")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -42,12 +42,12 @@ def list_groups():
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
 @app.command(name="UserUsage")
-def get_user_report(userId:int = typer.Option(..., help='User Identifier'),
+def get_user_report(userId:int = typer.Option(..., help='Id (User)'),
                     startDate:str = typer.Option(None, help='Start Date with time (Format: YYYY-MM-DDTHH:mm:ss)'),
                     endDate:str = typer.Option(None, help='End Date with time (Format:YYYY-MM-DDTHH:mm:ss)')):
-    """Get user report for his jobs"""
+    """Resource usage report for user"""
     try:
-        utils.print_and_log("Getting user report for his jobs ...") 
+        utils.print_and_log("Fetching usage report for user …") 
         parameters = {
             "_preload_content": False,
             "UserId": userId,
@@ -57,14 +57,14 @@ def get_user_report(userId:int = typer.Option(..., help='User Identifier'),
         }
 
         response = heappeCore.JobReportingApi(configuration.get_api_instance()).heappe_job_reporting_user_resource_usage_report_get(**parameters)
-        print(f"\nUser Report:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nUser usage report:\n{json.dumps(json.loads(response.data), indent = 3)}")
        
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -76,12 +76,12 @@ def get_user_report(userId:int = typer.Option(..., help='User Identifier'),
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
 @app.command(name="GroupUsage")
-def get_group_report(groupId:int = typer.Option(..., help='Group Identifier'),
+def get_group_report(groupId:int = typer.Option(..., help='Id (User group)'),
                      startDate:str = typer.Option(None, help='Start Date with time (Format: YYYY-MM-DDTHH:mm:ss)'),
                      endDate:str = typer.Option(None, help='End Date with time (Format:YYYY-MM-DDTHH:mm:ss)')):
-    """Get group report for group jobs"""
+    """Resource usage report for user group"""
     try:
-        utils.print_and_log("Getting group report for group jobs ...") 
+        utils.print_and_log("Fetching usage report for user group …") 
         parameters = {
             "_preload_content": False,
             "GroupId": groupId,
@@ -91,14 +91,14 @@ def get_group_report(groupId:int = typer.Option(..., help='Group Identifier'),
         }
 
         response = heappeCore.JobReportingApi(configuration.get_api_instance()).heappe_job_reporting_user_group_resource_usage_report_get(**parameters)
-        print(f"\nGroup Report:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nUser group usage report:\n{json.dumps(json.loads(response.data), indent = 3)}")
        
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -111,23 +111,23 @@ def get_group_report(groupId:int = typer.Option(..., help='Group Identifier'),
 
 @app.command(name="GroupUsageDetailed")
 def get_detailed_jobs_report():
-    """Get detailed report for all group jobs"""
+    """Deailed resource usage report for user groups"""
     try:
-        utils.print_and_log("Getting detailed report for all group jobs ...") 
+        utils.print_and_log("Fetching detailed usage report for user groups …") 
         parameters = {
             "_preload_content": False,
             "SessionCode": utils.load_stored_session()
         }
 
         response = heappeCore.JobReportingApi(configuration.get_api_instance()).heappe_job_reporting_jobs_detailed_report_get(**parameters)
-        print(f"\nJobs Report:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nDetailed user groups usage report:\n{json.dumps(json.loads(response.data), indent = 3)}")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None
@@ -138,11 +138,11 @@ def get_detailed_jobs_report():
     except Exception:
         raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
 
-@app.command(name="UserJobUsage")
-def get_detailed_job_report(id:int = typer.Option(..., help='HPC Job Info Identifier')):
-    """Get detailed report for a user specific job"""
+@app.command(name="JobUsage")
+def get_detailed_job_report(id:int = typer.Option(..., help='Id (Job)')):
+    """Resource usage report for job"""
     try:
-        utils.print_and_log("Getting detailed report for a user specific job ...") 
+        utils.print_and_log("Fetching job usage report …") 
         parameters = {
             "_preload_content": False,
             "JobId": id,
@@ -150,14 +150,14 @@ def get_detailed_job_report(id:int = typer.Option(..., help='HPC Job Info Identi
         }
 
         response = heappeCore.JobReportingApi(configuration.get_api_instance()).heappe_job_reporting_resource_usage_report_for_job_get(**parameters)
-        print(f"\nJob Report:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nJob usage report: \n{json.dumps(json.loads(response.data), indent = 3)}")
 
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
         except json.JSONDecodeError:
-            raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
     except exceptions.Py4HEAppEAPIInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None

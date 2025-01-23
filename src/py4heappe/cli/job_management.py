@@ -31,7 +31,7 @@
 #         raise exceptions.Py4HEAppEException(response_data['title'], response_data['detail'], response_data['status']) from None
     
 #     except Exception as exception:
-#         raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None
+#         raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
 
 # @app.command(name="Submit")
 # def submit_job(id:int = typer.Option(..., help='Created HPC Job Info Identifier')):
@@ -52,7 +52,7 @@
 #         raise exceptions.Py4HEAppEException(response_data['title'], response_data['detail'], response_data['status']) from None
     
 #     except Exception as exception:
-#         raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None  
+#         raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None  
 
 # @app.command(name="Cancel")
 # def cancel_job(id:int = typer.Option(..., help='Created HPC Job Info Identifier')):
@@ -73,7 +73,7 @@
 #         raise exceptions.Py4HEAppEException(response_data['title'], response_data['detail'], response_data['status']) from None
     
 #     except Exception as exception:
-#         raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None  
+#         raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None  
 
 
 # @app.command(name="Remove")
@@ -95,7 +95,7 @@
 #         raise exceptions.Py4HEAppEException(response_data['title'], response_data['detail'], response_data['status']) from None
     
 #     except Exception as exception:
-#         raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None  
+#         raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None  
 
 # @app.command(name="ListJobs")
 # def remove_job():
@@ -115,7 +115,7 @@
 #         raise exceptions.Py4HEAppEException(response_data['title'], response_data['detail'], response_data['status']) from None
     
 #     except Exception as exception:
-#         raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None  
+#         raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None  
 
 # @app.command(name="ListJobs")
 # def remove_job(id:int = typer.Option(..., help='Created HPC Job Info Identifier')):
@@ -136,7 +136,7 @@
 #         raise exceptions.Py4HEAppEException(response_data['title'], response_data['detail'], response_data['status']) from None
     
 #     except Exception as exception:
-#         raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None  
+#         raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None  
 
 
 # @app.command(name="CopyDataToTemp")
@@ -160,7 +160,7 @@
 #         raise exceptions.Py4HEAppEException(response_data['title'], response_data['detail'], response_data['status']) from None
     
 #     except Exception as exception:
-#         raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None  
+#         raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None  
 
 # @app.command(name="CopyDataFromTemp")
 # def copy_data_from_temp(id:int = typer.Option(..., help='Created HPC Job Info Identifier'),
@@ -183,7 +183,7 @@
 #         raise exceptions.Py4HEAppEException(response_data['title'], response_data['detail'], response_data['status']) from None
     
 #     except Exception as exception:
-#         raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None  
+#         raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None  
 
 # @app.command(name="GetAllocatedNodes")
 # def get_allocated_nodes_ip(id:int = typer.Option(..., help='Created HPC Job Info Identifier')):
@@ -204,7 +204,7 @@
 #         raise exceptions.Py4HEAppEException(response_data['title'], response_data['detail'], response_data['status']) from None
     
 #     except Exception as exception:
-#         raise exceptions.Py4HEAppEException("HEAppE is not listening on specific address") from None  
+#         raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None  
     
 
 # if __name__ == '__main__':
