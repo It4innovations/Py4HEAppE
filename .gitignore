@@ -9,3 +9,7 @@ __pycache__
 .env
 lexis_logs.log
 py4heappe.log
+UNKNOWN.egg-info/dependency_links.txt
+UNKNOWN.egg-info/PKG-INFO
+UNKNOWN.egg-info/SOURCES.txt
+UNKNOWN.egg-info/top_level.txt

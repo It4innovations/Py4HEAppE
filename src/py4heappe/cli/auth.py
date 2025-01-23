@@ -1,5 +1,6 @@
 import json
 import typer
+import os
 
 import py4heappe.cli.configuration as configuration
 import py4heappe.core.base.utils as utils
@@ -18,8 +19,16 @@ def authentication_credentials():
     try:
         utils.print_and_log("Authentication through Credentials")
         client = configuration.get_api_instance()
-        username = typer.prompt("Enter your username")
-        password = typer.prompt("Enter your password", hide_input=True)
+        if "CREDENTIALS_USERNAME" in os.environ:
+            username = os.environ["CREDENTIALS_USERNAME"]
+        else:
+            username = typer.prompt("Enter your username")
+
+        if "CREDENTIALS_PASSWORD" in os.environ:
+            password = os.environ["CREDENTIALS_PASSWORD"]
+        else:
+            password = typer.prompt("Enter your password", hide_input=True)
+
         cred = {
             "_preload_content": False,
             "body": {
@@ -57,7 +66,11 @@ def authentication_openid():
     try:
         utils.print_and_log("Authentication through Open-Id token")
         client = configuration.get_api_instance()
-        openIdToken = typer.prompt("Enter your Open-Id token")
+        if "CREDENTIALS_TOKEN" in os.environ:
+            openIdToken = os.environ["CREDENTIALS_TOKEN"]
+        else:
+            openIdToken = typer.prompt("Enter your Open-Id token")
+
         cred = {
             "_preload_content": False,
             "body": {
