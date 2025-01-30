@@ -40,7 +40,11 @@ def authentication_credentials():
         }
 
         response = heappeCore.UserAndLimitationManagementApi(client).heappe_user_and_limitation_management_authenticate_user_password_post(**cred)
-        session_code = json.loads(response.data)      
+        session_code = json.loads(response.data)
+
+        if "CREDENTIALS_PASSWORD" in os.environ:
+            print(session_code)
+
         utils.print_and_log("User was authenticated.")
         utils.store_session(session_code)
 
@@ -83,6 +87,10 @@ def authentication_openid():
 
         response = heappeCore.UserAndLimitationManagementApi(client).heappe_user_and_limitation_management_authenticate_user_open_id_post(**cred)
         session_code = json.loads(response.data)
+
+        if "CREDENTIALS_TOKEN" in os.environ:
+            print(session_code)
+        
         utils.print_and_log("User was authenticated.")
         utils.store_session(session_code)
 
