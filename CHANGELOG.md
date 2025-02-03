@@ -7,4 +7,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## V1.0.0
 
-### Compatible with HEAppE V4.2.X
+### Compatible with HEAppE V4.2.X and V4.3.X
