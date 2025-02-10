@@ -38,8 +38,8 @@ def list_groups():
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command(name="UserUsage")
 def get_user_report(userId:int = typer.Option(..., help='Id (User)'),
@@ -72,8 +72,8 @@ def get_user_report(userId:int = typer.Option(..., help='Id (User)'),
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command(name="GroupUsage")
 def get_group_report(groupId:int = typer.Option(..., help='Id (User group)'),
@@ -106,8 +106,8 @@ def get_group_report(groupId:int = typer.Option(..., help='Id (User group)'),
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command(name="GroupUsageDetailed")
 def get_detailed_jobs_report():
@@ -135,8 +135,8 @@ def get_detailed_jobs_report():
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command(name="JobUsage")
 def get_detailed_job_report(id:int = typer.Option(..., help='Id (Job)')):
@@ -165,8 +165,8 @@ def get_detailed_job_report(id:int = typer.Option(..., help='Id (Job)')):
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 
 if __name__ == '__main__':

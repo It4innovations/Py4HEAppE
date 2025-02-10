@@ -20,7 +20,8 @@ def get_hpc_project():
         }    
 
         response = heappeCore.UserAndLimitationManagementApi(configuration.get_api_instance()).heappe_user_and_limitation_management_projects_for_current_user_get(**parameters)
-        project = next(f["Project"] for f in json.loads(response.data) if f["Project"]["AccountingString"] == configuration.get_project_from_configuration())
+        project = next((f["Project"] for f in json.loads(response.data)if f["Project"]["AccountingString"] == configuration.get_project_from_configuration()), None)
+
         if project is None:
             raise exceptions.Py4HEAppEInternalException("The computational project does not exist.") from None
 
@@ -36,8 +37,8 @@ def get_hpc_project():
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEInternalException(exception.message) from None 
            
-    except Exception:
-        raise exceptions.Py4HEAppEInternalException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
     
 @app.command(name="Version")
 def get_api_version():
@@ -63,8 +64,8 @@ def get_api_version():
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command(name="ClusterInfo")
 def get_cluster_information():
@@ -88,8 +89,8 @@ def get_cluster_information():
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command("ListParamsFromGeneric")
 def get_parameters_from_generic_cmd_template_script(id:int = typer.Option(..., help='Id (Command template)'),
@@ -123,8 +124,8 @@ def get_parameters_from_generic_cmd_template_script(id:int = typer.Option(..., h
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
     
 @app.command(name="ClusterNodeUsage")
 def get_cluster_node_usage(clusterNodeId :int = typer.Option(default=...,  help='Id (Cluster node type)')):
@@ -154,8 +155,8 @@ def get_cluster_node_usage(clusterNodeId :int = typer.Option(default=...,  help=
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 
 if __name__ == '__main__':

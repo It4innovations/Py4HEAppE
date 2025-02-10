@@ -42,8 +42,8 @@ def get_command_templates_for_project():
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command("Create")
 def create_command_template(Name:str = typer.Option(..., help='Name'),
@@ -87,8 +87,8 @@ def create_command_template(Name:str = typer.Option(..., help='Name'),
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command("Modify")
 def modify_command_template(id:int = typer.Option(..., help='Id (Command template)'),
@@ -132,8 +132,8 @@ def modify_command_template(id:int = typer.Option(..., help='Id (Command templat
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command("Remove")
 def remove_command_template(id:int = typer.Option(..., help='Id (Command template)')):
@@ -164,8 +164,8 @@ def remove_command_template(id:int = typer.Option(..., help='Id (Command templat
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command("CreateFromGeneric")
 def create_command_template_from_generic(id:str = typer.Option(..., help='Id (Generic command template)'),
@@ -210,8 +210,8 @@ def create_command_template_from_generic(id:str = typer.Option(..., help='Id (Ge
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command("ModifyFromGeneric")
 def modify_command_template_from_generic(id:int = typer.Option(..., help='Id (Generic command template)'),
@@ -253,8 +253,8 @@ def modify_command_template_from_generic(id:int = typer.Option(..., help='Id (Ge
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command("CreateParameter")
 def create_command_template_parameter(uniqueName:str = typer.Option(..., help='Identifier (Name)'),
@@ -292,8 +292,8 @@ def create_command_template_parameter(uniqueName:str = typer.Option(..., help='I
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command("ModifyParameter")
 def modify_command_template_parameter(id:int = typer.Option(..., help='Id (Command template parameter)'),
@@ -330,8 +330,8 @@ def modify_command_template_parameter(id:int = typer.Option(..., help='Id (Comma
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command("RemoveParameter")
 def remove_command_template_parameter(id:int = typer.Option(..., help='Id (Command template parameter)')):
@@ -362,8 +362,8 @@ def remove_command_template_parameter(id:int = typer.Option(..., help='Id (Comma
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 
 if __name__ == '__main__':

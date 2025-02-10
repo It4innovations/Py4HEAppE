@@ -61,8 +61,8 @@ def authentication_credentials():
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command(name="OpenId")
 def authentication_openid():
@@ -107,8 +107,8 @@ def authentication_openid():
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command(name="Lexis")
 def authentication_lexis(useCredentials:bool = typer.Option(default=False, help='Use Credentials for authentication to LEXIS')):
@@ -145,8 +145,8 @@ def authentication_lexis(useCredentials:bool = typer.Option(default=False, help=
     except exceptions.Py4HEAppEInternalException as exception:
          raise exceptions.Py4HEAppEException(exception.message) from None 
     
-    except Exception:
-        raise exceptions.Py4HEAppEException(f"Other exception: {exception.message}") from None
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 
 if __name__ == '__main__':

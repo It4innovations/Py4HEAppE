@@ -115,6 +115,5 @@ publish_package:
   artifacts:
     paths:
       - dist/*.whl
-    expire_in: 365 days
   only:
     - develop
