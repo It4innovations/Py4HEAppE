@@ -214,7 +214,7 @@ def create_command_template_from_generic(id:str = typer.Option(..., help='Id (Ge
         raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command("ModifyFromGeneric")
-def modify_command_template_from_generic(id:int = typer.Option(..., help='Id (Generic command template)'),
+def modify_command_template_from_generic(id:int = typer.Option(..., help='Id (Command template)'),
                                          name:str = typer.Option(..., help='Name'),
                                          desc:str = typer.Option(..., help='Description'),
                                          extAllocCommand:str = typer.Option(None, help='Extended allocation command'),
