@@ -116,4 +116,4 @@ publish_package:
     paths:
       - dist/*.whl
   only:
-    - develop
+    - master
