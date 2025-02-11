@@ -33,7 +33,7 @@ The library ensures consistent and reliable communication with the HEAppE API, h
 
 1. Clone the repo
    ```sh
-   git clone -b develop https://code.it4i.cz/ADAS-Private/HEAppE/clientapplications/Py4HEAppE.git
+   git clone https://github.com/It4innovations/Py4HEAppE.git
    ```
 2. Go to cloned dir
    ```sh
