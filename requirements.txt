@@ -1,0 +1,9 @@
+paramiko==3.5.0
+scp==0.15.0
+urllib3==2.2.3
+certifi==2024.8.30
+six==1.16.0
+typer==0.13.1
+python-dotenv==1.0.1
+validators==0.34.0
+py4lexis @ https://opencode.it4i.eu/api/v4/projects/107/packages/pypi/files/781a790ad7202da0f9e8a1013e2687388c32c60fa43b053f5499858f9ef8b1ac/py4lexis-2.2.3.tar.gz#sha256=781a790ad7202da0f9e8a1013e2687388c32c60fa43b053f5499858f9ef8b1ac
