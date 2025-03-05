@@ -73,15 +73,17 @@ push_to_github_job:
      - git push github --tags
      - echo "${TAG_MESSAGE}"
      - MODIFICATION_TAG_MESSAGE=$(echo "${TAG_MESSAGE}" | base64 -d | sed '/^[[:space:]]*$/s/^.*$/\\n/' | sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g')
-     - echo "${MODIFICATION_TAG_MESSAGE}"
      - |
-        curl -L -X POST -H "Authorization: token $GITHUB_TOKEN" -d '{
+        BODY='{
           "tag_name": "'"${TAG_NAME}"'",
           "name": "'"${TAG_NAME}"'",
           "body": "'"${MODIFICATION_TAG_MESSAGE}"'",
           "draft": false,
           "prerelease": false
-        }' https://api.github.com/repos/It4innovations/Py4HEAppE/releases
+        }'
+     - echo "${BODY}"
+     - |
+        curl --L -X POST -H "Authorization: token $GITHUB_TOKEN" -d "$BODY" https://api.github.com/repos/It4innovations/Py4HEAppE/releases
   before_script:
     - apk update && apk upgrade
     - apk add --no-cache git curl jq
