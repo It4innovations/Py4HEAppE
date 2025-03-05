@@ -7,11 +7,10 @@ name = "Py4HEAppE"
 authors = [{name = "IT4Innovations", email = "support.heappe@it4i.cz"}]
 description = "Py4HEAppE Library"
 version = "1.0.0"
-#license={ text = "MIT" }
-license = { file="LICENSE.txt" }
+license = { file="LICENSE" }
 readme = "README.md"
-requires-python = ">=3.10"
-keywords = ["lexis", "HEAppE", "client", "python"]
+requires-python = ">=3.11"
+keywords = ["LEXIS", "HEAppE", "client", "python"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -24,3 +23,7 @@ py4heappe = "py4heappe_cli:main"
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
+
+[project.urls]
+Homepage = "https://github.com/It4innovations/Py4HEAppE"
+Issues = "https://github.com/It4innovations/Py4HEAppE/issues"
