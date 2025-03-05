@@ -99,6 +99,8 @@ push_to_github_job:
 publish_package:
   stage: publish_package
   image: python:3.11
+  needs:
+    - job: push_to_github_job
   before_script:
     - python -V  # Print out python version for debugging
     - apt-get update
