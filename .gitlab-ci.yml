@@ -74,14 +74,28 @@ push_to_github_job:
      - echo "${TAG_MESSAGE}"
      - MODIFICATION_TAG_MESSAGE=$(echo "${TAG_MESSAGE}" | base64 -d | sed '/^[[:space:]]*$/s/^.*$/\\n/' | sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g')
      - |
-        BODY='{
-          "tag_name": "'"${TAG_NAME}"'",
-          "name": "'"${TAG_NAME}"'",
-          "body": "'"${MODIFICATION_TAG_MESSAGE}"'",
-          "draft": false,
-          "prerelease": false
-        }'
-     - echo "${BODY}"
+        BODY=$(jq -n --arg tag_name "$TAG_NAME" \
+                     --arg name "$TAG_NAME" \
+                     --arg body "$MODIFICATION_TAG_MESSAGE" \
+                     '{
+                        tag_name: $tag_name,
+                        name: $name,
+                        body: $body,
+                        draft: false,
+                        prerelease: false
+                      }')
+     - echo "${BODY}" | jq 
+     - |
+        HTTP_STATUS=$(curl -s -o response.txt -w "%{http_code}" -X POST -H "Authorization: token $GITHUB_TOKEN" -d "$BODY" https://api.github.com/repos/It4innovations/Py4HEAppE/releases)
+        if [ "$HTTP_STATUS" -ne 201 ]; then
+          echo "Error: Failed to create GitHub release. HTTP status code: $HTTP_STATUS"
+          cat response.txt  # Print the response for debugging
+          exit 1
+        else
+          echo "GitHub release created successfully. HTTP status code: $HTTP_STATUS"
+          echo "Response body:"
+          cat response.txt  # Print the response body
+        fi
      - |
         curl --L -X POST -H "Authorization: token $GITHUB_TOKEN" -d "$BODY" https://api.github.com/repos/It4innovations/Py4HEAppE/releases
   before_script:
