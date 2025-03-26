@@ -5,16 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "Py4HEAppE"
 authors = [{name = "IT4Innovations", email = "support.heappe@it4i.cz"}]
-description = "Py4HEAppE Library"
-version = "1.0.0"
-license = { file="LICENSE" }
+description = "Py4HEAppE is client library for easy access to HEAppE Middleware"
+version = "1.0.6"
+license = "MIT"
 readme = "README.md"
 requires-python = ">=3.11"
-keywords = ["LEXIS", "HEAppE", "client", "python"]
+keywords = ["LEXIS", "HEAppE"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+    "Operating System :: OS Independent"
 ]
 dynamic = ["dependencies"]
 
@@ -26,4 +25,5 @@ dependencies = {file = ["requirements.txt"]}
 
 [project.urls]
 Homepage = "https://github.com/It4innovations/Py4HEAppE"
+Repository = "https://github.com/It4innovations/Py4HEAppE.git"
 Issues = "https://github.com/It4innovations/Py4HEAppE/issues"
