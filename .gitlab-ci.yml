@@ -2,8 +2,6 @@ services:
   - docker:dind
 
 include:
-  - template: Security/Secret-Detection.gitlab-ci.yml
-  - local: '.gilab-ci_job_rules.yml'
   - local: '.gitlab/stages/.check.yml'
   - local: '.gitlab/stages/.release.yml'
   - local: '.gitlab/stages/.publish.yml'
