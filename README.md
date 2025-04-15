@@ -32,7 +32,7 @@ The library ensures consistent and reliable communication with the HEAppE API, h
 ### Installation
 
 ```
-pip install py4heappe
+pip install Py4HEAppE
  ```
 
 <b>Note:</b> In some cases, you can obtain a warning message like this <b>"WARNING: The script py4heappe.exe is installed in 'C:\Users\user\AppData\Roaming\Python\Python311\Scripts' which is not on PATH.</b>" If you obtained a similar warning message, it is necessary to add the mentioned path into your operation system <b>PATH</b> variable or use a path with an executable file (i.e. C:\Users\user\AppData\Roaming\Python\Python311\Scripts\py4heappe.exe).

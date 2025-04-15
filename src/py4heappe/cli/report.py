@@ -8,6 +8,8 @@ import py4heappe.core as heappeCore
 from datetime import datetime
 from py4heappe.core.base import exceptions
 from py4heappe.core  import rest 
+from typing import List, Optional
+from typing_extensions import Annotated
 
 
 app = typer.Typer(name="ReportCLI", no_args_is_help=True, pretty_exceptions_show_locals=False)
@@ -16,7 +18,7 @@ app = typer.Typer(name="ReportCLI", no_args_is_help=True, pretty_exceptions_show
 def list_groups():
     """List associated user groups"""
     try:
-        utils.print_and_log("Listing groups where the user is assigned …") 
+        utils.print_and_log("Listing groups where the user is assigned ...") 
         parameters = {
             "_preload_content": False,
             "SessionCode": utils.load_stored_session()
@@ -44,10 +46,11 @@ def list_groups():
 @app.command(name="UserUsage")
 def get_user_report(userId:int = typer.Option(..., help='Id (User)'),
                     startDate:str = typer.Option(None, help='Start Date with time (Format: YYYY-MM-DDTHH:mm:ss)'),
-                    endDate:str = typer.Option(None, help='End Date with time (Format:YYYY-MM-DDTHH:mm:ss)')):
+                    endDate:str = typer.Option(None, help='End Date with time (Format:YYYY-MM-DDTHH:mm:ss)'),
+                    subProjects: Annotated[Optional[List[str]], typer.Option(help='Sub projects')]= None):
     """Resource usage report for user"""
     try:
-        utils.print_and_log("Fetching usage report for user …") 
+        utils.print_and_log("Fetching usage report for user ...") 
         parameters = {
             "_preload_content": False,
             "UserId": userId,
@@ -56,6 +59,9 @@ def get_user_report(userId:int = typer.Option(..., help='Id (User)'),
             "SessionCode": utils.load_stored_session()
         }
 
+        if subProjects:
+            parameters["SubProjects"] = subProjects
+        
         response = heappeCore.JobReportingApi(configuration.get_api_instance()).heappe_job_reporting_user_resource_usage_report_get(**parameters)
         print(f"\nUser usage report:\n{json.dumps(json.loads(response.data), indent = 3)}")
        
@@ -78,10 +84,11 @@ def get_user_report(userId:int = typer.Option(..., help='Id (User)'),
 @app.command(name="GroupUsage")
 def get_group_report(groupId:int = typer.Option(..., help='Id (User group)'),
                      startDate:str = typer.Option(None, help='Start Date with time (Format: YYYY-MM-DDTHH:mm:ss)'),
-                     endDate:str = typer.Option(None, help='End Date with time (Format:YYYY-MM-DDTHH:mm:ss)')):
+                     endDate:str = typer.Option(None, help='End Date with time (Format:YYYY-MM-DDTHH:mm:ss)'),
+                     subProjects: Annotated[Optional[List[str]], typer.Option(help='Sub projects')]= None):
     """Resource usage report for user group"""
     try:
-        utils.print_and_log("Fetching usage report for user group …") 
+        utils.print_and_log("Fetching usage report for user group ...") 
         parameters = {
             "_preload_content": False,
             "GroupId": groupId,
@@ -89,6 +96,9 @@ def get_group_report(groupId:int = typer.Option(..., help='Id (User group)'),
             "EndTime": endDate if endDate is not None else datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
             "SessionCode": utils.load_stored_session()
         }
+       
+        if subProjects:
+            parameters["SubProjects"] = subProjects
 
         response = heappeCore.JobReportingApi(configuration.get_api_instance()).heappe_job_reporting_user_group_resource_usage_report_get(**parameters)
         print(f"\nUser group usage report:\n{json.dumps(json.loads(response.data), indent = 3)}")
@@ -109,15 +119,18 @@ def get_group_report(groupId:int = typer.Option(..., help='Id (User group)'),
     except Exception as exception:
         raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
-@app.command(name="GroupUsageDetailed")
-def get_detailed_jobs_report():
-    """Deailed resource usage report for user groups"""
+@app.command(name="GroupsUsageDetailed")
+def get_detailed_jobs_report(subProjects: Annotated[Optional[List[str]], typer.Option(help='Sub projects')]= None):
+    """Detailed resource usage report for user groups"""
     try:
-        utils.print_and_log("Fetching detailed usage report for user groups …") 
+        utils.print_and_log("Fetching detailed usage report for user groups ...") 
         parameters = {
             "_preload_content": False,
             "SessionCode": utils.load_stored_session()
         }
+        
+        if subProjects:
+            parameters["SubProjects"] = subProjects
 
         response = heappeCore.JobReportingApi(configuration.get_api_instance()).heappe_job_reporting_jobs_detailed_report_get(**parameters)
         print(f"\nDetailed user groups usage report:\n{json.dumps(json.loads(response.data), indent = 3)}")
@@ -142,7 +155,7 @@ def get_detailed_jobs_report():
 def get_detailed_job_report(id:int = typer.Option(..., help='Id (Job)')):
     """Resource usage report for job"""
     try:
-        utils.print_and_log("Fetching job usage report …") 
+        utils.print_and_log("Fetching job usage report ...") 
         parameters = {
             "_preload_content": False,
             "JobId": id,

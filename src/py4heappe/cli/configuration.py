@@ -34,7 +34,7 @@ def get_project_from_configuration():
 @app.command(name="Init")
 def environment_preparation():
     """Initialization"""
-    utils.print_and_log("Preparation of Py4HEAppE Environment …")
+    utils.print_and_log("Preparation of Py4HEAppE Environment ...")
     dotenv.load_dotenv()
 
     url: str = os.environ.get("url")

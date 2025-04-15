@@ -42,33 +42,32 @@ lver_body = {
 }
 
 manEndpoint = hp.ManagementApi(api_instance)
-r= manEndpoint.heappe_management_version_information_get(**lver_body)
+r = manEndpoint.heappe_management_version_information_get(**lver_body)
 r_data = json.loads(r.data)
-print(json.dumps(r_data, indent = 3))
+print(json.dumps(r_data, indent=3))
 
 
 print("\nFetching cluster info...")
 lac_body = {
-    "_preload_content": False
+    "_preload_content": False,
+    "SessionCode": session_code
 }
 
 ciEndpoint = hp.ClusterInformationApi(api_instance)
 r = ciEndpoint.heappe_cluster_information_list_available_clusters_get(**lac_body)
 r_data = json.loads(r.data)
-print(json.dumps(r_data, indent = 3))
-
+print(json.dumps(r_data, indent=3))
 
 print("\nFetching available computational projects...")
 lproj_body = {
     "_preload_content": False,
-    "SessionCode": session_code
+    "SessionCode": session_code,
 }
 
 r = ulmEndpoint.heappe_user_and_limitation_management_projects_for_current_user_get(**lproj_body)
 r_data = json.loads(r.data)
 project = next(f["Project"] for f in r_data if f["Project"]["AccountingString"] == projectIdentificator)
-print(json.dumps(project, indent = 3))
-
+print(json.dumps(project, indent=3))
 
 print("\nCreating job template...")
 job_spec_body = {
@@ -81,11 +80,10 @@ job_spec_body = {
             #"NotifyOnAbort": true,
             #"NotifyOnFinish": true,
             #"NotifyOnStart": true,
+            #"SubProjectIdentifier": "string"
             "ClusterId": 2,
             "FileTransferMethodId": 2,
             "ProjectId": project["Id"],
-            #"WaitingLimit": 0,
-            #"IsExtraLong": true,
             "EnvironmentVariables": [],
             "Tasks": [
                 {
@@ -93,7 +91,7 @@ job_spec_body = {
                     "MinCores": 1,
                     "MaxCores": 128,
                     "Priority": 4,
-                    "WalltimeLimit": 600,                  
+                    "WalltimeLimit": 600,
                     #"PlacementPolicy": "string"
                     #"RequiredNodes": [
                     #   "string"
@@ -149,11 +147,10 @@ print(f"Job ID: {job_id} ...")
 print(f"\nSubmitting job {job_id}...")
 submit_body = {
     "_preload_content": False,
-    "body":
-        {
-            "CreatedJobInfoId": job_id,
-            "SessionCode": session_code
-        }
+    "body": {
+        "CreatedJobInfoId": job_id,
+        "SessionCode": session_code
+    }
 }
 
 r = jmEndpoint.heappe_job_management_submit_job_put(**submit_body)
@@ -182,7 +179,6 @@ while True:
         break
     print(f"Waiting for job {job_id} to finish... current state: {state}")
     time.sleep(30)
-
 
 
 print("\nFetching generated files...")
@@ -221,7 +217,7 @@ match jobtransfer["Credentials"]["CipherType"]:
     case 3:
         pkey = paramiko.ECDSAKey.from_private_key(pkey_file)
     case 4:
-        pkey = paramiko.ECDSAKey.from_private_key(pkey_file)       
+        pkey = paramiko.ECDSAKey.from_private_key(pkey_file)
     case default:
         pkey = paramiko.RSAKey.from_private_key(pkey_file)
 
@@ -232,7 +228,7 @@ with SCPClient(ssh.get_transport()) as scp:
     for fn in producedFiles:
         specpath = fn[1:]
         Path(os.path.dirname(f"data_transfer/output/{job_id}/{specpath}")).mkdir(parents=True, exist_ok=True)
-        scp.get(os.path.join(base_path, specpath).replace("\\","/"), f"data_transfer/output/{job_id}/{specpath}")
+        scp.get(os.path.join(base_path, specpath).replace("\\", "/"), f"data_transfer/output/{job_id}/{specpath}")
 ssh.close()
 
 ft_body = {
