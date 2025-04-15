@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "Py4HEAppE"
 authors = [{name = "IT4Innovations", email = "support.heappe@it4i.cz"}]
 description = "Py4HEAppE is client library for easy access to HEAppE Middleware"
-version = "1.0.0"
+version = "2.0.0"
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.11"

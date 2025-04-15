@@ -16,7 +16,7 @@ app = typer.Typer(name="HEAppECommandTemplateCLI", no_args_is_help=True, pretty_
 def get_command_templates_for_project():
     """List all command templates"""
     try:      
-        utils.print_and_log("Fetching command templates of a configured HEAppE project …") 
+        utils.print_and_log("Fetching command templates of a configured HEAppE project ...") 
         projectId : int = infoCLI.get_hpc_project()["Id"]
         parameters = {
             "_preload_content": False,
@@ -54,7 +54,7 @@ def create_command_template(Name:str = typer.Option(..., help='Name'),
                            clusterNodeTypeId:int = typer.Option(..., help='Cluster node type identifier')):
     """Create new command template"""
     try:
-        utils.print_and_log("Creating new command template …")
+        utils.print_and_log("Creating new command template ...")
         body = {
             "_preload_content": False,
             "body": {
@@ -97,10 +97,11 @@ def modify_command_template(id:int = typer.Option(..., help='Id (Command templat
                             extAllocCommand:str = typer.Option(None, help='Extended allocation command'),
                             execScript:str = typer.Option(..., help='Path to executable file/script'),
                             prepScript:str = typer.Option(None, help='Path to preparation script or specific prerequisites/module loads'),
-                            clusterNodeTypeId:int = typer.Option(None, help='Cluster node type identifier')):
+                            clusterNodeTypeId:int = typer.Option(None, help='Cluster node type identifier'),
+                            isEnabled:bool = typer.Option(None, help='Is enabled')):
     """Modify existing command template"""
     try:
-        utils.print_and_log("Modifying the command template …")
+        utils.print_and_log("Modifying the command template ...")
         body = {
             "_preload_content": False,
             "body": {
@@ -111,7 +112,7 @@ def modify_command_template(id:int = typer.Option(..., help='Id (Command templat
                 "PreparationScript": prepScript,
                 "ExecutableFile": execScript,
                 "ClusterNodeTypeId": clusterNodeTypeId,
-                "TemplateParameters": [],
+                "IsEnabled": isEnabled,
                 "SessionCode": utils.load_stored_session()
             }
         }
@@ -139,7 +140,7 @@ def modify_command_template(id:int = typer.Option(..., help='Id (Command templat
 def remove_command_template(id:int = typer.Option(..., help='Id (Command template)')):
     """Remove existing command template"""
     try:
-        utils.print_and_log("Removing the command template …")
+        utils.print_and_log("Removing the command template ...")
         body = {
             "_preload_content": False,
             "body": {
@@ -176,7 +177,7 @@ def create_command_template_from_generic(id:str = typer.Option(..., help='Id (Ge
                                          prepScript:str = typer.Option(None, help='Path to preparation script or specific prerequisites/module loads')):
     """Create new static command template from a generic one"""
     try:
-        utils.print_and_log("Creating new static command template from a generic one …")
+        utils.print_and_log("Creating new static command template from a generic one ...")
         body = {
             "_preload_content": False,
             "body": {
@@ -222,7 +223,7 @@ def modify_command_template_from_generic(id:int = typer.Option(..., help='Id (Co
                                          prepScript:str = typer.Option(None, help='Path to preparation script or specific prerequisites/module loads')):
     """Modify existing command template created from a generic one"""
     try:
-        utils.print_and_log("Modifying the command template …")
+        utils.print_and_log("Modifying the command template ...")
         body = {
             "_preload_content": False,
             "body": {
@@ -256,6 +257,39 @@ def modify_command_template_from_generic(id:int = typer.Option(..., help='Id (Co
     except Exception as exception:
         raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
+
+@app.command(name="ListParameter")
+def get_command_template_parameter(id:int = typer.Option(..., help='Id (Command template parameter)')):
+    """command template parameter"""
+    try:      
+        utils.print_and_log("Fetching command template parameter ...") 
+        parameters = {
+            "_preload_content": False,
+            "Id": id,
+            "SessionCode": utils.load_stored_session()
+        }
+
+        response = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_parameter_get(**parameters)
+        commandTemplateParameter =  json.loads(response.data)
+        print(f"\nCommand template parameter:")
+        print(json.dumps(commandTemplateParameter, indent = 3))
+        
+    except rest.ApiException as exception:
+        try:
+            response_data = json.loads(exception.body)
+            raise exceptions.Py4HEAppEAPIException(response_data['title'], response_data['detail'], response_data['status']) from None
+        except json.JSONDecodeError:
+            raise exceptions.Py4HEAppEException("Link to a HEAppE instance is not set or valid. Please check Conf Init option.") from None
+
+    except exceptions.Py4HEAppEAPIInternalException as exception:
+         raise exceptions.Py4HEAppEException(exception.message) from None
+
+    except exceptions.Py4HEAppEInternalException as exception:
+         raise exceptions.Py4HEAppEException(exception.message) from None 
+    
+    except Exception as exception:
+        raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
+
 @app.command("CreateParameter")
 def create_command_template_parameter(uniqueName:str = typer.Option(..., help='Identifier (Name)'),
                                      query:str = typer.Option(None, help='Query'),
@@ -263,7 +297,7 @@ def create_command_template_parameter(uniqueName:str = typer.Option(..., help='I
                                      cmdTemplateId:int = typer.Option(..., help='Id (Command template)')):
     "Create new command template parameter"
     try:
-        utils.print_and_log("Creating command template parameter …")
+        utils.print_and_log("Creating command template parameter ...")
         body = {
             "_preload_content": False,
             "body": {
@@ -302,7 +336,7 @@ def modify_command_template_parameter(id:int = typer.Option(..., help='Id (Comma
                                       desc:str = typer.Option(..., help='Description')):
     "Modify existing command template parameter"
     try:
-        utils.print_and_log("Modifying the selected command template parameter …")
+        utils.print_and_log("Modifying the selected command template parameter ...")
         body = {
             "_preload_content": False,
             "body": {
@@ -337,7 +371,7 @@ def modify_command_template_parameter(id:int = typer.Option(..., help='Id (Comma
 def remove_command_template_parameter(id:int = typer.Option(..., help='Id (Command template parameter)')):
     "Remove existing command template parameter"
     try:
-        utils.print_and_log("Removing the command template parameter …")
+        utils.print_and_log("Removing the command template parameter ...")
         body = {
             "_preload_content": False,
             "body": {
