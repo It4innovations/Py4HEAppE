@@ -3,6 +3,8 @@
 release_msg_job:
   stage: release
   image: alpine:latest
+  needs:
+    - job: push_to_github_job
   script:
     - TAG_NAME=$(awk '/^## /{sub(/^## /, ""); print; exit}' CHANGELOG.md)
     - TAG_MESSAGE=$(awk '/^### /{flag=1} /^## /{if(flag) exit} flag' CHANGELOG.md)
@@ -89,8 +91,6 @@ push_to_github_job:
           echo "Response body:"
           cat response.txt  # Print the response body
         fi
-     - |
-        curl --L -X POST -H "Authorization: token $GITHUB_TOKEN" -d "$BODY" https://api.github.com/repos/It4innovations/Py4HEAppE/releases
   before_script:
     - apk update && apk upgrade
     - apk add --no-cache git curl jq
