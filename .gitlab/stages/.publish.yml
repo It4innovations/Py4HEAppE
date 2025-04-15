@@ -18,8 +18,12 @@ publish_package:
     - pip install build
     - pip install twine
     - python -m build
-    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --skip-existing --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
-    - TWINE PASSWORD=${PYPI_TOKEN} TWINE_USERNAME=__token__ python -m twine upload --repository testpypi dist/*
+    - TWINE_USERNAME=__token__ TWINE_PASSWORD=${PYPI_TEST_TOKEN}  python -m twine upload --repository testpypi dist/*
+    - TWINE_USERNAME=gitlab-ci-token TWINE_PASSWORD=${CI_JOB_TOKEN} python -m twine upload --skip-existing --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+  tags:
+    - Docker
+    - Centos9
+    - IT4I_Network
   artifacts:
     paths:
       - dist/*.whl

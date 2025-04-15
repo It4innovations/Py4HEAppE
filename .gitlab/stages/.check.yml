@@ -11,5 +11,9 @@ check_changelog:
         echo "CHANGELOG.md was not modified."
         exit 1
       fi
+  tags:
+    - Docker
+    - Centos9
+    - IT4I_Network
   only:
-    - test
+    - master
