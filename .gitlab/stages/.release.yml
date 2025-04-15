@@ -4,7 +4,7 @@ release_msg_job:
   stage: release
   image: alpine:latest
   needs:
-    - job: push_to_github_job
+    - job: check_changelog
   script:
     - TAG_NAME=$(awk '/^## /{sub(/^## /, ""); print; exit}' CHANGELOG.md)
     - TAG_MESSAGE=$(awk '/^### /{flag=1} /^## /{if(flag) exit} flag' CHANGELOG.md)
