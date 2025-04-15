@@ -7,13 +7,15 @@ import py4heappe.core as heappeCore
 
 from py4heappe.core.base import exceptions
 from py4heappe.core  import rest 
+from typing import List, Optional
+from typing_extensions import Annotated
 
 
 app = typer.Typer(name="HEAppEInfoCLI", no_args_is_help=True, pretty_exceptions_short=True)
 
 def get_hpc_project():
     try:
-        utils.print_and_log("Fetching computational project …")
+        utils.print_and_log("Fetching computational project ...")
         parameters = {
             "_preload_content": False,
             "SessionCode": utils.load_stored_session()
@@ -44,7 +46,7 @@ def get_hpc_project():
 def get_api_version():
     """Version information"""
     try:
-        utils.print_and_log("Fetching HEAppE API version information …")
+        utils.print_and_log("Fetching HEAppE API version information ...")
         parameters = {
             "_preload_content": False,
             "SessionCode": utils.load_stored_session()
@@ -68,13 +70,30 @@ def get_api_version():
         raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command(name="ClusterInfo")
-def get_cluster_information():
+def get_cluster_information(clusterName:str = typer.Option(None, help='Cluster name'),
+                            nodeTypeName:str = typer.Option(None, help='Cluster node type name'),
+                            projectName:str = typer.Option(None, help='Project name'),
+                            accountingString: Annotated[Optional[List[str]], typer.Option( help='Accounting project strings')]= None,
+                            commandTemplateName:str = typer.Option(None, help='Command template name')):
     """Cluster information"""
     try:
-        utils.print_and_log("Fetching cluster information …")
+        print(accountingString)
+        utils.print_and_log("Fetching cluster information ...")
         parameters = {
-            "_preload_content": False
-        }    
+            "_preload_content": False,
+            "SessionCode": utils.load_stored_session()
+        }
+
+        if clusterName:
+            parameters["ClusterName"] = clusterName
+        if nodeTypeName:
+            parameters["NodeTypeName"] = nodeTypeName
+        if projectName:
+            parameters["ProjectName"] = projectName
+        if commandTemplateName:
+            parameters["CommandTemplateName"] = commandTemplateName
+        if accountingString:
+            parameters["AccountingString"] = accountingString
 
         response= heappeCore.ClusterInformationApi(configuration.get_api_instance()).heappe_cluster_information_list_available_clusters_get(**parameters)
         print(f"\nCluster information:\n{json.dumps(json.loads(response.data), indent = 3)}")
@@ -97,7 +116,7 @@ def get_parameters_from_generic_cmd_template_script(id:int = typer.Option(..., h
                                                     userScriptPath:str = typer.Option(None, help='Path to executable file/script')):
     """List command template parameters from generic command template"""
     try:
-        utils.print_and_log("Fetching command template parameters from generic command template …")
+        utils.print_and_log("Fetching command template parameters from generic command template ...")
         body = {
             "_preload_content": False,
             "body": {
@@ -131,7 +150,7 @@ def get_parameters_from_generic_cmd_template_script(id:int = typer.Option(..., h
 def get_cluster_node_usage(clusterNodeId :int = typer.Option(default=...,  help='Id (Cluster node type)')):
     """Cluster node usage information"""
     try:
-        utils.print_and_log("Fetching cluster information …")
+        utils.print_and_log("Fetching cluster information ...")
         parameters = {
             "_preload_content": False,
             "ClusterNodeId": clusterNodeId,
