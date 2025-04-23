@@ -1,11 +1,11 @@
 import typer
 
-import py4heappe.cli.auth as auth
-import py4heappe.cli.command_template as command_template
-import py4heappe.cli.configuration as configuration
-import py4heappe.cli.information as information
-import py4heappe.cli.job_management as job_management
-import py4heappe.cli.report as report
+import py4heappe.heappe_v5.cli.auth as auth
+import py4heappe.heappe_v5.cli.command_template as command_template
+import py4heappe.heappe_v5.cli.configuration as configuration
+import py4heappe.heappe_v5.cli.information as information
+import py4heappe.heappe_v5.cli.job_management as job_management
+import py4heappe.heappe_v5.cli.report as report
 
 app = typer.Typer(no_args_is_help=True, pretty_exceptions_short=True, pretty_exceptions_show_locals=False)
 app.add_typer(configuration.app, name="Conf", help="Configuration options")
