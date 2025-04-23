@@ -8,7 +8,7 @@ import paramiko
 from paramiko import SSHClient
 from scp import SCPClient
 
-import py4heappe.core as hp
+import py4heappe.heappe_v5.core as hp
 
 configuration = hp.Configuration()
 configuration.host = ""
