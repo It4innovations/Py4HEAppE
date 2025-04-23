@@ -10,13 +10,11 @@ version = "2.1.0"
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.11"
-keywords = ["LEXIS", "HEAppE"]
+keywords = ["LEXIS", "HEAppE", "Client Library"]
+custom-metadata = {HEAppE supported-versions = ["5.0.X", "4.3.X", "4.2.X"]}
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Operating System :: OS Independent",
-    "HEAppE Support :: HEAppE V5.0.X",
-    "HEAppE Support :: HEAppE V4.3.X",
-    "HEAppE Support :: HEAppE V4.2.X"
+    "Operating System :: OS Independent"
 ]
 dynamic = ["dependencies"]
 
