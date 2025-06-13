@@ -20,6 +20,13 @@ By using Py4HEAppE, users can quickly integrate HEAppE functionalities into thei
 ### Consistency:
 The library ensures consistent and reliable communication with the HEAppE API, handling errors and edge cases gracefully.
 
+## Supported HEAppE versions
+| Py4HEAppE      | HEAppE Version       |  Notes                             |
+|:--------------:|:--------------------:|:-----------------------------------|
+| 2.1.X          | 5.0.X, 4.3.X, 4.2.X  | W/O Admin/Job/File sections in CLI |
+| 2.0.X          | 5.0.X                | W/O Admin/Job/File sections in CLI |
+| 1.X.X          | 4.3.X, 4.2.X         | W/O Admin/Job/File sections in CLI |
+
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -36,6 +43,7 @@ pip install Py4HEAppE
  ```
 
 <b>Note:</b> In some cases, you can obtain a warning message like this <b>"WARNING: The script py4heappe.exe is installed in 'C:\Users\user\AppData\Roaming\Python\Python311\Scripts' which is not on PATH.</b>" If you obtained a similar warning message, it is necessary to add the mentioned path into your operation system <b>PATH</b> variable or use a path with an executable file (i.e. C:\Users\user\AppData\Roaming\Python\Python311\Scripts\py4heappe.exe).
+
 
 ## HEAppE CLI
 
