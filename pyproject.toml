@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "Py4HEAppE"
 authors = [{name = "IT4Innovations", email = "support.heappe@it4i.cz"}]
 description = "Py4HEAppE is client library for easy access to HEAppE Middleware"
-version = "2.1.0"
+version = "2.1.1"
 license = "MIT"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -22,11 +22,6 @@ py4heappe = "py4heappe_cli:main"
 
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
-
-[tool.Py4HEAppE]
-supported_versions = ["5.0.X", "4.3.X", "4.2.X"]
-description = "HEAppE supported versions"
-
 
 [project.urls]
 Homepage = "https://github.com/It4innovations/Py4HEAppE"
