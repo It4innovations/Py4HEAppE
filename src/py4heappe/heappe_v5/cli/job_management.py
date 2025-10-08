@@ -251,18 +251,19 @@ def copy_data_to_temp(id:int = typer.Option(..., help='Id (HPC job)'),
     """Copy data to temp location"""
     try:
         utils.print_and_log("Copying HPC job data to temporary location ...") 
+        session_code = utils.load_stored_session()
         body = {
             "_preload_content": False,
             "body": {
                 "SubmittedJobInfoId": id,
                 "Path": path,
-                "SessionCode": utils.load_stored_session()
+                "SessionCode": session_code
             }
         }
 
-        response = heappeCore.JobManagementApi(configuration.get_api_instance()).heappe_job_management_copy_job_data_to_temp_post(**body)
-        #Need to be checked with Jakub Konvička
-        utils.print_and_log(f"\nSpecific data was successfully copied to temporary location. Hash for usage the data is: {response.data}")
+        heappeCore.JobManagementApi(configuration.get_api_instance()).heappe_job_management_copy_job_data_to_temp_post(**body)
+        utils.print_and_log(f"\nSpecific data was successfully copied to temporary location.")
+        print(f"Temp SessionCode for copying the data is: {session_code}.")
        
     except rest.ApiException as exception:
         try:
