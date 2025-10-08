@@ -6,7 +6,7 @@ import validators
 import py4heappe.heappe_v5.core as hp
 import py4heappe.heappe_v5.core.base.utils as utils
 from py4heappe.heappe_v5.core.base import exceptions
-
+from urllib.parse import urlparse
 
 app = typer.Typer(name="HEAppEConfigurationCLI", no_args_is_help=True, pretty_exceptions_show_locals=False)
 
@@ -46,15 +46,24 @@ def environment_preparation():
             return
 
     url = typer.prompt("Enter the HEAppE instance address (for example: https://heappe.domain.cz/production)")
-    if not validators.url(url):
+
+    normalized = url
+    parsed = urlparse(normalized)
+    if not parsed.scheme:
+        normalized = "http://" + normalized
+        parsed = urlparse(normalized)
+
+    host = parsed.hostname
+
+    if not validators.url(normalized) and host not in ("localhost", "127.0.0.1"):
         raise exceptions.Py4HEAppEInternalException("The provided HEAppE URL is not valid.") from None
-    
-    if "/swagger/index.html" in url:
-        url = url.replace("/swagger/index.html", "")
+
+    if "/swagger/index.html" in normalized:
+        normalized = normalized.replace("/swagger/index.html", "")
 
     computationalProject = typer.prompt("Enter HEAppE accounting string", confirmation_prompt=True)
 
-    dotenv.set_key(os.path.join(os.path.dirname(__file__), '.env'), "url", url)
+    dotenv.set_key(os.path.join(os.path.dirname(__file__), '.env'), "url", normalized)
     dotenv.set_key(os.path.join(os.path.dirname(__file__), '.env'), "project", computationalProject)
 
     utils.print_and_log("Py4HEAppE is configured.")

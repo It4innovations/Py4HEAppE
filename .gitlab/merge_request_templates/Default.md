@@ -22,5 +22,3 @@ Include any extra information or considerations for reviewers, such as impacted 
 
 
 /draft 
-/assign @ladislav.foltyn
-/assign_reviewer @lukas.drabek 
