@@ -13,8 +13,13 @@
       "name": "GNU General Public License v3.0",
       "url": "https://www.gnu.org/licenses/gpl-3.0.html"
     },
-    "version": "v5.0.0"
+    "version": "v6.0.0"
   },
+  "host": "heappe.it4i.cz",
+  "basePath": "/develop-latest",
+  "schemes": [
+    "https"
+  ],
   "paths": {
     "/heappe/ClusterInformation/ListAvailableClusters": {
       "get": {
@@ -66,6 +71,12 @@
             "name": "CommandTemplateName",
             "description": "",
             "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "ForceRefresh",
+            "description": "",
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -82,6 +93,60 @@
             "description": "Bad Request",
             "schema": {
               "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/heappe/ClusterInformation/ListAvailableClustersClearCache": {
+      "post": {
+        "tags": [
+          "ClusterInformation"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "SessionCode",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
             }
           },
           "413": {
@@ -822,6 +887,24 @@
             "description": "Internal Server Error",
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/HealthExt"
             }
           }
         }
@@ -1855,7 +1938,7 @@
           {
             "in": "query",
             "name": "SubProjects",
-            "description": "SubProjects",
+            "description": "",
             "type": "array",
             "items": {
               "type": "string"
@@ -1864,8 +1947,22 @@
           },
           {
             "in": "query",
+            "name": "TimeFrom",
+            "description": "",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "in": "query",
+            "name": "TimeTo",
+            "description": "",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "in": "query",
             "name": "SessionCode",
-            "description": "Session code",
+            "description": "",
             "type": "string"
           }
         ],
@@ -2476,7 +2573,7 @@
         "tags": [
           "Management"
         ],
-        "summary": "Get CommandTemplateParameter by id",
+        "summary": "Get Command Template Parameter by id",
         "produces": [
           "application/json"
         ],
@@ -2532,7 +2629,7 @@
         "tags": [
           "Management"
         ],
-        "summary": "Create Static Command Template",
+        "summary": "Create a new Command Template Parameter",
         "consumes": [
           "application/json",
           "text/json",
@@ -2594,7 +2691,7 @@
         "tags": [
           "Management"
         ],
-        "summary": "Modify Static Command Template",
+        "summary": "Modify an existing Command Template Parameter",
         "consumes": [
           "application/json",
           "text/json",
@@ -2656,7 +2753,7 @@
         "tags": [
           "Management"
         ],
-        "summary": "Remove Static Command Template",
+        "summary": "Remove an existing Command Template Parameter",
         "consumes": [
           "application/json",
           "text/json",
@@ -2760,6 +2857,66 @@
           },
           "404": {
             "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/Projects": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "List Projects",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "SessionCode",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ProjectExt"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
             }
@@ -3274,6 +3431,64 @@
         }
       }
     },
+    "/heappe/Management/ProjectAssignmentToClusters": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "ProjectId",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "SessionCode",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ClusterProjectExt"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
     "/heappe/Management/Cluster": {
       "get": {
         "tags": [
@@ -3553,6 +3768,66 @@
           },
           "404": {
             "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/ClusterNodeTypes": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "List ClusterNodeTypes",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "SessionCode",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ClusterNodeTypeExt"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
             }
@@ -4025,6 +4300,120 @@
             "description": "OK",
             "schema": {
               "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/ClusterProxyConnections": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Get ClusterProxyConnections",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "SessionCode",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ClusterProxyConnectionExt"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/FileTransferMethods": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "List FileTransferMethods",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "SessionCode",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FileTransferMethodNoCredentialsExt"
+              }
             }
           },
           "400": {
@@ -4602,6 +4991,66 @@
         }
       }
     },
+    "/heappe/Management/ClusterNodeTypeAggregationAccountings": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "List ClusterNodeTypeAggregationAccountings",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "SessionCode",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ClusterNodeTypeAggregationAccountingExt"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
     "/heappe/Management/ClusterNodeTypeAggregationAccounting": {
       "get": {
         "tags": [
@@ -4756,6 +5205,66 @@
             "description": "OK",
             "schema": {
               "type": "string"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/Accountings": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "List Accountings",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "SessionCode",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AccountingExt"
+              }
             }
           },
           "400": {
@@ -5871,12 +6380,14 @@
           {
             "in": "query",
             "name": "ProjectId",
+            "description": "",
             "type": "integer",
             "format": "int64"
           },
           {
             "in": "query",
             "name": "SessionCode",
+            "description": "",
             "type": "string"
           }
         ],
@@ -5983,6 +6494,67 @@
           },
           "500": {
             "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/ModifyClusterAuthenticationCredential": {
+      "put": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Modify Cluster Authentication Credential",
+        "consumes": [
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/ModifyClusterAuthenticationCredentialModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PublicKeyExt"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
             "schema": {
               "$ref": "#/definitions/ProblemDetails"
             }
@@ -6282,7 +6854,83 @@
           "200": {
             "description": "OK",
             "schema": {
-              "type": "string"
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ClusterAccessReportExt"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/BadRequestResult"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/ProblemDetails"
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/ClusterAccountStatus": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "Username",
+            "description": "",
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "ProjectId",
+            "description": "",
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "SessionCode",
+            "description": "",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ClusterAccountStatusExt"
+              }
             }
           },
           "400": {
@@ -7204,6 +7852,36 @@
       },
       "additionalProperties": false
     },
+    "ClusterAccessReportExt": {
+      "type": "object",
+      "properties": {
+        "ClusterName": {
+          "description": "Cluster name",
+          "type": "string"
+        },
+        "IsClusterAccessible": {
+          "description": "Is cluster accessible",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ClusterAccountStatusExt": {
+      "type": "object",
+      "properties": {
+        "Cluster": {
+          "$ref": "#/definitions/ClusterExt"
+        },
+        "Project": {
+          "$ref": "#/definitions/ProjectExt"
+        },
+        "IsInitialized": {
+          "description": "Is initialized",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
     "ClusterAggregatedReportExt": {
       "type": "object",
       "properties": {
@@ -7311,6 +7989,14 @@
         "Description": {
           "description": "Description",
           "type": "string"
+        },
+        "FileTransferMethodIds": {
+          "description": "File transfer ids",
+          "type": "array",
+          "items": {
+            "format": "int64",
+            "type": "integer"
+          }
         },
         "NodeTypes": {
           "description": "Array of node types",
@@ -7529,6 +8215,11 @@
           "description": "Description",
           "type": "string"
         },
+        "ClusterId": {
+          "format": "int64",
+          "description": "Cluster id",
+          "type": "integer"
+        },
         "NumberOfNodes": {
           "format": "int32",
           "description": "Number of nodes",
@@ -7734,8 +8425,14 @@
           "description": "Project id",
           "type": "integer"
         },
-        "LocalBasepath": {
-          "description": "Local base path",
+        "ScratchStoragePath": {
+          "description": "Scratch Storage Path",
+          "maxLength": 100,
+          "minLength": 0,
+          "type": "string"
+        },
+        "PermanentStoragePath": {
+          "description": "Permanent Storage Path",
           "maxLength": 100,
           "minLength": 0,
           "type": "string"
@@ -7879,7 +8576,7 @@
         },
         "ParameterValue": {
           "description": "Parameter value",
-          "maxLength": 1000,
+          "maxLength": 100000,
           "minLength": 0,
           "type": "string"
         }
@@ -7945,9 +8642,9 @@
           "minLength": 0,
           "type": "string"
         },
-        "SubmittedJobInfoId": {
+        "CreatedJobInfoId": {
           "format": "int64",
-          "description": "Subbmited job info id",
+          "description": "Created job info id",
           "type": "integer"
         },
         "Path": {
@@ -8454,8 +9151,14 @@
           "description": "Cluster id",
           "type": "integer"
         },
-        "LocalBasepath": {
-          "description": "Local base path",
+        "ScratchStoragePath": {
+          "description": "Scratch Storage Path",
+          "maxLength": 100,
+          "minLength": 0,
+          "type": "string"
+        },
+        "PermanentStoragePath": {
+          "description": "Permanent Storage Path",
           "maxLength": 100,
           "minLength": 0,
           "type": "string"
@@ -8539,6 +9242,10 @@
           "maxLength": 255,
           "minLength": 0,
           "type": "string"
+        },
+        "IsOneToOneMapping": {
+          "description": "Map user account to exact robot account",
+          "type": "boolean"
         }
       },
       "additionalProperties": false
@@ -8655,6 +9362,16 @@
           "format": "int32",
           "description": "Node port",
           "type": "integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Database_": {
+      "type": "object",
+      "properties": {
+        "IsHealthy": {
+          "description": "Database is healthy",
+          "type": "boolean"
         }
       },
       "additionalProperties": false
@@ -8859,6 +9576,14 @@
         "ProxyConnection": {
           "$ref": "#/definitions/ClusterProxyConnectionExt"
         },
+        "FileTransferMethodIds": {
+          "description": "File transfer ids",
+          "type": "array",
+          "items": {
+            "format": "int64",
+            "type": "integer"
+          }
+        },
         "NodeTypes": {
           "description": "Array of node types",
           "type": "array",
@@ -9026,12 +9751,12 @@
     "FileTransferCipherTypeExt": {
       "format": "int32",
       "enum": [
-        0,
         1,
         2,
         3,
         4,
-        5
+        5,
+        6
       ],
       "type": "integer"
     },
@@ -9126,6 +9851,11 @@
           "minLength": 0,
           "type": "string"
         },
+        "ClusterId": {
+          "format": "int64",
+          "description": "Cluster id",
+          "type": "integer"
+        },
         "Protocol": {
           "$ref": "#/definitions/FileTransferProtocolExt"
         },
@@ -9192,9 +9922,9 @@
           "minLength": 0,
           "type": "string"
         },
-        "SubmittedJobInfoId": {
+        "SubmittedTaskInfoId": {
           "format": "int64",
-          "description": "Subbmited job info id",
+          "description": "Submitted task info id",
           "type": "integer"
         },
         "IpAddress": {
@@ -9246,6 +9976,40 @@
       },
       "additionalProperties": false
     },
+    "HealthComponent_": {
+      "type": "object",
+      "properties": {
+        "Database": {
+          "$ref": "#/definitions/Database_"
+        },
+        "Vault": {
+          "$ref": "#/definitions/Vault_"
+        }
+      },
+      "additionalProperties": false
+    },
+    "HealthExt": {
+      "type": "object",
+      "properties": {
+        "IsHealthy": {
+          "description": "IsHealthy",
+          "type": "boolean"
+        },
+        "Timestamp": {
+          "format": "date-time",
+          "description": "Timestamp",
+          "type": "string"
+        },
+        "Version": {
+          "description": "Version",
+          "type": "string"
+        },
+        "Component": {
+          "$ref": "#/definitions/HealthComponent_"
+        }
+      },
+      "additionalProperties": false
+    },
     "HttpGetToJobNodeModel": {
       "required": [
         "NodePort"
@@ -9258,9 +10022,9 @@
           "minLength": 0,
           "type": "string"
         },
-        "SubmittedJobInfoId": {
+        "SubmittedTaskInfoId": {
           "format": "int64",
-          "description": "Subbmited job info id",
+          "description": "Submitted task info id",
           "type": "integer"
         },
         "HttpRequest": {
@@ -9300,9 +10064,9 @@
           "minLength": 0,
           "type": "string"
         },
-        "SubmittedJobInfoId": {
+        "SubmittedTaskInfoId": {
           "format": "int64",
-          "description": "Subbmited job info id",
+          "description": "Submitted task info id",
           "type": "integer"
         },
         "HttpRequest": {
@@ -9348,8 +10112,12 @@
           "description": "Project id",
           "type": "integer"
         },
-        "ClusterProjectRootDirectory": {
-          "description": "Cluster project root directory",
+        "OverwriteExistingProjectRootDirectory": {
+          "description": "Overwrite existing cluster project root directory",
+          "type": "boolean"
+        },
+        "Username": {
+          "description": "Username",
           "type": "string"
         }
       },
@@ -9701,6 +10469,35 @@
         "ValidityTo": {
           "format": "date-time",
           "description": "Validity to",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ModifyClusterAuthenticationCredentialModel": {
+      "type": "object",
+      "properties": {
+        "SessionCode": {
+          "description": "Session code",
+          "maxLength": 50,
+          "minLength": 0,
+          "type": "string"
+        },
+        "ProjectId": {
+          "format": "int64",
+          "description": "Project ID",
+          "type": "integer"
+        },
+        "OldUsername": {
+          "description": "Old username",
+          "type": "string"
+        },
+        "NewUsername": {
+          "description": "New username",
+          "type": "string"
+        },
+        "NewPassword": {
+          "description": "New password",
           "type": "string"
         }
       },
@@ -10134,8 +10931,14 @@
           "description": "Cluster id",
           "type": "integer"
         },
-        "LocalBasepath": {
-          "description": "Local base path",
+        "ScratchStoragePath": {
+          "description": "Scratch Storage Path",
+          "maxLength": 100,
+          "minLength": 0,
+          "type": "string"
+        },
+        "PermanentStoragePath": {
+          "description": "Permanent Storage Path",
           "maxLength": 100,
           "minLength": 0,
           "type": "string"
@@ -10211,6 +11014,10 @@
         },
         "UseAccountingStringForScheduler": {
           "description": "Use accounting string for scheduler",
+          "type": "boolean"
+        },
+        "IsOneToOneMapping": {
+          "description": "Map user account to exact robot account",
           "type": "boolean"
         }
       },
@@ -10495,6 +11302,10 @@
         },
         "UseAccountingStringForScheduler": {
           "description": "Use accounting string for scheduler",
+          "type": "boolean"
+        },
+        "IsOneToOneMapping": {
+          "description": "Map user account to exact robot account",
           "type": "boolean"
         },
         "CommandTemplates": {
@@ -11282,6 +12093,10 @@
         "CpuHyperThreading": {
           "description": "Cpu hyper threading",
           "type": "boolean"
+        },
+        "Reason": {
+          "description": "Reason (parsed from scheduler, e.g. SLURM)",
+          "type": "string"
         }
       },
       "additionalProperties": false
@@ -11556,8 +12371,8 @@
             "type": "string"
           }
         },
-        "TaskParalizationParameters": {
-          "description": "Array of task paralization parameters",
+        "TaskParallelizationParameters": {
+          "description": "Array of task paralelization parameters",
           "type": "array",
           "items": {
             "$ref": "#/definitions/TaskParalizationParameterExt"
@@ -11664,6 +12479,41 @@
         },
         "Project": {
           "$ref": "#/definitions/ProjectListReportExt"
+        }
+      },
+      "additionalProperties": false
+    },
+    "VaultInfo_": {
+      "type": "object",
+      "properties": {
+        "Initialized": {
+          "description": "Vault is initialized",
+          "type": "boolean"
+        },
+        "Sealed": {
+          "description": "Vault is sealed",
+          "type": "boolean"
+        },
+        "StandBy": {
+          "description": "Vault is in stand by",
+          "type": "boolean"
+        },
+        "PerformanceStandby": {
+          "description": "Vault is in performance stand by",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Vault_": {
+      "type": "object",
+      "properties": {
+        "IsHealthy": {
+          "description": "Vault is healthy",
+          "type": "boolean"
+        },
+        "Info": {
+          "$ref": "#/definitions/VaultInfo_"
         }
       },
       "additionalProperties": false
