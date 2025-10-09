@@ -77,6 +77,9 @@ py4heappe CmdTemp --help
 # Information commands group
 py4heappe Info --help 
 
+# Job Management commands group
+py4heappe Job --help
+
 # Report commands group
 py4heappe Report --help 
 ```
