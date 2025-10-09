@@ -16,12 +16,12 @@ app = typer.Typer(name="HEAppEJobManagementCLI", no_args_is_help=True, pretty_ex
 
 @app.command(name="Create")
 def create_job(name: str = typer.Option(..., help='Name of the HPC job'),
-               clusterId: int = typer.Option(..., help='Cluster Id'),
+               clusterId: int = typer.Option(..., help='Id (Cluster)'),
                maxCores: int = typer.Option(..., help='Number of cores for the HPC job allocation'),
                wallTimeLimit: int = typer.Option(..., help='Maximum wall time limit for the HPC job [s]'),
-               clusterNodeTypeId: int = typer.Option(..., help='Cluster node type identifier'),
+               clusterNodeTypeId: int = typer.Option(..., help='Id (Cluster node type)'),
                cmdTemplateParameters: Annotated[Optional[List[str]], typer.Option( help='Command template parameters (key:value)')]= None,
-               cmdTemplateId: int = typer.Option(..., help='Command template identifier')):
+               cmdTemplateId: int = typer.Option(..., help='Id (Command template)')):
     """Create HPC job"""
     try:
         utils.print_and_log("Creating new HPC job ...") 

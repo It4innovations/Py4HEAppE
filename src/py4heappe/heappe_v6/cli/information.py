@@ -147,13 +147,13 @@ def get_parameters_from_generic_cmd_template_script(id:int = typer.Option(..., h
         raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
     
 @app.command(name="ClusterNodeUsage")
-def get_cluster_node_usage(clusterNodeId :int = typer.Option(default=...,  help='Id (Cluster node type)')):
+def get_cluster_node_usage(clusterNodeTypeId :int = typer.Option(default=...,  help='Id (Cluster node type)')):
     """Cluster node usage information"""
     try:
         utils.print_and_log("Fetching cluster information ...")
         parameters = {
             "_preload_content": False,
-            "ClusterNodeId": clusterNodeId,
+            "ClusterNodeId": clusterNodeTypeId,
             "ProjectId": get_hpc_project()["Id"],
             "SessionCode": utils.load_stored_session(),
         }    
