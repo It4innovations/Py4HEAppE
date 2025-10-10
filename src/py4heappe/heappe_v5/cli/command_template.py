@@ -97,8 +97,8 @@ def modify_command_template(id:int = typer.Option(..., help='Id (Command templat
                             extAllocCommand:str = typer.Option(None, help='Extended allocation command'),
                             execScript:str = typer.Option(..., help='Path to executable file/script'),
                             prepScript:str = typer.Option(None, help='Path to preparation script or specific prerequisites/module loads'),
-                            clusterNodeTypeId:int = typer.Option(None, help='Cluster node type identifier'),
-                            isEnabled:bool = typer.Option(None, help='Is enabled')):
+                            clusterNodeTypeId:int = typer.Option(..., help='Cluster node type identifier'),
+                            enabled:bool = typer.Option(True, help='Is enabled')):
     """Modify existing command template"""
     try:
         utils.print_and_log("Modifying the command template ...")
@@ -112,7 +112,7 @@ def modify_command_template(id:int = typer.Option(..., help='Id (Command templat
                 "PreparationScript": prepScript,
                 "ExecutableFile": execScript,
                 "ClusterNodeTypeId": clusterNodeTypeId,
-                "IsEnabled": isEnabled,
+                "IsEnabled": enabled,
                 "SessionCode": utils.load_stored_session()
             }
         }

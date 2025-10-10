@@ -23,6 +23,7 @@ The library ensures consistent and reliable communication with the HEAppE API, h
 ## Supported HEAppE versions
 | Py4HEAppE      | HEAppE Version       |  Notes                             |
 |:--------------:|:--------------------:|:-----------------------------------|
+| 2.2.X          | 5.0.X, 4.3.X, 4.2.X  | W/O Admin/File sections in CLI     |
 | 2.1.X          | 5.0.X, 4.3.X, 4.2.X  | W/O Admin/Job/File sections in CLI |
 | 2.0.X          | 5.0.X                | W/O Admin/Job/File sections in CLI |
 | 1.X.X          | 4.3.X, 4.2.X         | W/O Admin/Job/File sections in CLI |
@@ -76,6 +77,9 @@ py4heappe CmdTemp --help
 # Information commands group
 py4heappe Info --help 
 
+# Job Management commands group
+py4heappe Job --help
+
 # Report commands group
 py4heappe Report --help 
 ```
@@ -92,9 +96,9 @@ In this mode, the Py4HEAppE package is used as a wrapper for HEAppE API specific
 It is required to specify following modules in "requirements.txt" file.
  
 ```text
-paramiko==3.5.0
+paramiko==4.0.0
 scp==0.15.0
-urllib3==2.2.3
+urllib3==2.5.0
 ```
 
 The code snapshot illustrated an example of "how to" obtain cluster information from the HEAppE Instance. For more detailed examples of basic HPC workflow, please refer to the [example.py](https://github.com/It4innovations/Py4HEAppE/blob/master/docs/examples/example.py) file.

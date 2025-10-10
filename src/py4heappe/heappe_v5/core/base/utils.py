@@ -9,6 +9,9 @@ def print_and_log(message: str):
     print(message)
     logger.info(message)
 
+def log_info(message: str):
+    logger.info(message)
+
 def get_user_shell_for_platform():
     current_platform=platform.system()
     if current_platform == "Linux" or current_platform == "Darwin":

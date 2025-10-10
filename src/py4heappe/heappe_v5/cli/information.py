@@ -15,7 +15,7 @@ app = typer.Typer(name="HEAppEInfoCLI", no_args_is_help=True, pretty_exceptions_
 
 def get_hpc_project():
     try:
-        utils.print_and_log("Fetching computational project ...")
+        utils.log_info("Fetching computational project ...")
         parameters = {
             "_preload_content": False,
             "SessionCode": utils.load_stored_session()
@@ -77,7 +77,6 @@ def get_cluster_information(clusterName:str = typer.Option(None, help='Cluster n
                             commandTemplateName:str = typer.Option(None, help='Command template name')):
     """Cluster information"""
     try:
-        print(accountingString)
         utils.print_and_log("Fetching cluster information ...")
         parameters = {
             "_preload_content": False,
