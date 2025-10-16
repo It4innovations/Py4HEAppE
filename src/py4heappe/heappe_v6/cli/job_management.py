@@ -316,18 +316,18 @@ def copy_data_from_temp(id:int = typer.Option(..., help='Id (HPC job)'),
         raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
 
 @app.command(name="GetAllocatedNodes")
-def get_allocated_nodes_ip(id:int = typer.Option(..., help='Id (HPC job)')):
-    """Get HPC job allocated nodes addresses (IP)"""
+def get_allocated_nodes_ip(taskId:int = typer.Option(..., help='Id (HPC task)')):
+    """Get HPC Task allocated nodes addresses (IP)"""
     try:
-        utils.print_and_log("Getting HPC job allocated nodes addresses (IP) ...") 
+        utils.print_and_log("Getting HPC task allocated nodes addresses (IP) ...") 
         parameters = {
             "_preload_content": False,
-            "SubmittedTaskInfoId": id,
+            "SubmittedTaskInfoId": taskId,
             "SessionCode": utils.load_stored_session()
         }
 
-        response = heappeCore.JobManagementApi(configuration.get_api_instance()).heappe_job_management_allocated_nodes_i_ps_get(**parameters)
-        utils.print_and_log(f"\nHPC job {id} uses the following nodes: {response.data}")
+        response = heappeCore.JobManagementApi(configuration.get_api_instance()).heappe_job_management_allocated_nodes_ips_get(**parameters)
+        utils.print_and_log(f"\nHPC task {taskId} uses the following nodes: {response.data}")
        
     except rest.ApiException as exception:
         try:
