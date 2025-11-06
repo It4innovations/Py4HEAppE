@@ -592,7 +592,7 @@ class TaskSpecificationExt(object):
     def task_parallelization_parameters(self):
         """Gets the task_parallelization_parameters of this TaskSpecificationExt.  # noqa: E501
 
-        Array of task paralelization parameters  # noqa: E501
+        Array of task parallelization parameters  # noqa: E501
 
         :return: The task_parallelization_parameters of this TaskSpecificationExt.  # noqa: E501
         :rtype: list[TaskParallelizationParameterExt]
@@ -603,7 +603,7 @@ class TaskSpecificationExt(object):
     def task_parallelization_parameters(self, task_parallelization_parameters):
         """Sets the task_parallelization_parameters of this TaskSpecificationExt.
 
-        Array of task paralelization parameters  # noqa: E501
+        Array of task parallelization parameters  # noqa: E501
 
         :param task_parallelization_parameters: The task_parallelization_parameters of this TaskSpecificationExt.  # noqa: E501
         :type: list[TaskParallelizationParameterExt]
