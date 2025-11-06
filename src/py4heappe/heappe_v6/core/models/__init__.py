@@ -176,7 +176,7 @@ from py4heappe.heappe_v6.core.models.synchronizable_files_ext import Synchroniza
 from py4heappe.heappe_v6.core.models.task_detailed_report_ext import TaskDetailedReportExt
 from py4heappe.heappe_v6.core.models.task_extended_report_ext import TaskExtendedReportExt
 from py4heappe.heappe_v6.core.models.task_file_offset_ext import TaskFileOffsetExt
-from py4heappe.heappe_v6.core.models.task_paralization_parameter_ext import TaskParalizationParameterExt
+from py4heappe.heappe_v6.core.models.task_parallelization_parameter_ext import TaskParallelizationParameterExt
 from py4heappe.heappe_v6.core.models.task_priority_ext import TaskPriorityExt
 from py4heappe.heappe_v6.core.models.task_report_ext import TaskReportExt
 from py4heappe.heappe_v6.core.models.task_specification_ext import TaskSpecificationExt

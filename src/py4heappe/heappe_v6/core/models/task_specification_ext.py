@@ -47,7 +47,7 @@ class TaskSpecificationExt(object):
         'command_template_id': 'int',
         'cpu_hyper_threading': 'bool',
         'required_nodes': 'list[str]',
-        'task_parallelization_parameters': 'list[TaskParalizationParameterExt]',
+        'task_parallelization_parameters': 'list[TaskParallelizationParameterExt]',
         'environment_variables': 'list[EnvironmentVariableExt]',
         'depends_on': 'list[TaskSpecificationExt]',
         'template_parameter_values': 'list[CommandTemplateParameterValueExt]'
@@ -595,7 +595,7 @@ class TaskSpecificationExt(object):
         Array of task paralelization parameters  # noqa: E501
 
         :return: The task_parallelization_parameters of this TaskSpecificationExt.  # noqa: E501
-        :rtype: list[TaskParalizationParameterExt]
+        :rtype: list[TaskParallelizationParameterExt]
         """
         return self._task_parallelization_parameters
 
@@ -606,7 +606,7 @@ class TaskSpecificationExt(object):
         Array of task paralelization parameters  # noqa: E501
 
         :param task_parallelization_parameters: The task_parallelization_parameters of this TaskSpecificationExt.  # noqa: E501
-        :type: list[TaskParalizationParameterExt]
+        :type: list[TaskParallelizationParameterExt]
         """
 
         self._task_parallelization_parameters = task_parallelization_parameters
