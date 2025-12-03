@@ -2,8 +2,8 @@ import os
 import platform
 import subprocess
 
-from py4heappe.heappe_v5.core.base import exceptions
-from py4heappe.heappe_v5.core.base.logger import logger
+from py4heappe.heappe_v6.core.base import exceptions
+from py4heappe.heappe_v6.core.base.logger import logger
 
 def print_and_log(message: str):
     print(message)
@@ -44,3 +44,34 @@ def load_stored_session():
         raise exceptions.Py4HEAppEInternalException("Session for HEAppE instance does not exist! You have to authenticate to HEAppE instance.") from None
     
     return sessionCode
+
+def load_stored_session():
+    sessionCode: str = os.environ.get("sessionCode")
+
+    if sessionCode is None:
+        raise exceptions.Py4HEAppEInternalException("Session for HEAppE instance does not exist! You have to authenticate to HEAppE instance.") from None
+    
+    return sessionCode
+
+def store_jwt_token(token: str):
+    try:
+        if token is None:
+            raise exceptions.Py4HEAppEInternalException("Passed token is 'None'!") from None
+    
+        environment_snapshot: dict = os.environ
+        environment_snapshot.update({"jwt_token": token}) 
+        subprocess.call(get_user_shell_for_platform(), env=environment_snapshot)
+
+    except exceptions.Py4HEAppEInternalException as exception:
+         raise exceptions.Py4HEAppEInternalException(exception.message) from None
+
+    except Exception:
+        raise exceptions.Py4HEAppEInternalException("Problem occurs during storing JWT token into variable.") from None
+    
+def load_stored_jwt_token():
+    token: str = os.environ.get("jwt_token")
+
+    if token is None:
+        raise exceptions.Py4HEAppEInternalException("JWT token does not exist! You have to authenticate to HEAppE instance.") from None
+    
+    return token
