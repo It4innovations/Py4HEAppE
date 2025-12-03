@@ -1,5 +1,5 @@
 import logging
-import py4heappe.heappe_v5.core.base.logger as logger
+import py4heappe.heappe_v6.core.base.logger as logger
 
 logger = logging.getLogger(__name__)
 
