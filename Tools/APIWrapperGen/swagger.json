@@ -1,5 +1,5 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.4",
   "info": {
     "title": "py4heappe API",
     "description": "Merged API documentation for py4heappe client",
@@ -13,11 +13,11 @@
       "name": "GNU General Public License v3.0",
       "url": "https://www.gnu.org/licenses/gpl-3.0.html"
     },
-    "version": "v6.0.0"
+    "version": "v6.1.1"
   },
   "servers": [
     {
-      "url": "http://localhost:5000"
+      "url": "http://localhost:5000/"
     }
   ],
   "paths": {
@@ -32,7 +32,6 @@
             "name": "SessionCode",
             "in": "query",
             "description": "",
-            "required": true,
             "schema": {
               "type": "string"
             }
@@ -689,6 +688,96 @@
           "DataTransfer"
         ],
         "summary": "Send HTTP POST to Job node",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HttpPostToJobNodeModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HttpPostToJobNodeModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/HttpPostToJobNodeModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/DataTransfer/HttpPostToJobNodeStream": {
+      "post": {
+        "tags": [
+          "DataTransfer"
+        ],
+        "summary": "HttpPostToJobNodeStream",
         "requestBody": {
           "description": "",
           "content": {
@@ -1628,7 +1717,7 @@
           {
             "name": "JobStates",
             "in": "query",
-            "description": "Job states separated by coma; eg.: \"1,2,8,32\", \"Configuring,Submitted,Running,Failed\",\r\n\"1,2,Running,Failed\" etc.",
+            "description": "Job states separated by coma; eg.: \"1,2,8,32\", \"Configuring,Submitted,Running,Failed\",\n\"1,2,Running,Failed\" etc.",
             "schema": {
               "type": "string"
             }
@@ -8587,278 +8676,6 @@
         }
       }
     },
-    "/heappe/Management/SecureShellKey": {
-      "post": {
-        "tags": [
-          "Management"
-        ],
-        "summary": "Generate SSH key",
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateSecureShellKeyModelObsolete"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateSecureShellKeyModelObsolete"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateSecureShellKeyModelObsolete"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/PublicKeyExt"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BadRequestResult"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Content Too Large",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        },
-        "deprecated": true
-      },
-      "put": {
-        "tags": [
-          "Management"
-        ],
-        "summary": "Regenerate SSH key",
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegenerateSecureShellKeyModelObsolete"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegenerateSecureShellKeyModelObsolete"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegenerateSecureShellKeyModelObsolete"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PublicKeyExt"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BadRequestResult"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Content Too Large",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        },
-        "deprecated": true
-      },
-      "delete": {
-        "tags": [
-          "Management"
-        ],
-        "summary": "Remove SSH key",
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RemoveSecureShellKeyModelObsolete"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RemoveSecureShellKeyModelObsolete"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/RemoveSecureShellKeyModelObsolete"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BadRequestResult"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Content Too Large",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        },
-        "deprecated": true
-      }
-    },
     "/heappe/Management/SecureShellKeys": {
       "get": {
         "tags": [
@@ -9401,95 +9218,6 @@
       }
     },
     "/heappe/Management/TestClusterAccessForAccount": {
-      "post": {
-        "tags": [
-          "Management"
-        ],
-        "summary": "Test cluster access for robot account",
-        "requestBody": {
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TestClusterAccessForAccountModelObsolete"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TestClusterAccessForAccountModelObsolete"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/TestClusterAccessForAccountModelObsolete"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BadRequestResult"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Content Too Large",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        },
-        "deprecated": true
-      },
       "get": {
         "tags": [
           "Management"
@@ -9808,6 +9536,574 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/AccountingStateExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/Status": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "parameters": [
+          {
+            "name": "ProjectId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "TimeFrom",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "TimeTo",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/StatusErrorLogs": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "parameters": [
+          {
+            "name": "ProjectId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "TimeFrom",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "TimeTo",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusCheckLogsExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/Backups": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "List database backups",
+        "parameters": [
+          {
+            "name": "FromDateTime",
+            "in": "query",
+            "description": "From date time",
+            "schema": {
+              "type": "string",
+              "description": "From date time",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ToDateTime",
+            "in": "query",
+            "description": "To date time",
+            "schema": {
+              "type": "string",
+              "description": "To date time",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "Type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/DatabaseBackupTypeExt"
+            }
+          },
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "Session code",
+            "schema": {
+              "maxLength": 50,
+              "minLength": 0,
+              "type": "string",
+              "description": "Session code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DatabaseBackupExt"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/BackupDatabase": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Full backup database",
+        "parameters": [
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/BackupDatabaseTransactionLogs": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Backup database transaction logs",
+        "parameters": [
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/RestoreDatabase": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Restore database from specified backup file",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreDatabaseModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreDatabaseModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestoreDatabaseModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
                 }
               }
             }
@@ -10832,6 +11128,23 @@
         },
         "additionalProperties": false
       },
+      "ByClusterAuthenticationCredentialExt": {
+        "type": "object",
+        "properties": {
+          "ClusterAuthenticationCredential": {
+            "$ref": "#/components/schemas/ClusterAuthenticationCredentialExt"
+          },
+          "CheckLogs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CheckLogExt"
+            },
+            "description": "CheckLogs",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CancelJobModel": {
         "type": "object",
         "properties": {
@@ -10846,6 +11159,68 @@
             "type": "integer",
             "description": "Subbmited job info id",
             "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CheckLogExt": {
+        "type": "object",
+        "properties": {
+          "CheckTimestamp": {
+            "type": "string",
+            "description": "CheckTimestamp",
+            "format": "date-time"
+          },
+          "VaultCredentialOk": {
+            "type": "boolean",
+            "description": "VaultCredentialOk",
+            "nullable": true
+          },
+          "ClusterConnectionOk": {
+            "type": "boolean",
+            "description": "ClusterConnectionOk",
+            "nullable": true
+          },
+          "DryRunJobOk": {
+            "type": "boolean",
+            "description": "DryRunJobOk",
+            "nullable": true
+          },
+          "ErrorMessage": {
+            "type": "string",
+            "description": "ErrorMessage",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CheckLogExt_": {
+        "type": "object",
+        "properties": {
+          "CheckTimestamp": {
+            "type": "string",
+            "description": "CheckTimestamp",
+            "format": "date-time"
+          },
+          "VaultCredentialOk": {
+            "type": "boolean",
+            "description": "VaultCredentialOk",
+            "nullable": true
+          },
+          "ClusterConnectionOk": {
+            "type": "boolean",
+            "description": "ClusterConnectionOk",
+            "nullable": true
+          },
+          "DryRunJobOk": {
+            "type": "boolean",
+            "description": "DryRunJobOk",
+            "nullable": true
+          },
+          "ErrorMessage": {
+            "type": "string",
+            "description": "ErrorMessage",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -10911,6 +11286,38 @@
         },
         "additionalProperties": false
       },
+      "ClusterAuthenticationCredentialExt": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "description": "Id",
+            "format": "int64"
+          },
+          "Username": {
+            "type": "string",
+            "description": "Username",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClusterAuthenticationCredentialExt_": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "description": "Id",
+            "format": "int64"
+          },
+          "Username": {
+            "type": "string",
+            "description": "Username",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ClusterAuthenticationCredentialsAuthTypeExt": {
         "enum": [
           0,
@@ -10922,10 +11329,28 @@
           6,
           7,
           8,
-          9
+          9,
+          10,
+          11
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "ClusterConnectionCountsExt_": {
+        "type": "object",
+        "properties": {
+          "OkCount": {
+            "type": "integer",
+            "description": "OkCount",
+            "format": "int32"
+          },
+          "FailCount": {
+            "type": "integer",
+            "description": "FailCount",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
       },
       "ClusterConnectionProtocol": {
         "enum": [
@@ -12433,35 +12858,6 @@
         },
         "additionalProperties": false
       },
-      "CreateSecureShellKeyModelObsolete": {
-        "type": "object",
-        "properties": {
-          "SessionCode": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "description": "Session code",
-            "nullable": true
-          },
-          "Username": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "Password": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "ProjectId": {
-            "type": "integer",
-            "format": "int64"
-          }
-        },
-        "additionalProperties": false
-      },
       "CreateSubProjectModel": {
         "type": "object",
         "properties": {
@@ -12535,6 +12931,43 @@
         },
         "additionalProperties": false
       },
+      "DatabaseBackupExt": {
+        "type": "object",
+        "properties": {
+          "Type": {
+            "$ref": "#/components/schemas/DatabaseBackupTypeExt"
+          },
+          "FileName": {
+            "type": "string",
+            "description": "Backup file name",
+            "nullable": true
+          },
+          "TimeStamp": {
+            "type": "string",
+            "description": "Timestamp",
+            "format": "date-time"
+          },
+          "FileSizeMB": {
+            "type": "number",
+            "description": "File size in MB",
+            "format": "double"
+          },
+          "Path": {
+            "type": "string",
+            "description": "Path",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DatabaseBackupTypeExt": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "Database_": {
         "type": "object",
         "properties": {
@@ -12574,6 +13007,37 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "DetailExt_": {
+        "type": "object",
+        "properties": {
+          "CheckTimestamp": {
+            "type": "string",
+            "description": "CheckTimestamp",
+            "format": "date-time"
+          },
+          "ClusterAuthenticationCredential": {
+            "$ref": "#/components/schemas/ClusterAuthenticationCredentialExt_"
+          },
+          "VaultCredential": {
+            "$ref": "#/components/schemas/VaultCredentialCountsExt_"
+          },
+          "ClusterConnection": {
+            "$ref": "#/components/schemas/ClusterConnectionCountsExt_"
+          },
+          "DryRunJob": {
+            "$ref": "#/components/schemas/DryRunJobCountsExt_"
+          },
+          "Errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CheckLogExt_"
+            },
+            "description": "Errors",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "DigitalSignatureCredentialsExt": {
         "type": "object",
@@ -12649,6 +13113,22 @@
             },
             "description": "Task file models array",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DryRunJobCountsExt_": {
+        "type": "object",
+        "properties": {
+          "OkCount": {
+            "type": "integer",
+            "description": "OkCount",
+            "format": "int32"
+          },
+          "FailCount": {
+            "type": "integer",
+            "description": "FailCount",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -14962,33 +15442,6 @@
         },
         "additionalProperties": false
       },
-      "RegenerateSecureShellKeyModelObsolete": {
-        "type": "object",
-        "properties": {
-          "SessionCode": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "description": "Session code",
-            "nullable": true
-          },
-          "Password": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "nullable": true
-          },
-          "ProjectId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "PublicKey": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "RemoveAccountingModel": {
         "type": "object",
         "properties": {
@@ -15243,27 +15696,6 @@
         },
         "additionalProperties": false
       },
-      "RemoveSecureShellKeyModelObsolete": {
-        "type": "object",
-        "properties": {
-          "SessionCode": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "description": "Session code",
-            "nullable": true
-          },
-          "ProjectId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "PublicKey": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "RemoveSubProjectModel": {
         "type": "object",
         "properties": {
@@ -15290,6 +15722,28 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "RestoreDatabaseModel": {
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "BackupFileName": {
+            "type": "string",
+            "description": "Backup file name",
+            "nullable": true
+          },
+          "IncludeLogs": {
+            "type": "boolean",
+            "description": "Include transaction logs backup restore"
+          }
+        },
+        "additionalProperties": false
       },
       "SchedulerType": {
         "enum": [
@@ -15326,6 +15780,74 @@
             "minLength": 0,
             "type": "string",
             "description": "Password",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StatisticsExt_": {
+        "type": "object",
+        "properties": {
+          "TotalChecks": {
+            "type": "integer",
+            "description": "TotalChecks",
+            "format": "int32"
+          },
+          "VaultCredential": {
+            "$ref": "#/components/schemas/VaultCredentialCountsExt_"
+          },
+          "ClusterConnection": {
+            "$ref": "#/components/schemas/ClusterConnectionCountsExt_"
+          },
+          "DryRunJob": {
+            "$ref": "#/components/schemas/ClusterConnectionCountsExt_"
+          }
+        },
+        "additionalProperties": false
+      },
+      "StatusCheckLogsExt": {
+        "type": "object",
+        "properties": {
+          "ByClusterAuthenticationCredential": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ByClusterAuthenticationCredentialExt"
+            },
+            "description": "ByClusterAuthenticationCredential",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "StatusExt": {
+        "type": "object",
+        "properties": {
+          "ProjectId": {
+            "type": "integer",
+            "description": "ProjectId",
+            "format": "int64"
+          },
+          "TimeFrom": {
+            "type": "string",
+            "description": "TimeFrom",
+            "format": "date-time",
+            "nullable": true
+          },
+          "TimeTo": {
+            "type": "string",
+            "description": "TimeTo",
+            "format": "date-time",
+            "nullable": true
+          },
+          "Statistics": {
+            "$ref": "#/components/schemas/StatisticsExt_"
+          },
+          "Details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DetailExt_"
+            },
+            "description": "Details",
             "nullable": true
           }
         },
@@ -15898,27 +16420,6 @@
         "type": "integer",
         "format": "int32"
       },
-      "TestClusterAccessForAccountModelObsolete": {
-        "type": "object",
-        "properties": {
-          "SessionCode": {
-            "maxLength": 50,
-            "minLength": 0,
-            "type": "string",
-            "description": "Session code",
-            "nullable": true
-          },
-          "ProjectId": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "PublicKey": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "UnauthorizedResult": {
         "type": "object",
         "properties": {
@@ -15966,6 +16467,22 @@
           },
           "Project": {
             "$ref": "#/components/schemas/ProjectListReportExt"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VaultCredentialCountsExt_": {
+        "type": "object",
+        "properties": {
+          "OkCount": {
+            "type": "integer",
+            "description": "OkCount",
+            "format": "int32"
+          },
+          "FailCount": {
+            "type": "integer",
+            "description": "FailCount",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -16026,6 +16543,19 @@
         },
         "additionalProperties": false
       }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "apiKey",
+        "description": "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token in the text input below.",
+        "name": "Authorization",
+        "in": "header"
+      }
     }
-  }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
 }

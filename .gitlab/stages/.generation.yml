@@ -2,7 +2,7 @@
 
 API_client_generation:
   stage: API_generation
-  image: openjdk:11-jre-slim
+  image: eclipse-temurin:11-jdk
   when: manual
   rules:
     - if: '$CI_COMMIT_BRANCH != "develop" && $CI_COMMIT_BRANCH != "main"'
