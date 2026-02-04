@@ -21,14 +21,15 @@ By using Py4HEAppE, users can quickly integrate HEAppE functionalities into thei
 The library ensures consistent and reliable communication with the HEAppE API, handling errors and edge cases gracefully.
 
 ## Supported HEAppE versions
-| Py4HEAppE      | HEAppE Version              |  Notes                             |
-|:--------------:|:---------------------------:|:-----------------------------------|
-| 2.4.X          | 6.1.X, 6.0.X, 5.X.X, 4.X.X  | W/O Admin/File sections in CLI     |
-| 2.3.X          | 6.0.x, 5.0.X, 4.X.X         | W/O Admin/File sections in CLI     |
-| 2.2.X          | 5.0.X, 4.3.X, 4.2.X         | W/O Admin/File sections in CLI     |
-| 2.1.X          | 5.0.X, 4.3.X, 4.2.X         | W/O Admin/Job/File sections in CLI |
-| 2.0.X          | 5.0.X                       | W/O Admin/Job/File sections in CLI |
-| 1.X.X          | 4.3.X, 4.2.X                | W/O Admin/Job/File sections in CLI |
+| Py4HEAppE      | HEAppE Version                    |  Notes                             |
+|:--------------:|:---------------------------------:|:-----------------------------------|
+| 2.5.X          | 6.2.X 6.1.X, 6.0.X, 5.X.X, 4.X.X  | W/O Admin/File sections in CLI     |
+| 2.4.X          | 6.1.X, 6.0.X, 5.X.X, 4.X.X        | W/O Admin/File sections in CLI     |
+| 2.3.X          | 6.0.x, 5.0.X, 4.X.X               | W/O Admin/File sections in CLI     |
+| 2.2.X          | 5.0.X, 4.3.X, 4.2.X               | W/O Admin/File sections in CLI     |
+| 2.1.X          | 5.0.X, 4.3.X, 4.2.X               | W/O Admin/Job/File sections in CLI |
+| 2.0.X          | 5.0.X                             | W/O Admin/Job/File sections in CLI |
+| 1.X.X          | 4.3.X, 4.2.X                      | W/O Admin/Job/File sections in CLI |
 
 <!-- GETTING STARTED -->
 ## Getting Started
