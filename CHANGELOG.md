@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.6.0
+
+### Compatible with HEAppE V6.3.X, V6.2.X, V6.2.1, V5.0.X, V4.3.X and V4.2.X
+
+### Added
+
+- **File Transfer CLI Commands**: Added full support for the `FileTransfer` HEAppE API suite to manage cluster data channels and job files:
+  - `py4heappe FileTransfer Single/Interactive` - Initiates and creates a secure file transfer tunnel via SSH and make a one-time transfer of file(s) or folder (Single) or interactively multiple times (Interactive) (`POST /heappe/FileTransfer/RequestFileTransfer`).
+  - Automatically closes an active file transfer tunnel after transfer (`POST /heappe/FileTransfer/CloseFileTransfer`).
+  - `py4heappe FileTransfer DownloadParts` - Downloads specific parts of job files from the cluster (`POST /heappe/FileTransfer/DownloadPartsOfJobFilesFromCluster`).
+  - `py4heappe FileTransfer ListChanged` - Retrieves a list of all files modified during job execution (`GET /heappe/FileTransfer/ListChangedFilesForJob`).
+  - `py4heappe FileTransfer Download` - Downloads a specific individual file directly from the cluster (`POST /heappe/FileTransfer/DownloadFileFromCluster`).
+  - `py4heappe FileTransfer Stream` - Uploads files directly into a designated job execution directory (`POST /heappe/FileTransfer/UploadFilesToJobExecutionDir`).
+
 ## 2.5.2
 
 ### Compatible with HEAppE V6.3.X, V6.2.X, V6.2.1, V5.0.X, V4.3.X and V4.2.X
