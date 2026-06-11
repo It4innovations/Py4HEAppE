@@ -344,6 +344,9 @@ def request_file_transfer(
     ),
 ):
     """Create file transfer tunnel and upload file(s) or folder"""
+    ssh = None
+    tunnel_credentials = None
+
     try:
         utils.print_and_log("Requesting file transfer tunnel ...")
 
@@ -375,17 +378,29 @@ def request_file_transfer(
             transferred_source = _transfer_to_remote(
                 scp, remote_path, files=files, directory=directory
             )
-        ssh.close()
-        _close_file_transfer(
-            submitted_job_info_id=id,
-            publicKey=tunnel_credentials["Credentials"].get("PublicKey"),
-        )
         _print_transfer_result(transferred_source)
 
     except rest.ApiException as exception:
         _raise_cli_exception_from_api(exception)
     except Exception as exception:
         _raise_cli_exception(exception)
+    finally:
+        if ssh is not None:
+            try:
+                ssh.close()
+            except Exception as e:
+                utils.print_and_log(f"Warning: Failed to close SSH client: {e}")
+
+        if tunnel_credentials is not None:
+            try:
+                _close_file_transfer(
+                    submitted_job_info_id=id,
+                    publicKey=tunnel_credentials["Credentials"].get("PublicKey"),
+                )
+            except Exception as e:
+                utils.print_and_log(
+                    f"Warning: Failed to cleanly close file transfer on server: {e}"
+                )
 
 
 @app.command(name="Interactive")
@@ -398,6 +413,8 @@ def request_file_transfer_interactive(
 ):
     """Create file transfer tunnel and keep uploading files or directories until quit"""
     ssh = None
+    tunnel_credentials = None
+
     try:
         utils.print_and_log("Requesting interactive file transfer tunnel ...")
         tunnel_credentials = _request_transfer_tunnel_credentials(id)
@@ -426,18 +443,27 @@ def request_file_transfer_interactive(
                 _print_transfer_result(transferred_source)
                 print()
 
-        _close_file_transfer(
-            submitted_job_info_id=id,
-            publicKey=tunnel_credentials["Credentials"].get("PublicKey"),
-        )
-
     except rest.ApiException as exception:
         _raise_cli_exception_from_api(exception)
     except Exception as exception:
         _raise_cli_exception(exception)
     finally:
         if ssh is not None:
-            ssh.close()
+            try:
+                ssh.close()
+            except Exception as e:
+                utils.print_and_log(f"Warning: Failed to close SSH client: {e}")
+
+        if tunnel_credentials is not None:
+            try:
+                _close_file_transfer(
+                    submitted_job_info_id=id,
+                    publicKey=tunnel_credentials["Credentials"].get("PublicKey"),
+                )
+            except Exception as e:
+                utils.print_and_log(
+                    f"Warning: Failed to cleanly close file transfer on server: {e}"
+                )
 
 
 @app.command(name="Download")
