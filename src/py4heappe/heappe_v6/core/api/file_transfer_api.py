@@ -572,8 +572,7 @@ class FileTransferApi(object):
         form_params = []
         local_var_files = {}
         if 'files' in params:
-            form_params.append(('files', params['files']))  # noqa: E501
-            collection_formats['files'] = 'multi'  # noqa: E501
+            local_var_files['files'] = params['files']  # noqa: E501
 
         body_params = None
         # HTTP header `Accept`
