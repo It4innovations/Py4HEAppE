@@ -2,19 +2,12 @@
   "openapi": "3.0.4",
   "info": {
     "title": "py4heappe API",
-    "version": "v6.3.0"
+    "version": "v6.4.0"
   },
-  "servers": [
-    {
-      "url": "https://heappe.it4i.cz//develop"
-    }
-  ],
   "paths": {
     "/heappe/ClusterInformation/ListAvailableClusters": {
       "get": {
-        "tags": [
-          "ClusterInformation"
-        ],
+        "tags": ["ClusterInformation"],
         "summary": "Get available clusters",
         "parameters": [
           {
@@ -134,87 +127,9 @@
         }
       }
     },
-    "/heappe/ClusterInformation/ListAvailableClustersClearCache": {
-      "post": {
-        "tags": [
-          "ClusterInformation"
-        ],
-        "parameters": [
-          {
-            "name": "SessionCode",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": { }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BadRequestResult"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "413": {
-            "description": "Content Too Large",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "429": {
-            "description": "Too Many Requests",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ProblemDetails"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/heappe/ClusterInformation/RequestCommandTemplateParametersName": {
       "post": {
-        "tags": [
-          "ClusterInformation"
-        ],
+        "tags": ["ClusterInformation"],
         "summary": "Get command template parameters name",
         "requestBody": {
           "content": {
@@ -304,9 +219,7 @@
     },
     "/heappe/ClusterInformation/CurrentClusterNodeUsage": {
       "get": {
-        "tags": [
-          "ClusterInformation"
-        ],
+        "tags": ["ClusterInformation"],
         "summary": "Get actual cluster node usage",
         "parameters": [
           {
@@ -400,11 +313,601 @@
         }
       }
     },
+    "/heappe/Credentials/CreateCredential": {
+      "post": {
+        "tags": ["Credentials"],
+        "summary": "Creates a new credential. Fill only the properties relevant to the selected AuthType.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCredentialModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCredentialModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCredentialModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CredentialResponseExt"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CredentialResponseExt"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CredentialResponseExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Credentials/GetCredentials": {
+      "get": {
+        "tags": ["Credentials"],
+        "summary": "Gets a list of credentials for a project.",
+        "parameters": [
+          {
+            "name": "ProjectId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "AdaptorUserId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CredentialResponseExt"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CredentialResponseExt"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CredentialResponseExt"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Credentials/ModifyCredential": {
+      "put": {
+        "tags": ["Credentials"],
+        "summary": "Modifies credential for a project.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModifyCredentialModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModifyCredentialModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModifyCredentialModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CredentialResponseExt"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CredentialResponseExt"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CredentialResponseExt"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Credentials/RemoveCredential": {
+      "delete": {
+        "tags": ["Credentials"],
+        "summary": "Remove credential for a project.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveCredentialModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveCredentialModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveCredentialModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/heappe/DataTransfer/RequestDataTransfer": {
       "post": {
-        "tags": [
-          "DataTransfer"
-        ],
+        "tags": ["DataTransfer"],
         "summary": "Create Data Transfer",
         "requestBody": {
           "description": "",
@@ -492,9 +995,7 @@
     },
     "/heappe/DataTransfer/CloseDataTransfer": {
       "post": {
-        "tags": [
-          "DataTransfer"
-        ],
+        "tags": ["DataTransfer"],
         "summary": "Close Data Transfer",
         "requestBody": {
           "description": "",
@@ -582,9 +1083,7 @@
     },
     "/heappe/DataTransfer/HttpGetToJobNode": {
       "post": {
-        "tags": [
-          "DataTransfer"
-        ],
+        "tags": ["DataTransfer"],
         "summary": "Send HTTP GET to Job node",
         "requestBody": {
           "description": "",
@@ -672,9 +1171,7 @@
     },
     "/heappe/DataTransfer/HttpPostToJobNode": {
       "post": {
-        "tags": [
-          "DataTransfer"
-        ],
+        "tags": ["DataTransfer"],
         "summary": "Send HTTP POST to Job node",
         "requestBody": {
           "description": "",
@@ -762,9 +1259,7 @@
     },
     "/heappe/DataTransfer/HttpPostToJobNodeStream": {
       "post": {
-        "tags": [
-          "DataTransfer"
-        ],
+        "tags": ["DataTransfer"],
         "summary": "HttpPostToJobNodeStream",
         "requestBody": {
           "description": "",
@@ -850,11 +1345,505 @@
         }
       }
     },
+    "/heappe/Dictionary/GetClusterAuthenticationCredentialsAuthTypes": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get cluster authentication credentials auth types mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetJobStates": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get job states mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetTaskStates": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get task states mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetTaskPriorities": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get task priorities mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetAdaptorUserTypes": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get adaptor user types mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetSchedulerTypes": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get scheduler types mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetFileTransferProtocols": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get file transfer protocols mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetProxyTypes": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get proxy types mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetDatabaseBackupTypes": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get database backup types mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetClusterConnectionProtocols": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get cluster connection protocols mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetAccountingStateTypes": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get accounting state types mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetResourceAllocationTypes": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get resource allocation types mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetDeploymentTypes": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get deployment types mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetUsageTypes": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get usage types mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetSynchronizableFiles": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get synchronizable files mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetFileTransferCipherTypes": {
+      "get": {
+        "tags": ["Dictionary"],
+        "summary": "Get file transfer cipher types mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/heappe/FileTransfer/RequestFileTransfer": {
       "post": {
-        "tags": [
-          "FileTransfer"
-        ],
+        "tags": ["FileTransfer"],
         "summary": "Create file transfer tunnel",
         "requestBody": {
           "description": "",
@@ -942,9 +1931,7 @@
     },
     "/heappe/FileTransfer/CloseFileTransfer": {
       "post": {
-        "tags": [
-          "FileTransfer"
-        ],
+        "tags": ["FileTransfer"],
         "summary": "Close file transfer tunnel",
         "requestBody": {
           "description": "",
@@ -1032,9 +2019,7 @@
     },
     "/heappe/FileTransfer/DownloadPartsOfJobFilesFromCluster": {
       "post": {
-        "tags": [
-          "FileTransfer"
-        ],
+        "tags": ["FileTransfer"],
         "summary": "Download part of job files from Cluster",
         "requestBody": {
           "description": "",
@@ -1125,9 +2110,7 @@
     },
     "/heappe/FileTransfer/ListChangedFilesForJob": {
       "get": {
-        "tags": [
-          "FileTransfer"
-        ],
+        "tags": ["FileTransfer"],
         "summary": "Get all changes files during job execution",
         "parameters": [
           {
@@ -1220,9 +2203,7 @@
     },
     "/heappe/FileTransfer/DownloadFileFromCluster": {
       "post": {
-        "tags": [
-          "FileTransfer"
-        ],
+        "tags": ["FileTransfer"],
         "summary": "Download specific file from Cluster",
         "requestBody": {
           "description": "",
@@ -1310,9 +2291,7 @@
     },
     "/heappe/FileTransfer/UploadFilesToJobExecutionDir": {
       "post": {
-        "tags": [
-          "FileTransfer"
-        ],
+        "tags": ["FileTransfer"],
         "summary": "Upload job to file to job execution dir",
         "parameters": [
           {
@@ -1435,9 +2414,7 @@
     },
     "/heappe/Health": {
       "get": {
-        "tags": [
-          "Health"
-        ],
+        "tags": ["Health"],
         "responses": {
           "200": {
             "description": "OK",
@@ -1454,9 +2431,7 @@
     },
     "/heappe/JobManagement/CreateJob": {
       "post": {
-        "tags": [
-          "JobManagement"
-        ],
+        "tags": ["JobManagement"],
         "summary": "Create job specification",
         "requestBody": {
           "description": "",
@@ -1544,9 +2519,7 @@
     },
     "/heappe/JobManagement/SubmitJob": {
       "put": {
-        "tags": [
-          "JobManagement"
-        ],
+        "tags": ["JobManagement"],
         "summary": "Submit job",
         "requestBody": {
           "description": "",
@@ -1634,9 +2607,7 @@
     },
     "/heappe/JobManagement/CancelJob": {
       "put": {
-        "tags": [
-          "JobManagement"
-        ],
+        "tags": ["JobManagement"],
         "summary": "Cancel job",
         "requestBody": {
           "description": "",
@@ -1724,9 +2695,7 @@
     },
     "/heappe/JobManagement/DeleteJob": {
       "delete": {
-        "tags": [
-          "JobManagement"
-        ],
+        "tags": ["JobManagement"],
         "summary": "Delete job",
         "requestBody": {
           "description": "",
@@ -1814,9 +2783,7 @@
     },
     "/heappe/JobManagement/ListJobsForCurrentUser": {
       "get": {
-        "tags": [
-          "JobManagement"
-        ],
+        "tags": ["JobManagement"],
         "summary": "Get all jobs for user",
         "parameters": [
           {
@@ -1833,6 +2800,60 @@
             "description": "Job states separated by coma; eg.: \"1,2,8,16,32\"",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Limit",
+            "in": "query",
+            "description": "Max number of jobs to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "description": "Number of jobs to skip",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "UserId",
+            "in": "query",
+            "description": "Filter by user ID",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "ClusterId",
+            "in": "query",
+            "description": "Filter by cluster ID",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "SubProjectId",
+            "in": "query",
+            "description": "Filter by subproject ID",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "ProjectId",
+            "in": "query",
+            "description": "Filter by project ID",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
@@ -1905,9 +2926,7 @@
     },
     "/heappe/JobManagement/CurrentInfoForJob": {
       "get": {
-        "tags": [
-          "JobManagement"
-        ],
+        "tags": ["JobManagement"],
         "summary": "Get current info for job",
         "parameters": [
           {
@@ -1994,9 +3013,7 @@
     },
     "/heappe/JobManagement/CopyJobDataToTemp": {
       "post": {
-        "tags": [
-          "JobManagement"
-        ],
+        "tags": ["JobManagement"],
         "summary": "Copy job data to temp folder",
         "requestBody": {
           "description": "",
@@ -2084,9 +3101,7 @@
     },
     "/heappe/JobManagement/CopyJobDataFromTemp": {
       "post": {
-        "tags": [
-          "JobManagement"
-        ],
+        "tags": ["JobManagement"],
         "summary": "Copy job data from temp folder",
         "requestBody": {
           "description": "",
@@ -2174,9 +3189,7 @@
     },
     "/heappe/JobManagement/AllocatedNodesIPs": {
       "get": {
-        "tags": [
-          "JobManagement"
-        ],
+        "tags": ["JobManagement"],
         "summary": "Get Allocated Nodes IPs",
         "parameters": [
           {
@@ -2266,9 +3279,7 @@
     },
     "/heappe/JobManagement/DryRunJob": {
       "post": {
-        "tags": [
-          "JobManagement"
-        ],
+        "tags": ["JobManagement"],
         "summary": "Dry run job",
         "requestBody": {
           "description": "",
@@ -2346,9 +3357,7 @@
     },
     "/heappe/JobReporting/ListAdaptorUserGroups": {
       "get": {
-        "tags": [
-          "JobReporting"
-        ],
+        "tags": ["JobReporting"],
         "summary": "Get user groups",
         "parameters": [
           {
@@ -2426,15 +3435,14 @@
     },
     "/heappe/JobReporting/UserResourceUsageReport": {
       "get": {
-        "tags": [
-          "JobReporting"
-        ],
+        "tags": ["JobReporting"],
         "summary": "Get resource usage report for user",
         "parameters": [
           {
             "name": "UserId",
             "in": "query",
             "description": "User ID",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2475,6 +3483,30 @@
             "description": "SessionCode",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ClusterId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
@@ -2547,15 +3579,14 @@
     },
     "/heappe/JobReporting/UserGroupResourceUsageReport": {
       "get": {
-        "tags": [
-          "JobReporting"
-        ],
+        "tags": ["JobReporting"],
         "summary": "Get resource usage for user group",
         "parameters": [
           {
             "name": "GroupId",
             "in": "query",
             "description": "Group ID",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2596,6 +3627,38 @@
             "description": "SessionCode",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ClusterId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
@@ -2665,9 +3728,7 @@
     },
     "/heappe/JobReporting/ResourceUsageReportForJob": {
       "get": {
-        "tags": [
-          "JobReporting"
-        ],
+        "tags": ["JobReporting"],
         "summary": "Get resource usage for executed job",
         "parameters": [
           {
@@ -2682,6 +3743,7 @@
             "name": "JobId",
             "in": "query",
             "description": "Job ID",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -2754,9 +3816,7 @@
     },
     "/heappe/JobReporting/JobsStateAgregationReport": {
       "get": {
-        "tags": [
-          "JobReporting"
-        ],
+        "tags": ["JobReporting"],
         "summary": "Get job state aggregation report",
         "parameters": [
           {
@@ -2837,9 +3897,7 @@
     },
     "/heappe/JobReporting/AggregatedUserGroupResourceUsageReport": {
       "get": {
-        "tags": [
-          "JobReporting"
-        ],
+        "tags": ["JobReporting"],
         "summary": "Get aggregated resource report usage for user groups",
         "parameters": [
           {
@@ -2866,6 +3924,38 @@
             "description": "",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ClusterId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
@@ -2938,9 +4028,7 @@
     },
     "/heappe/JobReporting/JobsDetailedReport": {
       "get": {
-        "tags": [
-          "JobReporting"
-        ],
+        "tags": ["JobReporting"],
         "summary": "Get job detailed report",
         "parameters": [
           {
@@ -2978,6 +4066,38 @@
             "description": "",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "Limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ClusterId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
@@ -3050,9 +4170,7 @@
     },
     "/heappe/Management/InstanceInformation": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get HEAppE Information",
         "parameters": [
           {
@@ -3130,9 +4248,7 @@
     },
     "/heappe/Management/VersionInformation": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get HEAppE Version Information",
         "parameters": [
           {
@@ -3210,9 +4326,7 @@
     },
     "/heappe/Management/CommandTemplate": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List Command Template",
         "parameters": [
           {
@@ -3297,9 +4411,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create Static Command Template",
         "requestBody": {
           "description": "CreateCommandTemplateModel",
@@ -3385,9 +4497,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify Static Command Template",
         "requestBody": {
           "description": "ModifyCommandTemplateModel",
@@ -3475,9 +4585,7 @@
     },
     "/heappe/Management/CommandTemplates": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List Command Templates",
         "parameters": [
           {
@@ -3567,9 +4675,7 @@
     },
     "/heappe/Management/GenericCommandTemplate": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create Generic Command Template",
         "requestBody": {
           "description": "",
@@ -3655,9 +4761,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify Generic Command Template",
         "requestBody": {
           "description": "",
@@ -3745,9 +4849,7 @@
     },
     "/heappe/Management/CommandTemplateFromGeneric": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create Command Template from Generic Command Template",
         "requestBody": {
           "description": "CreateCommandTemplateFromGenericModel",
@@ -3833,9 +4935,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify Command Template based on Generic Command Template",
         "requestBody": {
           "description": "ModifyCommandTemplateFromGenericModel",
@@ -3923,9 +5023,7 @@
     },
     "/heappe/Management/RemoveCommandTemplate": {
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove Command Template",
         "requestBody": {
           "description": "RemoveCommandTemplateModel",
@@ -4013,9 +5111,7 @@
     },
     "/heappe/Management/CommandTemplateParameter": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get Command Template Parameter by id",
         "parameters": [
           {
@@ -4090,9 +5186,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create a new Command Template Parameter",
         "requestBody": {
           "description": "CreateCommandTemplateModel",
@@ -4178,9 +5272,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify an existing Command Template Parameter",
         "requestBody": {
           "description": "ModifyCommandTemplateParameterModel",
@@ -4266,9 +5358,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove an existing Command Template Parameter",
         "requestBody": {
           "description": "RemoveCommandTemplateParameterModel",
@@ -4356,9 +5446,7 @@
     },
     "/heappe/Management/AdaptorUser": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get Adaptor User by Username",
         "parameters": [
           {
@@ -4432,9 +5520,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create Adaptor User",
         "requestBody": {
           "description": "",
@@ -4510,9 +5596,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify Adaptor User",
         "requestBody": {
           "description": "",
@@ -4588,9 +5672,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Delete Adaptor User",
         "requestBody": {
           "description": "",
@@ -4668,9 +5750,7 @@
     },
     "/heappe/Management/AdaptorUsers": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List Adaptor Users",
         "parameters": [
           {
@@ -4741,9 +5821,7 @@
     },
     "/heappe/Management/AdaptorUsersInProject": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List Adaptor Users in Project",
         "parameters": [
           {
@@ -4823,9 +5901,7 @@
     },
     "/heappe/Management/AssignAdaptorUserToProject": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Assign Adaptor User to Project",
         "requestBody": {
           "description": "",
@@ -4903,9 +5979,7 @@
     },
     "/heappe/Management/RemoveAdaptorUserFromProject": {
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove Adaptor User from Project",
         "requestBody": {
           "description": "",
@@ -4983,9 +6057,7 @@
     },
     "/heappe/Management/AdaptorUsersInUserGroup": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List Adaptor Users in User Group",
         "parameters": [
           {
@@ -5065,9 +6137,7 @@
     },
     "/heappe/Management/AssignAdaptorUserToUserGroup": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Assign Adaptor User to User Group",
         "requestBody": {
           "description": "",
@@ -5145,9 +6215,7 @@
     },
     "/heappe/Management/RemoveAdaptorUserFromUserGroup": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Unassign Adaptor User from User Group",
         "requestBody": {
           "description": "",
@@ -5225,9 +6293,7 @@
     },
     "/heappe/Management/ProjectsByAccountingStrings": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get project by accounting string",
         "parameters": [
           {
@@ -5309,9 +6375,7 @@
     },
     "/heappe/Management/Projects": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List Projects",
         "parameters": [
           {
@@ -5392,9 +6456,7 @@
     },
     "/heappe/Management/Project": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get Project by id",
         "parameters": [
           {
@@ -5469,9 +6531,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create project",
         "requestBody": {
           "description": "",
@@ -5557,9 +6617,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify project",
         "requestBody": {
           "description": "",
@@ -5645,9 +6703,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove project",
         "requestBody": {
           "description": "",
@@ -5735,9 +6791,7 @@
     },
     "/heappe/Management/ProjectAssignmentToCluster": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get ProjectAssignmentToCluster by id",
         "parameters": [
           {
@@ -5821,9 +6875,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Assign project to the cluster",
         "requestBody": {
           "description": "",
@@ -5909,9 +6961,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify project assignment to the cluster",
         "requestBody": {
           "description": "",
@@ -5997,9 +7047,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove project assignment to the cluster",
         "requestBody": {
           "description": "",
@@ -6087,9 +7135,7 @@
     },
     "/heappe/Management/ProjectAssignmentToClusters": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "parameters": [
           {
             "name": "ProjectId",
@@ -6166,9 +7212,7 @@
     },
     "/heappe/Management/Cluster": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get Cluster by id",
         "parameters": [
           {
@@ -6243,9 +7287,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create Cluster",
         "requestBody": {
           "description": "",
@@ -6331,9 +7373,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Update Cluster",
         "requestBody": {
           "description": "",
@@ -6419,9 +7459,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove Cluster",
         "requestBody": {
           "description": "",
@@ -6509,9 +7547,7 @@
     },
     "/heappe/Management/Clusters": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get all clusters",
         "parameters": [
           {
@@ -6582,9 +7618,7 @@
     },
     "/heappe/Management/ClusterNodeTypes": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List ClusterNodeTypes",
         "parameters": [
           {
@@ -6665,9 +7699,7 @@
     },
     "/heappe/Management/ClusterNodeType": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get ClusterNodeType by id",
         "parameters": [
           {
@@ -6742,9 +7774,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create ClusterNodeType",
         "requestBody": {
           "description": "",
@@ -6830,9 +7860,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify ClusterNodeType",
         "requestBody": {
           "description": "",
@@ -6918,9 +7946,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove ClusterNodeType",
         "requestBody": {
           "description": "",
@@ -7008,9 +8034,7 @@
     },
     "/heappe/Management/ClusterProxyConnection": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get ClusterProxyConnection by id",
         "parameters": [
           {
@@ -7085,9 +8109,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create ClusterProxyConnection",
         "requestBody": {
           "description": "",
@@ -7173,9 +8195,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify ClusterProxyConnection",
         "requestBody": {
           "description": "",
@@ -7261,9 +8281,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove ClusterProxyConnection",
         "requestBody": {
           "description": "",
@@ -7351,9 +8369,7 @@
     },
     "/heappe/Management/ClusterProxyConnections": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get ClusterProxyConnections",
         "parameters": [
           {
@@ -7424,9 +8440,7 @@
     },
     "/heappe/Management/FileTransferMethods": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List FileTransferMethods",
         "parameters": [
           {
@@ -7507,9 +8521,7 @@
     },
     "/heappe/Management/FileTransferMethod": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get FileTransferMethod by id",
         "parameters": [
           {
@@ -7584,9 +8596,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create FileTransferMethod",
         "requestBody": {
           "description": "",
@@ -7672,9 +8682,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify FileTransferMethod",
         "requestBody": {
           "description": "",
@@ -7760,9 +8768,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove FileTransferMethod",
         "requestBody": {
           "description": "",
@@ -7850,9 +8856,7 @@
     },
     "/heappe/Management/ClusterNodeTypeAggregation": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get ClusterNodeTypeAggregation by id",
         "parameters": [
           {
@@ -7927,9 +8931,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create ClusterNodeTypeAggregations",
         "requestBody": {
           "description": "",
@@ -8015,9 +9017,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify ClusterNodeTypeAggregations",
         "requestBody": {
           "description": "",
@@ -8103,9 +9103,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove ClusterNodeTypeAggregation",
         "requestBody": {
           "description": "",
@@ -8193,9 +9191,7 @@
     },
     "/heappe/Management/ClusterNodeTypeAggregations": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get all ClusterNodeTypeAggregations",
         "parameters": [
           {
@@ -8266,9 +9262,7 @@
     },
     "/heappe/Management/ClusterNodeTypeAggregationAccountings": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List ClusterNodeTypeAggregationAccountings",
         "parameters": [
           {
@@ -8349,9 +9343,7 @@
     },
     "/heappe/Management/ClusterNodeTypeAggregationAccounting": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get ClusterNodeTypeAggregationAccounting by id",
         "parameters": [
           {
@@ -8435,9 +9427,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create ClusterNodeTypeAggregationAccounting",
         "requestBody": {
           "description": "",
@@ -8523,9 +9513,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove ClusterNodeTypeAggregationAccounting",
         "requestBody": {
           "description": "",
@@ -8613,9 +9601,7 @@
     },
     "/heappe/Management/Accountings": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List Accountings",
         "parameters": [
           {
@@ -8696,9 +9682,7 @@
     },
     "/heappe/Management/Accounting": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get Accounting by id",
         "parameters": [
           {
@@ -8773,9 +9757,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create Accounting",
         "requestBody": {
           "description": "",
@@ -8861,9 +9843,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify Accounting",
         "requestBody": {
           "description": "",
@@ -8949,9 +9929,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove Accounting",
         "requestBody": {
           "description": "",
@@ -9039,9 +10017,7 @@
     },
     "/heappe/Management/ProjectClusterNodeTypeAggregation": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get ProjectClusterNodeTypeAggregation by id",
         "parameters": [
           {
@@ -9125,9 +10101,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create ProjectClusterNodeTypeAggregation",
         "requestBody": {
           "description": "",
@@ -9213,9 +10187,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify ProjectClusterNodeTypeAggregation",
         "requestBody": {
           "description": "",
@@ -9301,9 +10273,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove ProjectClusterNodeTypeAggregation",
         "requestBody": {
           "description": "",
@@ -9391,9 +10361,7 @@
     },
     "/heappe/Management/ProjectClusterNodeTypeAggregations": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get ProjectClusterNodeTypeAggregations by ProjectId",
         "parameters": [
           {
@@ -9473,9 +10441,7 @@
     },
     "/heappe/Management/SubProjects": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List SubProjects",
         "parameters": [
           {
@@ -9565,9 +10531,7 @@
     },
     "/heappe/Management/SubProject": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List SubProject",
         "parameters": [
           {
@@ -9652,9 +10616,7 @@
         }
       },
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Create SubProject",
         "requestBody": {
           "description": "",
@@ -9740,9 +10702,7 @@
         }
       },
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify SubProject",
         "requestBody": {
           "description": "",
@@ -9828,9 +10788,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove SubProject",
         "requestBody": {
           "description": "",
@@ -9918,9 +10876,7 @@
     },
     "/heappe/Management/SecureShellKeys": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Get SSH keys for project",
         "parameters": [
           {
@@ -10010,9 +10966,7 @@
     },
     "/heappe/Management/GenerateSecureShellKey": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Generate SSH key",
         "requestBody": {
           "description": "",
@@ -10103,9 +11057,7 @@
     },
     "/heappe/Management/ModifyClusterAuthenticationCredential": {
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Modify Cluster Authentication Credential",
         "requestBody": {
           "description": "",
@@ -10186,9 +11138,7 @@
     },
     "/heappe/Management/RegenerateSecureShellKey": {
       "put": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Regenerate SSH key",
         "requestBody": {
           "description": "",
@@ -10276,9 +11226,7 @@
     },
     "/heappe/Management/RemoveSecureShellKey": {
       "delete": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Remove SSH key",
         "requestBody": {
           "description": "",
@@ -10366,9 +11314,7 @@
     },
     "/heappe/Management/InitializeClusterScriptDirectory": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Initialize cluster script directory for SSH HPC Account",
         "requestBody": {
           "description": "",
@@ -10459,9 +11405,7 @@
     },
     "/heappe/Management/TestClusterAccessForAccount": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Test cluster access for robot account",
         "parameters": [
           {
@@ -10559,9 +11503,7 @@
     },
     "/heappe/Management/ClusterAccountStatus": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "",
         "parameters": [
           {
@@ -10659,9 +11601,7 @@
     },
     "/heappe/Management/ComputeAccounting": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Compute accounting - calculate accounting via accounting formulas",
         "requestBody": {
           "description": "",
@@ -10749,9 +11689,7 @@
     },
     "/heappe/Management/AccountingState": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "parameters": [
           {
             "name": "ProjectId",
@@ -10835,9 +11773,7 @@
     },
     "/heappe/Management/Status": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "parameters": [
           {
             "name": "ProjectId",
@@ -10937,9 +11873,7 @@
     },
     "/heappe/Management/StatusErrorLogs": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "parameters": [
           {
             "name": "ProjectId",
@@ -11039,9 +11973,7 @@
     },
     "/heappe/Management/Backups": {
       "get": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "List database backups",
         "parameters": [
           {
@@ -11152,9 +12084,7 @@
     },
     "/heappe/Management/BackupDatabase": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Full backup database",
         "parameters": [
           {
@@ -11232,9 +12162,7 @@
     },
     "/heappe/Management/BackupDatabaseTransactionLogs": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Backup database transaction logs",
         "parameters": [
           {
@@ -11312,9 +12240,7 @@
     },
     "/heappe/Management/RestoreDatabase": {
       "post": {
-        "tags": [
-          "Management"
-        ],
+        "tags": ["Management"],
         "summary": "Restore database from specified backup file",
         "requestBody": {
           "description": "",
@@ -11400,11 +12326,203 @@
         }
       }
     },
+    "/heappe/Management/ExportMigrationPackage": {
+      "post": {
+        "tags": ["Management"],
+        "summary": "Export migration package containing database and vault secrets (encrypted).",
+        "parameters": [
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "Session code",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Passphrase",
+            "in": "query",
+            "description": "Optional passphrase for encryption",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/ImportMigrationPackage": {
+      "post": {
+        "tags": ["Management"],
+        "summary": "Import migration package, decrypting and restoring database and vault secrets.",
+        "parameters": [
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "Session code",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Passphrase",
+            "in": "query",
+            "description": "Optional passphrase for decryption",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "Encrypted migration package file (.enc)",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "file": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/heappe/UserAndLimitationManagement/AuthenticateLexisToken": {
       "post": {
-        "tags": [
-          "UserAndLimitationManagement"
-        ],
+        "tags": ["UserAndLimitationManagement"],
         "summary": "Provide user authentication via OpenId token.",
         "requestBody": {
           "description": "Authentication credentials",
@@ -11502,9 +12620,7 @@
     },
     "/heappe/UserAndLimitationManagement/AuthenticateUserOpenId": {
       "post": {
-        "tags": [
-          "UserAndLimitationManagement"
-        ],
+        "tags": ["UserAndLimitationManagement"],
         "summary": "Provide user authentication via OpenId token.",
         "requestBody": {
           "description": "Authentication credentials",
@@ -11602,9 +12718,7 @@
     },
     "/heappe/UserAndLimitationManagement/AuthenticateUserOpenStack": {
       "post": {
-        "tags": [
-          "UserAndLimitationManagement"
-        ],
+        "tags": ["UserAndLimitationManagement"],
         "summary": "Provide user authentication to OpenStack.",
         "requestBody": {
           "description": "Authentication credentials",
@@ -11692,9 +12806,7 @@
     },
     "/heappe/UserAndLimitationManagement/AuthenticateUserPassword": {
       "post": {
-        "tags": [
-          "UserAndLimitationManagement"
-        ],
+        "tags": ["UserAndLimitationManagement"],
         "summary": "Provide user authentication",
         "requestBody": {
           "description": "Authentication credentials",
@@ -11782,9 +12894,7 @@
     },
     "/heappe/UserAndLimitationManagement/AuthenticateUserDigitalSignature": {
       "post": {
-        "tags": [
-          "UserAndLimitationManagement"
-        ],
+        "tags": ["UserAndLimitationManagement"],
         "summary": "Provide user authentication",
         "requestBody": {
           "description": "Authentication credentials",
@@ -11872,9 +12982,7 @@
     },
     "/heappe/UserAndLimitationManagement/CurrentUsageAndLimitationsForCurrentUser": {
       "get": {
-        "tags": [
-          "UserAndLimitationManagement"
-        ],
+        "tags": ["UserAndLimitationManagement"],
         "summary": "Get current resource usage",
         "parameters": [
           {
@@ -11955,9 +13063,7 @@
     },
     "/heappe/UserAndLimitationManagement/ProjectsForCurrentUser": {
       "get": {
-        "tags": [
-          "UserAndLimitationManagement"
-        ],
+        "tags": ["UserAndLimitationManagement"],
         "summary": "Get projects for current user",
         "parameters": [
           {
@@ -12038,9 +13144,7 @@
     },
     "/heappe/UserAndLimitationManagement/CurrentUserInfo": {
       "get": {
-        "tags": [
-          "UserAndLimitationManagement"
-        ],
+        "tags": ["UserAndLimitationManagement"],
         "summary": "Get current user info",
         "parameters": [
           {
@@ -12195,13 +13299,7 @@
         "additionalProperties": false
       },
       "AccountingStateTypeExt": {
-        "enum": [
-          0,
-          1,
-          2,
-          4,
-          8
-        ],
+        "enum": [0, 1, 2, 4, 8],
         "type": "integer",
         "format": "int32"
       },
@@ -12299,10 +13397,7 @@
         "additionalProperties": false
       },
       "AdaptorUserRoleExt": {
-        "required": [
-          "Description",
-          "Name"
-        ],
+        "required": ["Description", "Name"],
         "type": "object",
         "properties": {
           "Name": {
@@ -12321,24 +13416,12 @@
         "additionalProperties": false
       },
       "AdaptorUserRoleType": {
-        "enum": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7
-        ],
+        "enum": [1, 2, 3, 4, 5, 6, 7],
         "type": "integer",
         "format": "int32"
       },
       "AdaptorUserTypeExt": {
-        "enum": [
-          1,
-          2,
-          3
-        ],
+        "enum": [1, 2, 3],
         "type": "integer",
         "format": "int32"
       },
@@ -12648,21 +13731,13 @@
         },
         "additionalProperties": false
       },
+      "ClusterAuthenticationCredentialsAuthType": {
+        "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+        "type": "integer",
+        "format": "int32"
+      },
       "ClusterAuthenticationCredentialsAuthTypeExt": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11
-        ],
+        "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
         "type": "integer",
         "format": "int32"
       },
@@ -12682,21 +13757,8 @@
         },
         "additionalProperties": false
       },
-      "ClusterConnectionProtocol": {
-        "enum": [
-          1,
-          2,
-          4
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "ClusterConnectionProtocolExt": {
-        "enum": [
-          1,
-          2,
-          4
-        ],
+        "enum": [0, 1, 2, 4, 8, 16],
         "type": "integer",
         "format": "int32"
       },
@@ -12754,6 +13816,11 @@
             "description": "Description",
             "nullable": true
           },
+          "MasterNodeName": {
+            "type": "string",
+            "description": "Master node name",
+            "nullable": true
+          },
           "FileTransferMethodIds": {
             "type": "array",
             "items": {
@@ -12775,9 +13842,7 @@
         "additionalProperties": false
       },
       "ClusterExtendedReportExt": {
-        "required": [
-          "Description"
-        ],
+        "required": ["Description"],
         "type": "object",
         "properties": {
           "Id": {
@@ -13271,6 +14336,15 @@
             "description": "Modified at",
             "format": "date-time",
             "nullable": true
+          },
+          "AdaptorUserId": {
+            "type": "integer",
+            "description": "Adaptor user id",
+            "format": "int64",
+            "nullable": true
+          },
+          "PreferredAuthType": {
+            "$ref": "#/components/schemas/ClusterAuthenticationCredentialsAuthTypeExt"
           }
         },
         "additionalProperties": false
@@ -13611,10 +14685,10 @@
             "nullable": true
           },
           "SchedulerType": {
-            "$ref": "#/components/schemas/SchedulerType"
+            "$ref": "#/components/schemas/SchedulerTypeExt"
           },
           "ConnectionProtocol": {
-            "$ref": "#/components/schemas/ClusterConnectionProtocol"
+            "$ref": "#/components/schemas/ClusterConnectionProtocolExt"
           },
           "TimeZone": {
             "maxLength": 10,
@@ -13644,6 +14718,15 @@
             "type": "integer",
             "description": "Proxy connection id",
             "format": "int64",
+            "nullable": true
+          },
+          "CustomConfiguration": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "Custom configuration",
             "nullable": true
           }
         },
@@ -14030,6 +15113,56 @@
         },
         "additionalProperties": false
       },
+      "CreateCredentialModel": {
+        "type": "object",
+        "properties": {
+          "ProjectId": {
+            "type": "integer",
+            "description": "Project id",
+            "format": "int64"
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "AdaptorUserId": {
+            "type": "integer",
+            "description": "Adaptor user id",
+            "format": "int64",
+            "nullable": true
+          },
+          "Username": {
+            "type": "string",
+            "description": "Username",
+            "nullable": true
+          },
+          "AuthType": {
+            "$ref": "#/components/schemas/ClusterAuthenticationCredentialsAuthType"
+          },
+          "GenerateNewKey": {
+            "type": "boolean",
+            "description": "Generate new key",
+            "nullable": true
+          },
+          "ProvidedPrivateKey": {
+            "type": "string",
+            "description": "Provided private key",
+            "nullable": true
+          },
+          "Passphrase": {
+            "type": "string",
+            "description": "Passphrase",
+            "nullable": true
+          },
+          "Password": {
+            "type": "string",
+            "description": "Password",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateFileTransferMethodModel": {
         "type": "object",
         "properties": {
@@ -14164,6 +15297,9 @@
             "type": "string",
             "description": "Project Storage Path",
             "nullable": true
+          },
+          "PreferredAuthType": {
+            "$ref": "#/components/schemas/ClusterAuthenticationCredentialsAuthType"
           }
         },
         "additionalProperties": false
@@ -14328,6 +15464,45 @@
         },
         "additionalProperties": false
       },
+      "CredentialResponseExt": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "description": "Id",
+            "format": "int64"
+          },
+          "Username": {
+            "type": "string",
+            "description": "Username",
+            "nullable": true
+          },
+          "AuthType": {
+            "$ref": "#/components/schemas/ClusterAuthenticationCredentialsAuthType"
+          },
+          "IsGenerated": {
+            "type": "boolean",
+            "description": "Is generated"
+          },
+          "PublicKeyFingerprint": {
+            "type": "string",
+            "description": "Public key fingerprint",
+            "nullable": true
+          },
+          "PublicKeyExt": {
+            "type": "string",
+            "description": "Public key ext",
+            "nullable": true
+          },
+          "AdaptorUserId": {
+            "type": "integer",
+            "description": "Adaptor user id",
+            "format": "int64",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "DataTransferMethodExt": {
         "type": "object",
         "properties": {
@@ -14388,10 +15563,7 @@
         "additionalProperties": false
       },
       "DatabaseBackupTypeExt": {
-        "enum": [
-          0,
-          1
-        ],
+        "enum": [0, 1],
         "type": "integer",
         "format": "int32"
       },
@@ -14447,11 +15619,7 @@
         "additionalProperties": false
       },
       "DeploymentTypeExt": {
-        "enum": [
-          1,
-          2,
-          3
-        ],
+        "enum": [1, 2, 3],
         "type": "integer",
         "format": "int32"
       },
@@ -14481,6 +15649,20 @@
               "$ref": "#/components/schemas/CheckLogExt_"
             },
             "description": "Errors",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DictionaryItemModel": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Name": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -14698,14 +15880,14 @@
         "type": "object",
         "properties": {
           "Name": {
-            "maxLength": 50,
+            "maxLength": 100,
             "minLength": 0,
             "type": "string",
             "description": "Name",
             "nullable": true
           },
           "Value": {
-            "maxLength": 100,
+            "maxLength": 2000,
             "minLength": 0,
             "type": "string",
             "description": "Value",
@@ -14782,6 +15964,15 @@
               "$ref": "#/components/schemas/ClusterNodeTypeExt"
             },
             "description": "Array of node types",
+            "nullable": true
+          },
+          "CustomConfiguration": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "Custom configuration",
             "nullable": true
           }
         },
@@ -14962,14 +16153,7 @@
         "additionalProperties": false
       },
       "FileTransferCipherTypeExt": {
-        "enum": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6
-        ],
+        "enum": [1, 2, 3, 4, 5, 6],
         "type": "integer",
         "format": "int32"
       },
@@ -15093,20 +16277,12 @@
         "additionalProperties": false
       },
       "FileTransferProtocol": {
-        "enum": [
-          1,
-          2,
-          4
-        ],
+        "enum": [1, 2, 4, 8, 16],
         "type": "integer",
         "format": "int32"
       },
       "FileTransferProtocolExt": {
-        "enum": [
-          1,
-          2,
-          4
-        ],
+        "enum": [1, 2, 4, 8, 16],
         "type": "integer",
         "format": "int32"
       },
@@ -15269,9 +16445,7 @@
         "additionalProperties": false
       },
       "HttpGetToJobNodeModel": {
-        "required": [
-          "NodePort"
-        ],
+        "required": ["NodePort"],
         "type": "object",
         "properties": {
           "SessionCode": {
@@ -15315,9 +16489,7 @@
         "additionalProperties": false
       },
       "HttpPostToJobNodeModel": {
-        "required": [
-          "NodePort"
-        ],
+        "required": ["NodePort"],
         "type": "object",
         "properties": {
           "SessionCode": {
@@ -15670,6 +16842,13 @@
             "format": "int64",
             "nullable": true
           },
+          "Reservation": {
+            "maxLength": 1000,
+            "minLength": 0,
+            "type": "string",
+            "description": "Reservation",
+            "nullable": true
+          },
           "IsExtraLong": {
             "type": "boolean",
             "description": "Is extra long"
@@ -15713,24 +16892,12 @@
         "additionalProperties": false
       },
       "JobStateExt": {
-        "enum": [
-          1,
-          2,
-          4,
-          8,
-          16,
-          32,
-          64,
-          128,
-          256
-        ],
+        "enum": [1, 2, 4, 8, 16, 32, 64, 128, 256],
         "type": "integer",
         "format": "int32"
       },
       "LexisCredentialsExt": {
-        "required": [
-          "OpenIdAccessToken"
-        ],
+        "required": ["OpenIdAccessToken"],
         "type": "object",
         "properties": {
           "Username": {
@@ -15881,10 +17048,10 @@
             "nullable": true
           },
           "SchedulerType": {
-            "$ref": "#/components/schemas/SchedulerType"
+            "$ref": "#/components/schemas/SchedulerTypeExt"
           },
           "ConnectionProtocol": {
-            "$ref": "#/components/schemas/ClusterConnectionProtocol"
+            "$ref": "#/components/schemas/ClusterConnectionProtocolExt"
           },
           "TimeZone": {
             "maxLength": 10,
@@ -15914,6 +17081,15 @@
             "type": "integer",
             "description": "Proxy connection id",
             "format": "int64",
+            "nullable": true
+          },
+          "CustomConfiguration": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "Custom configuration",
             "nullable": true
           }
         },
@@ -16261,6 +17437,43 @@
         },
         "additionalProperties": false
       },
+      "ModifyCredentialModel": {
+        "type": "object",
+        "properties": {
+          "ProjectId": {
+            "type": "integer",
+            "description": "Project id",
+            "format": "int64"
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "AdaptorUserId": {
+            "type": "integer",
+            "description": "Adaptor user id",
+            "format": "int64",
+            "nullable": true
+          },
+          "OldUsername": {
+            "type": "string",
+            "description": "Old username",
+            "nullable": true
+          },
+          "NewUsername": {
+            "type": "string",
+            "description": "New username",
+            "nullable": true
+          },
+          "NewPassword": {
+            "type": "string",
+            "description": "New password",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ModifyFileTransferMethodModel": {
         "type": "object",
         "properties": {
@@ -16388,6 +17601,9 @@
             "type": "string",
             "description": "Project Storage Path",
             "nullable": true
+          },
+          "PreferredAuthType": {
+            "$ref": "#/components/schemas/ClusterAuthenticationCredentialsAuthType"
           }
         },
         "additionalProperties": false
@@ -16530,9 +17746,7 @@
         "additionalProperties": false
       },
       "OpenIdCredentialsExt": {
-        "required": [
-          "OpenIdAccessToken"
-        ],
+        "required": ["OpenIdAccessToken"],
         "type": "object",
         "properties": {
           "Username": {
@@ -16611,7 +17825,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": { }
+        "additionalProperties": {}
       },
       "ProjectAggregatedReportExt": {
         "type": "object",
@@ -16915,9 +18129,7 @@
         "additionalProperties": false
       },
       "ProjectReferenceExt": {
-        "required": [
-          "Project"
-        ],
+        "required": ["Project"],
         "type": "object",
         "properties": {
           "Project": {
@@ -17012,20 +18224,12 @@
         "additionalProperties": false
       },
       "ProxyType": {
-        "enum": [
-          1,
-          2,
-          3
-        ],
+        "enum": [1, 2, 3, 16],
         "type": "integer",
         "format": "int32"
       },
       "ProxyTypeExt": {
-        "enum": [
-          1,
-          2,
-          3
-        ],
+        "enum": [1, 2, 3, 16],
         "type": "integer",
         "format": "int32"
       },
@@ -17234,6 +18438,33 @@
         },
         "additionalProperties": false
       },
+      "RemoveCredentialModel": {
+        "type": "object",
+        "properties": {
+          "ProjectId": {
+            "type": "integer",
+            "description": "Project id",
+            "format": "int64"
+          },
+          "SessionCode": {
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "AdaptorUserId": {
+            "type": "integer",
+            "description": "Adaptor user id",
+            "format": "int64",
+            "nullable": true
+          },
+          "Username": {
+            "type": "string",
+            "description": "Username",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "RemoveFileTransferMethodModel": {
         "type": "object",
         "properties": {
@@ -17358,11 +18589,7 @@
         "additionalProperties": false
       },
       "ResourceAllocationTypeExt": {
-        "enum": [
-          1,
-          2,
-          3
-        ],
+        "enum": [1, 2, 3],
         "type": "integer",
         "format": "int32"
       },
@@ -17388,23 +18615,8 @@
         },
         "additionalProperties": false
       },
-      "SchedulerType": {
-        "enum": [
-          1,
-          2,
-          4,
-          8
-        ],
-        "type": "integer",
-        "format": "int32"
-      },
       "SchedulerTypeExt": {
-        "enum": [
-          1,
-          2,
-          4,
-          8
-        ],
+        "enum": [1, 2, 4, 8, 16],
         "type": "integer",
         "format": "int32"
       },
@@ -17712,12 +18924,7 @@
         "additionalProperties": false
       },
       "SynchronizableFilesExt": {
-        "enum": [
-          0,
-          1,
-          2,
-          3
-        ],
+        "enum": [0, 1, 2, 3],
         "type": "integer",
         "format": "int32"
       },
@@ -17860,17 +19067,7 @@
         "additionalProperties": false
       },
       "TaskPriorityExt": {
-        "enum": [
-          0,
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8
-        ],
+        "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8],
         "type": "integer",
         "format": "int32"
       },
@@ -17897,9 +19094,6 @@
         "additionalProperties": false
       },
       "TaskSpecificationExt": {
-        "required": [
-          "MaxCores"
-        ],
         "type": "object",
         "properties": {
           "Name": {
@@ -17911,14 +19105,27 @@
           },
           "MinCores": {
             "type": "integer",
-            "description": "Minimum number of cores",
+            "description": "Minimum number of CPU cores",
             "format": "int32",
             "nullable": true
           },
           "MaxCores": {
             "type": "integer",
-            "description": "Maximum number of cores",
-            "format": "int32"
+            "description": "Maximum number of CPU cores",
+            "format": "int32",
+            "nullable": true
+          },
+          "GpuCores": {
+            "type": "integer",
+            "description": "Number of GPU cores",
+            "format": "int32",
+            "nullable": true
+          },
+          "GpuNodes": {
+            "type": "integer",
+            "description": "Number of GPU nodes",
+            "format": "int32",
+            "nullable": true
           },
           "WalltimeLimit": {
             "type": "integer",
@@ -18030,6 +19237,24 @@
             "description": "Array of environment variables",
             "nullable": true
           },
+          "Memory": {
+            "type": "integer",
+            "description": "Allocated memory for task",
+            "format": "int64",
+            "nullable": true
+          },
+          "MemoryPerCPU": {
+            "type": "integer",
+            "description": "Allocated memory for task (CPU)",
+            "format": "int64",
+            "nullable": true
+          },
+          "MemoryPerGPU": {
+            "type": "integer",
+            "description": "Allocated memory for task (GPU)",
+            "format": "int64",
+            "nullable": true
+          },
           "DependsOn": {
             "type": "array",
             "items": {
@@ -18050,16 +19275,7 @@
         "additionalProperties": false
       },
       "TaskStateExt": {
-        "enum": [
-          1,
-          2,
-          4,
-          8,
-          16,
-          32,
-          64,
-          256
-        ],
+        "enum": [0, 1, 2, 4, 8, 16, 32, 64, 128, 256],
         "type": "integer",
         "format": "int32"
       },
@@ -18074,10 +19290,7 @@
         "additionalProperties": false
       },
       "UsageTypeExt": {
-        "enum": [
-          1,
-          2
-        ],
+        "enum": [1, 2, 3, 4],
         "type": "integer",
         "format": "int32"
       },
@@ -18202,10 +19415,10 @@
   },
   "security": [
     {
-      "ServiceApiKey": [ ]
+      "ServiceApiKey": []
     },
     {
-      "Bearer": [ ]
+      "Bearer": []
     }
   ]
 }
