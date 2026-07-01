@@ -29,6 +29,7 @@ The library ensures consistent and reliable communication with the HEAppE API, h
 
 | Py4HEAppE |          HEAppE Version          | Notes                              |
 | :-------: | :------------------------------: | :--------------------------------- |
+|   2.7.X   | 6.4.X, 6.X.X, 5.X.X 4.X.X        | W/O Admin/File sections in CLI     |
 |   2.6.X   | 6.3.X, 6.2.X 6.1.X, 5.X.X, 4.X.X | W/O Admin/File sections in CLI     |
 |   2.5.X   | 6.3.X, 6.2.X 6.1.X, 5.X.X, 4.X.X | W/O Admin/File sections in CLI     |
 |   2.4.X   |    6.1.X, 6.0.X, 5.X.X, 4.X.X    | W/O Admin/File sections in CLI     |
