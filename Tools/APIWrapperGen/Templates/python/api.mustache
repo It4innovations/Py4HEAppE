@@ -172,9 +172,17 @@ class {{classname}}(object):
         local_var_files = {}
 {{#formParams}}
         if '{{baseName}}' in params:
+            {{#isBinary}}
+            local_var_files['{{baseName}}'] = params['{{baseName}}']  # noqa: E501
+            {{/isBinary}}
+            {{^isBinary}}
             {{#items.isBinary}}
             local_var_files['{{baseName}}'] = params['{{baseName}}']  # noqa: E501
             {{/items.isBinary}}
+            {{^items.isBinary}}
+            form_params.append(('{{baseName}}', params['{{baseName}}']))  # noqa: E501
+            {{/items.isBinary}}
+            {{/isBinary}}
 {{/formParams}}
 
         body_params = None

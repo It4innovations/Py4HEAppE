@@ -5938,6 +5938,7 @@ class ManagementApi(object):
         form_params = []
         local_var_files = {}
         if 'file' in params:
+            local_var_files['file'] = params['file']
 
         body_params = None
         # HTTP header `Accept`
