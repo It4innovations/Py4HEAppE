@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.7.1
+
+### Compatible with HEAppE V6.4.X, V6.3.X, V6.2.X, V6.2.1, V5.0.X, V4.3.X and V4.2.X
+
+### Fixed
+- Fixed syntax error (`IndentationError`) in `management_api.py` caused by an empty `if` block for single file upload parameters.
+- Fixed the Swagger Codegen mustache template to correctly support single file (`isBinary`), list of files (`items.isBinary`), and regular form parameters.
+
 ## 2.7.0
 
 ### Compatible with HEAppE V6.4.X, V6.3.X, V6.2.X, V6.2.1, V5.0.X, V4.3.X and V4.2.X
