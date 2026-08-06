@@ -1,146 +1,299 @@
 <img align="right" width="35%" src="https://raw.githubusercontent.com/It4innovations/Py4HEAppE/refs/heads/master/docs/imgs/logo.png">
 
 # Py4HEAppE (Python for HEAppE Middleware)
+Py4HEAppE provides both a command-line interface and versioned Python wrappers for the [HEAppE](https://heappe.eu) middleware API.
 
-Py4HEAppE simplifies access to the [HEAppE](https://heappe.eu) features by providing a high-level Python interface that abstracts away the complexities of direct API interactions. This allows users to focus on their core tasks without worrying about the underlying details of API communication. It can be usable in <b>two modes</b> depends what the end-user needs:
+You can use it in two ways:
+- HEAppE CLI commands for interactive and scripting use
+- Versioned Python API wrappers for direct integration into your own applications
 
-- HEAppE CLI Commands
-- HEAppE API Wrapper Library
+## Supported HEAppE Versions
+| Py4HEAppE | HEAppE Version | Notes |
+| :-------: | :------------- | :---- |
+| 2.8.X | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
+| 2.7.X | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
+| 2.6.X | 6.3.X, 6.2.X, 6.1.X, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
+| 2.5.X | 6.3.X, 6.2.X, 6.1.X, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
+| 2.4.X | 6.1.X, 6.0.X, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
+| 2.3.X | 6.0.X, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
+| 2.2.X | 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
+| 2.1.X | 5.0.X, 4.3.X, 4.2.X | Without Admin, Job, and File CLI sections |
+| 2.0.X | 5.0.X | Without Admin, Job, and File CLI sections |
+| 1.X.X | 4.3.X, 4.2.X | Without Admin, Job, and File CLI sections |
 
-## Key Benefits
+## Requirements
+- Python 3.11 or newer
+- Access to a deployed HEAppE instance
+- HEAppE instance URL
+- HEAppE accounting string for the target computational project
 
-### Ease of Use:
+## Installation
+If the `py4heappe` executable is not on your `PATH`, use the full path to the installed script or add the script directory to `PATH`.
 
-Py4HEAppE provides a straightforward and intuitive interface for interacting with the HEAppE API. Users can perform complex operations with simple function calls.
-
-### Abstraction:
-
-The library abstracts the intricacies of the HEAppE API, allowing users to work with high-level concepts and operations.
-
-### Efficiency:
-
-By using Py4HEAppE, users can quickly integrate HEAppE functionalities into their Python applications, reducing development time and effort.
-
-### Consistency:
-
-The library ensures consistent and reliable communication with the HEAppE API, handling errors and edge cases gracefully.
-
-## Supported HEAppE versions
-
-| Py4HEAppE |          HEAppE Version          | Notes                              |
-| :-------: | :------------------------------: | :--------------------------------- |
-|   2.7.X   | 6.4.X, 6.X.X, 5.X.X 4.X.X        | W/O Admin/File sections in CLI     |
-|   2.6.X   | 6.3.X, 6.2.X 6.1.X, 5.X.X, 4.X.X | W/O Admin/File sections in CLI     |
-|   2.5.X   | 6.3.X, 6.2.X 6.1.X, 5.X.X, 4.X.X | W/O Admin/File sections in CLI     |
-|   2.4.X   |    6.1.X, 6.0.X, 5.X.X, 4.X.X    | W/O Admin/File sections in CLI     |
-|   2.3.X   |       6.0.x, 5.0.X, 4.X.X        | W/O Admin/File sections in CLI     |
-|   2.2.X   |       5.0.X, 4.3.X, 4.2.X        | W/O Admin/File sections in CLI     |
-|   2.1.X   |       5.0.X, 4.3.X, 4.2.X        | W/O Admin/Job/File sections in CLI |
-|   2.0.X   |              5.0.X               | W/O Admin/Job/File sections in CLI |
-|   1.X.X   |           4.3.X, 4.2.X           | W/O Admin/Job/File sections in CLI |
-
-<!-- GETTING STARTED -->
-
-## Getting Started
-
-### Prerequisites
-
-- Python (version 3.11)
-- Pip (package installer)
-- Access to Deployed HEAppE instance (HEAppE instance URL and HPC project identificator)
-
-### Installation
-
-```
-pip install Py4HEAppE
-```
-
-<b>Note:</b> In some cases, you can obtain a warning message like this <b>"WARNING: The script py4heappe.exe is installed in 'C:\Users\user\AppData\Roaming\Python\Python311\Scripts' which is not on PATH.</b>" If you obtained a similar warning message, it is necessary to add the mentioned path into your operation system <b>PATH</b> variable or use a path with an executable file (i.e. C:\Users\user\AppData\Roaming\Python\Python311\Scripts\py4heappe.exe).
+On Windows, use `py4heappe.exe` instead of `py4heappe`.
 
 ## HEAppE CLI
+The CLI is intended for users who want to work with HEAppE directly from a terminal without writing Python code.
 
-The HEAppE CLI (Command Line Interface) provides a convenient way to interact with the HEAppE Middleware directly from your terminal. It allows users to perform various operations such as authentication, job management, and information retrieval without needing to write any code. This makes it an ideal tool for end-users who need to manage HEAppE Instance efficiently.
-
-### Usage
-
-For using HEAppE CLI it is neeaded to initializing Py4HEAppE for usage with a specific HEAppE Instance (It is necessary to call for the first usage). Command requires <b>HPC project accounting string</b> and <b>HEAppE Instance URL</b>.
+### Initial Setup
+Before using the CLI for the first time, initialize the HEAppE instance URL and the accounting string:
 
 ```shell
-# Initial Setup
 py4heappe Conf Init
 ```
 
-All mentioned functions are aggregated to CLI's specific <b>commands groups (commands aggregations)</b>. To do so, type the following to provide help on how to use managers via CLI.
-
+### Available Command Groups
 ```shell
-# List of commands groups (commands aggregations)
 py4heappe --help
 ```
 
-Available Commands Groups (commands aggregations):
+Current command groups:
+
+- `Conf` for local CLI configuration
+- `Auth` for authentication
+- `CmdTemp` for command template operations
+- `Info` for version and cluster information
+- `Job` for job lifecycle management
+- `FileTransfer` for job file upload and download operations
+- `Report` for resource usage and reporting
+
+### Useful Help Commands
 
 ```shell
-# Authentication commands group
 py4heappe Auth --help
-
-# Command Template Management commands group
-py4heappe CmdTemp --help
-
-# Information commands group
 py4heappe Info --help
-
-# Job Management commands group
 py4heappe Job --help
-
-# Report commands group
+py4heappe FileTransfer --help
 py4heappe Report --help
 ```
 
-<b>Note:</b> On Windows operation system need to use <b>"py4heappe.exe"</b> instead of <b>"py4heappe"</b>.
+### Basic CLI Examples
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+Authenticate with username and password:
 
-## HEAppE API Wrapper Library
-
-In this mode, the Py4HEAppE package is used as a wrapper for HEAppE API specification. It allows users to perform various operations from <b>HEAppE API</b>, such as authentication, job management, and information retrieval, without needing to write their API wrapper code. It can be easily integrated with internal <b>Python</b> projects that HEAppE Middleware wants to be used. More information about usability can be found in the section below.
-
-### Usage
-
-It is required to specify following modules in "requirements.txt" file.
-
-```text
-paramiko>=4.0.0
-scp==0.15.0
-urllib3>=2.0.2
+```shell
+py4heappe Auth UserPass
 ```
 
-The code snapshot illustrated an example of "how to" obtain cluster information from the HEAppE Instance. For more detailed examples of basic HPC workflow, please refer to the [example.py](https://github.com/It4innovations/Py4HEAppE/blob/master/docs/examples/example.py) file.
+Show the HEAppE API version:
+
+```shell
+py4heappe Info Version
+```
+
+List available clusters:
+
+```shell
+py4heappe Info ClusterInfo
+```
+
+List your jobs:
+
+```shell
+py4heappe Job List
+```
+
+### Create a Job from a JSON Template
+
+Py4HEAppE 2.8 adds a JSON-first workflow for job creation.
+
+Generate a minimal job specification template in the current directory:
+
+```shell
+py4heappe Job InitJobSpecification
+```
+
+Or generate it in a specific directory or target file:
+
+```shell
+py4heappe Job InitJobSpecification --file-destination ./job_specs
+py4heappe Job InitJobSpecification --file-destination ./job_specs/demo_job.json
+```
+
+Create a job from the JSON file and override selected values from the command line:
+
+```shell
+py4heappe Job Create \
+  --json-job-spec-file ./job_specification.json \
+  --name demo-job \
+  --cluster-id 2 \
+  --project-id 1 \
+  --task-name 0:demo-task \
+  --max-cores 0:128 \
+  --walltime-limit 0:1800 \
+  --cluster-node-type-id 0:18 \
+  --cmd-template-id 0:3 \
+  --cmd-template-parameters inputParam:testValue
+```
+
+CLI overrides always take precedence over values loaded from `--json-job-spec-file`.
+
+### Override Format for Nested Task Data
+
+Some `Job Create` options work on indexed task items and nested collections.
+
+Examples:
+
+```shell
+# Task scalar override
+py4heappe Job Create --json-job-spec-file ./job_specification.json --task-name 0:main-task
+
+# Task environment variable override
+py4heappe Job Create --json-job-spec-file ./job_specification.json \
+  --task-environment-variable 0:0:Name:OMP_NUM_THREADS \
+  --task-environment-variable 0:0:Value:8
+
+# Task template parameter override
+py4heappe Job Create --json-job-spec-file ./job_specification.json \
+  --task-template-parameter-value 0:0:CommandParameterIdentifier:inputParam \
+  --task-template-parameter-value 0:0:ParameterValue:testValue
+```
+
+### File Transfer Examples
+
+List files changed during job execution:
+
+```shell
+py4heappe FileTransfer ListChanged --help
+```
+
+Download a single file from a job directory:
+
+```shell
+py4heappe FileTransfer Download --help
+```
+
+Upload files directly into the job execution directory:
+
+```shell
+py4heappe FileTransfer Stream --help
+```
+
+## Python API Wrapper
+
+Py4HEAppE also ships versioned Python wrappers generated from the HEAppE API.
+
+Use the wrapper that matches your target HEAppE version:
+
+```python
+import py4heappe.heappe_v6.core as hp
+# or:
+# import py4heappe.heappe_v5.core as hp
+# import py4heappe.heappe_v4.core as hp
+```
+
+There is no single unversioned `py4heappe.core` module. Use the versioned wrapper explicitly.
+
+### Minimal Python Example
 
 ```python
 import json
-import os
-import time
-from io import StringIO
-from pathlib import Path
 
-import py4heappe.core as hp
+import py4heappe.heappe_v6.core as hp
 
-print("\nFetching cluster info...")
-lac_body = {
-    "_preload_content": False
-}
+configuration = hp.Configuration()
+configuration.host = "https://heappe.example.org"
+api_client = hp.ApiClient(configuration)
 
-ciEndpoint = hp.ClusterInformationApi(api_instance)
-r = ciEndpoint.heappe_cluster_information_list_available_clusters_get(**lac_body)
-r_data = json.loads(r.data)
-print(json.dumps(r_data, indent = 3))
+try:
+    auth_api = hp.UserAndLimitationManagementApi(api_client)
+    management_api = hp.ManagementApi(api_client)
+    cluster_api = hp.ClusterInformationApi(api_client)
+
+    auth_body = {
+        "_preload_content": False,
+        "body": {
+            "Credentials": {
+                "Username": "username",
+                "Password": "password",
+            }
+        },
+    }
+
+    auth_response = auth_api.heappe_user_and_limitation_management_authenticate_user_password_post(
+        **auth_body
+    )
+    session_code = json.loads(auth_response.data)
+
+    version_response = management_api.heappe_management_version_information_get(
+        _preload_content=False,
+        SessionCode=session_code,
+    )
+    print(json.dumps(json.loads(version_response.data), indent=2))
+
+    cluster_response = cluster_api.heappe_cluster_information_list_available_clusters_get(
+        _preload_content=False,
+        SessionCode=session_code,
+    )
+    print(json.dumps(json.loads(cluster_response.data), indent=2))
+
+finally:
+    api_client.pool.close()
+    api_client.pool.join()
 ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### Create a Job Through the Python Wrapper
+
+```python
+import json
+
+import py4heappe.heappe_v6.core as hp
+
+configuration = hp.Configuration()
+configuration.host = "https://heappe.example.org"
+api_client = hp.ApiClient(configuration)
+
+try:
+    job_api = hp.JobManagementApi(api_client)
+
+    body = {
+        "_preload_content": False,
+        "body": {
+            "SessionCode": "your-session-code",
+            "JobSpecification": {
+                "Name": "demo-job",
+                "ProjectId": 1,
+                "ClusterId": 2,
+                "FileTransferMethodId": 1,
+                "Tasks": [
+                    {
+                        "Name": "demo-task",
+                        "MinCores": 1,
+                        "MaxCores": 16,
+                        "WalltimeLimit": 1800,
+                        "StandardOutputFile": "stdout",
+                        "StandardErrorFile": "stderr",
+                        "ProgressFile": "stdprog",
+                        "LogFile": "stdlog",
+                        "ClusterNodeTypeId": 18,
+                        "CommandTemplateId": 3,
+                        "TemplateParameterValues": [
+                            {
+                                "CommandParameterIdentifier": "inputParam",
+                                "ParameterValue": "testValue",
+                            }
+                        ],
+                    }
+                ],
+            },
+        },
+    }
+
+    response = job_api.heappe_job_management_create_job_post(**body)
+    job_id = json.loads(response.data)["Id"]
+    print(f"Created job: {job_id}")
+
+finally:
+    api_client.pool.close()
+    api_client.pool.join()
+```
+
+## Notes
+
+- CLI configuration is stored locally after `py4heappe Conf Init`.
+- Most CLI commands require a valid session, so authenticate before running job or file-transfer operations.
+- For detailed option lists, use the built-in `--help` on each command group and subcommand.
 
 ## Acknowledgement
 
-e-Infra CZ
-This work was supported by the Ministry of Education, Youth and Sports of the Czech Republic through the e-INFRA CZ (ID:90254)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+This work was supported by the Ministry of Education, Youth and Sports of the Czech Republic through e-INFRA CZ (ID:90254).
