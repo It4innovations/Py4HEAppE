@@ -992,6 +992,11 @@ def create_job(
             cmd_template_parameters=cmdTemplateParameters,
         )
 
+        # check content of 'parsed_job_specification'
+        resultFilePath = Path("resultJobSpecJson.json")
+        dict_data = parsed_job_specification.to_dict()
+        resultFilePath.write_text(json.dumps(dict_data, indent=4))
+
         body = {
             "_preload_content": False,
             "body": parsed_job_specification,
@@ -1005,7 +1010,6 @@ def create_job(
 
     except rest.ApiException as exception:
         try:
-            print(exception)
             response_data = json.loads(exception.body)
             raise exceptions.Py4HEAppEAPIException(
                 response_data["title"], response_data["detail"], response_data["status"]
