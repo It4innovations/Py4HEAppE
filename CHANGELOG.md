@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.8.0
+
+### Compatible with HEAppE V6.4.X, V6.3.X, V6.2.X, V6.2.1, V5.0.X, V4.3.X and V4.2.X
+
+### Added
+- Added `py4heappe Job InitJobSpecification` to generate a minimal JSON job specification template in the current directory or in a user-provided destination.
+
+### Changed
+- Expanded `py4heappe Job Create` to accept an optional JSON job specification file and merge CLI overrides on top of values loaded from that file.
+- Added optional CLI overrides for the extended HEAppE V6 job specification, including indexed overrides for task attributes and nested collections such as environment variables, template parameter values, required nodes, task parallelization parameters, and task dependencies.
+- Switched job specification parsing to build requests from the generated HEAppE V6 models, including generated-model handling for `Priority` and `DependsOn`.
+- Replaced the previous `Job Remove` behavior with `Job Delete`, including support for the `--archive-logs` option.
+
 ## 2.7.1
 
 ### Compatible with HEAppE V6.4.X, V6.3.X, V6.2.X, V6.2.1, V5.0.X, V4.3.X and V4.2.X
