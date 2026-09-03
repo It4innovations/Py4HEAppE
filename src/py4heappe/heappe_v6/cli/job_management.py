@@ -123,6 +123,8 @@ FULL_JOB_SPECIFICATION_TEMPLATE = {
     },
 }
 
+DEFAULT_RESULT_JOB_SPECIFICATION_FILENAME = "resultJobSpecJson.json"
+
 DEFAULT_CREATE_JOB_SPECIFICATION = {
     "SessionCode": "",
     "JobSpecification": {
@@ -774,11 +776,10 @@ def create_job(
             help="Override task minimum cores as taskIndex:value.",
         ),
     ] = None,
-    max_cores: Annotated[
+    task_max_cores: Annotated[
         Optional[List[str]],
         typer.Option(
-            "--max-cores",
-            "--maxcores",
+            "--task-max-cores",
             help="Override task maximum cores as taskIndex:value.",
         ),
     ] = None,
@@ -967,6 +968,14 @@ def create_job(
             help="Override task template parameter values as taskIndex:itemIndex:field:value.",
         ),
     ] = None,
+    save_result_job_specification: bool = typer.Option(
+        False,
+        "--save-result-job-specification",
+        help=(
+            "Save the resulting job specification JSON to the current working "
+            f"directory as {DEFAULT_RESULT_JOB_SPECIFICATION_FILENAME}."
+        ),
+    ),
 ):
     """Create HPC job"""
     try:
@@ -993,7 +1002,7 @@ def create_job(
             task_scalar_overrides={
                 "Name": (task_name, str, "--task-name"),
                 "MinCores": (task_min_cores, int, "--task-min-cores"),
-                "MaxCores": (max_cores, int, "--max-cores"),
+                "MaxCores": (task_max_cores, int, "--task-max-cores"),
                 "GpuCores": (task_gpu_cores, int, "--task-gpu-cores"),
                 "GpuNodes": (task_gpu_nodes, int, "--task-gpu-nodes"),
                 "WalltimeLimit": (walltime_limit, int, "--walltime-limit"),
@@ -1073,6 +1082,17 @@ def create_job(
             task_template_parameter_values=task_template_parameter_value,
             cmd_template_parameters=cmdTemplateParameters,
         )
+
+        if save_result_job_specification:
+            result_file_path = Path.cwd() / DEFAULT_RESULT_JOB_SPECIFICATION_FILENAME
+            result_file_path.write_text(
+                json.dumps(parsed_job_specification.to_dict(), indent=4),
+                encoding="utf-8",
+            )
+            utils.print_and_log(
+                "Resulting job specification was saved in: "
+                f"{result_file_path.resolve()}"
+            )
 
         body = {
             "_preload_content": False,
