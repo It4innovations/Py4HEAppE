@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.9.0
+
+### Compatible with HEAppE V6.4.X, V6.3.X, V6.2.X, V6.2.1, V5.0.X, V4.3.X and V4.2.X
+
+### Added
+- Added `--full/--minimal` to `py4heappe Job InitJobSpecification` so the initializer can generate either the original minimal template or a full swagger-shaped job specification.
+- Added `--save-result-job-specification` to `py4heappe Job Create` to persist the final parsed job specification JSON in the current working directory before submission.
+
 ## 2.8.0
 
 ### Compatible with HEAppE V6.4.X, V6.3.X, V6.2.X, V6.2.1, V5.0.X, V4.3.X and V4.2.X

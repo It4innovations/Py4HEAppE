@@ -19,7 +19,7 @@ app = typer.Typer(
 )
 
 
-INIT_JOB_SPECIFICATION_TEMPLATE = {
+MINIMAL_JOB_SPECIFICATION_TEMPLATE = {
     "SessionCode": "",
     "JobSpecification": {
         "Name": "test",
@@ -49,6 +49,81 @@ INIT_JOB_SPECIFICATION_TEMPLATE = {
         "ProjectId": 1,
     },
 }
+
+FULL_JOB_SPECIFICATION_TEMPLATE = {
+    "SessionCode": "string",
+    "JobSpecification": {
+        "Name": "string",
+        "ProjectId": 0,
+        "SubProjectIdentifier": "string",
+        "WaitingLimit": 0,
+        "NotificationEmail": "string",
+        "PhoneNumber": "string",
+        "NotifyOnAbort": True,
+        "NotifyOnFinish": True,
+        "NotifyOnStart": True,
+        "ClusterId": 0,
+        "FileTransferMethodId": 0,
+        "Reservation": "string",
+        "IsExtraLong": True,
+        "EnvironmentVariables": [
+            {
+                "Name": "string",
+                "Value": "string",
+            }
+        ],
+        "Tasks": [
+            {
+                "Name": "string",
+                "MinCores": 0,
+                "MaxCores": 0,
+                "GpuCores": 0,
+                "GpuNodes": 0,
+                "WalltimeLimit": 0,
+                "PlacementPolicy": "string",
+                "Priority": 0,
+                "JobArrays": "string",
+                "IsExclusive": True,
+                "IsRerunnable": True,
+                "StandardInputFile": "string",
+                "StandardOutputFile": "string",
+                "StandardErrorFile": "string",
+                "ProgressFile": "string",
+                "LogFile": "string",
+                "ClusterTaskSubdirectory": "string",
+                "ClusterNodeTypeId": 0,
+                "CommandTemplateId": 0,
+                "CpuHyperThreading": True,
+                "RequiredNodes": ["string"],
+                "TaskParallelizationParameters": [
+                    {
+                        "MPIProcesses": 0,
+                        "OpenMPThreads": 0,
+                        "MaxCores": 0,
+                    }
+                ],
+                "EnvironmentVariables": [
+                    {
+                        "Name": "string",
+                        "Value": "string",
+                    }
+                ],
+                "Memory": 0,
+                "MemoryPerCPU": 0,
+                "MemoryPerGPU": 0,
+                "DependsOn": ["string"],
+                "TemplateParameterValues": [
+                    {
+                        "CommandParameterIdentifier": "string",
+                        "ParameterValue": "string",
+                    }
+                ],
+            }
+        ],
+    },
+}
+
+DEFAULT_RESULT_JOB_SPECIFICATION_FILENAME = "resultJobSpecJson.json"
 
 DEFAULT_CREATE_JOB_SPECIFICATION = {
     "SessionCode": "",
@@ -580,10 +655,19 @@ def init_job_specification(
         None,
         help="Destination directory or JSON file path for the initialized job specification.",
     ),
+    full: bool = typer.Option(
+        False,
+        "--full/--minimal",
+        help="Initialize a full job specification instead of the default minimal template.",
+    ),
 ):
-    """Create a minimal HPC job specification JSON file."""
+    """Create a minimal or full HPC job specification JSON file."""
     try:
-        job_specification = deepcopy(INIT_JOB_SPECIFICATION_TEMPLATE)
+        job_specification = deepcopy(
+            FULL_JOB_SPECIFICATION_TEMPLATE
+            if full
+            else MINIMAL_JOB_SPECIFICATION_TEMPLATE
+        )
 
         destination = (
             Path(file_destination).expanduser() if file_destination else Path.cwd()
@@ -597,7 +681,7 @@ def init_job_specification(
 
         file_path.write_text(json.dumps(job_specification, indent=4), encoding="utf-8")
         utils.print_and_log(
-            f"Minimal job specification was created in: {file_path.resolve()}"
+            f"{'Full' if full else 'Minimal'} job specification was created in: {file_path.resolve()}"
         )
 
     except exceptions.Py4HEAppEInternalException as exception:
@@ -692,11 +776,10 @@ def create_job(
             help="Override task minimum cores as taskIndex:value.",
         ),
     ] = None,
-    max_cores: Annotated[
+    task_max_cores: Annotated[
         Optional[List[str]],
         typer.Option(
-            "--max-cores",
-            "--maxcores",
+            "--task-max-cores",
             help="Override task maximum cores as taskIndex:value.",
         ),
     ] = None,
@@ -885,6 +968,14 @@ def create_job(
             help="Override task template parameter values as taskIndex:itemIndex:field:value.",
         ),
     ] = None,
+    save_result_job_specification: bool = typer.Option(
+        False,
+        "--save-result-job-specification",
+        help=(
+            "Save the resulting job specification JSON to the current working "
+            f"directory as {DEFAULT_RESULT_JOB_SPECIFICATION_FILENAME}."
+        ),
+    ),
 ):
     """Create HPC job"""
     try:
@@ -911,7 +1002,7 @@ def create_job(
             task_scalar_overrides={
                 "Name": (task_name, str, "--task-name"),
                 "MinCores": (task_min_cores, int, "--task-min-cores"),
-                "MaxCores": (max_cores, int, "--max-cores"),
+                "MaxCores": (task_max_cores, int, "--task-max-cores"),
                 "GpuCores": (task_gpu_cores, int, "--task-gpu-cores"),
                 "GpuNodes": (task_gpu_nodes, int, "--task-gpu-nodes"),
                 "WalltimeLimit": (walltime_limit, int, "--walltime-limit"),
@@ -992,10 +1083,16 @@ def create_job(
             cmd_template_parameters=cmdTemplateParameters,
         )
 
-        # check content of 'parsed_job_specification'
-        resultFilePath = Path("resultJobSpecJson.json")
-        dict_data = parsed_job_specification.to_dict()
-        resultFilePath.write_text(json.dumps(dict_data, indent=4))
+        if save_result_job_specification:
+            result_file_path = Path.cwd() / DEFAULT_RESULT_JOB_SPECIFICATION_FILENAME
+            result_file_path.write_text(
+                json.dumps(parsed_job_specification.to_dict(), indent=4),
+                encoding="utf-8",
+            )
+            utils.print_and_log(
+                "Resulting job specification was saved in: "
+                f"{result_file_path.resolve()}"
+            )
 
         body = {
             "_preload_content": False,
