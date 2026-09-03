@@ -10,6 +10,7 @@ You can use it in two ways:
 ## Supported HEAppE Versions
 | Py4HEAppE | HEAppE Version | Notes |
 | :-------: | :------------- | :---- |
+| 2.9.X | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 | 2.8.X | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 | 2.7.X | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 | 2.6.X | 6.3.X, 6.2.X, 6.1.X, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
@@ -95,12 +96,18 @@ py4heappe Job List
 
 ### Create a Job from a JSON Template
 
-Py4HEAppE 2.8 adds a JSON-first workflow for job creation.
+Py4HEAppE supports a JSON-first workflow for job creation.
 
 Generate a minimal job specification template in the current directory:
 
 ```shell
 py4heappe Job InitJobSpecification
+```
+
+Generate the full swagger-shaped job specification template instead:
+
+```shell
+py4heappe Job InitJobSpecification --full
 ```
 
 Or generate it in a specific directory or target file:
@@ -113,20 +120,28 @@ py4heappe Job InitJobSpecification --file-destination ./job_specs/demo_job.json
 Create a job from the JSON file and override selected values from the command line:
 
 ```shell
-py4heappe Job Create \
-  --json-job-spec-file ./job_specification.json \
-  --name demo-job \
-  --cluster-id 2 \
-  --project-id 1 \
-  --task-name 0:demo-task \
-  --max-cores 0:128 \
-  --walltime-limit 0:1800 \
-  --cluster-node-type-id 0:18 \
-  --cmd-template-id 0:3 \
-  --cmd-template-parameters inputParam:testValue
+py4heappe Job Create --json-job-spec-file ./job_specification.json \
+    --name demo-job \
+    --cluster-id 2 \
+    --project-id 1 \
+    --task-name 0:demo-task \
+    --task-max-cores 0:128 \
+    --walltime-limit 0:1800 \
+    --cluster-node-type-id 0:18 \
+    --cmd-template-id 0:3 \
+    --cmd-template-parameters inputParam:testValue
 ```
 
 CLI overrides always take precedence over values loaded from `--json-job-spec-file`.
+
+Save the final parsed job specification that will be submitted to HEAppE:
+
+```shell
+py4heappe Job Create --json-job-spec-file ./job_specification.json \
+    --save-result-job-specification
+```
+
+This writes `resultJobSpecJson.json` into the current working directory.
 
 ### Override Format for Nested Task Data
 
