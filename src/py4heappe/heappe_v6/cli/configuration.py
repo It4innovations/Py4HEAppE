@@ -2,11 +2,14 @@ import dotenv
 import os
 import typer
 import validators
+from pathlib import Path
 
 import py4heappe.heappe_v6.core as hp
 import py4heappe.heappe_v6.core.base.utils as utils
 from py4heappe.heappe_v6.core.base import exceptions
 from urllib.parse import urlparse
+
+ENV_FILE_PATH = Path(__file__).with_name(".env")
 
 app = typer.Typer(
     name="HEAppEConfigurationCLI",
@@ -16,8 +19,8 @@ app = typer.Typer(
 
 
 def get_api_instance():
-    dotenv.load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
-    url: str = os.environ.get("url")
+    dotenv.load_dotenv(ENV_FILE_PATH)
+    url = os.environ.get("url")
 
     if url is None:
         raise exceptions.Py4HEAppEInternalException(
@@ -31,9 +34,9 @@ def get_api_instance():
 
 
 def get_project_from_configuration():
-    dotenv.load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
+    dotenv.load_dotenv(ENV_FILE_PATH)
 
-    computationalProject: str = os.environ.get("project")
+    computationalProject = os.environ.get("project")
     if computationalProject is None:
         raise exceptions.Py4HEAppEInternalException(
             "Py4HEappE is not configured. Please check Conf option."
@@ -46,10 +49,10 @@ def get_project_from_configuration():
 def environment_preparation():
     """Initialization"""
     utils.print_and_log("Preparation of Py4HEAppE Environment ...")
-    dotenv.load_dotenv()
+    dotenv.load_dotenv(ENV_FILE_PATH)
 
-    url: str = os.environ.get("url")
-    computationalProject: str = os.environ.get("project")
+    url = os.environ.get("url")
+    computationalProject = os.environ.get("project")
 
     if url is not None or computationalProject is not None:
         reconfigure = typer.confirm(
@@ -82,9 +85,9 @@ def environment_preparation():
         "Enter HEAppE accounting string", confirmation_prompt=True
     )
 
-    dotenv.set_key(os.path.join(os.path.dirname(__file__), ".env"), "url", normalized)
+    dotenv.set_key(ENV_FILE_PATH, "url", normalized)
     dotenv.set_key(
-        os.path.join(os.path.dirname(__file__), ".env"),
+        ENV_FILE_PATH,
         "project",
         computationalProject.upper(),
     )
