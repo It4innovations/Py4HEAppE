@@ -2,12 +2,14 @@
   "openapi": "3.0.4",
   "info": {
     "title": "py4heappe API",
-    "version": "v6.4.0"
+    "version": "v6.5.0"
   },
   "paths": {
     "/heappe/ClusterInformation/ListAvailableClusters": {
       "get": {
-        "tags": ["ClusterInformation"],
+        "tags": [
+          "ClusterInformation"
+        ],
         "summary": "Get available clusters",
         "parameters": [
           {
@@ -129,7 +131,9 @@
     },
     "/heappe/ClusterInformation/RequestCommandTemplateParametersName": {
       "post": {
-        "tags": ["ClusterInformation"],
+        "tags": [
+          "ClusterInformation"
+        ],
         "summary": "Get command template parameters name",
         "requestBody": {
           "content": {
@@ -219,7 +223,9 @@
     },
     "/heappe/ClusterInformation/CurrentClusterNodeUsage": {
       "get": {
-        "tags": ["ClusterInformation"],
+        "tags": [
+          "ClusterInformation"
+        ],
         "summary": "Get actual cluster node usage",
         "parameters": [
           {
@@ -315,7 +321,9 @@
     },
     "/heappe/Credentials/CreateCredential": {
       "post": {
-        "tags": ["Credentials"],
+        "tags": [
+          "Credentials"
+        ],
         "summary": "Creates a new credential. Fill only the properties relevant to the selected AuthType.",
         "requestBody": {
           "content": {
@@ -462,7 +470,9 @@
     },
     "/heappe/Credentials/GetCredentials": {
       "get": {
-        "tags": ["Credentials"],
+        "tags": [
+          "Credentials"
+        ],
         "summary": "Gets a list of credentials for a project.",
         "parameters": [
           {
@@ -624,7 +634,9 @@
     },
     "/heappe/Credentials/ModifyCredential": {
       "put": {
-        "tags": ["Credentials"],
+        "tags": [
+          "Credentials"
+        ],
         "summary": "Modifies credential for a project.",
         "requestBody": {
           "content": {
@@ -760,7 +772,9 @@
     },
     "/heappe/Credentials/RemoveCredential": {
       "delete": {
-        "tags": ["Credentials"],
+        "tags": [
+          "Credentials"
+        ],
         "summary": "Remove credential for a project.",
         "requestBody": {
           "content": {
@@ -907,7 +921,9 @@
     },
     "/heappe/DataTransfer/RequestDataTransfer": {
       "post": {
-        "tags": ["DataTransfer"],
+        "tags": [
+          "DataTransfer"
+        ],
         "summary": "Create Data Transfer",
         "requestBody": {
           "description": "",
@@ -995,7 +1011,9 @@
     },
     "/heappe/DataTransfer/CloseDataTransfer": {
       "post": {
-        "tags": ["DataTransfer"],
+        "tags": [
+          "DataTransfer"
+        ],
         "summary": "Close Data Transfer",
         "requestBody": {
           "description": "",
@@ -1083,7 +1101,9 @@
     },
     "/heappe/DataTransfer/HttpGetToJobNode": {
       "post": {
-        "tags": ["DataTransfer"],
+        "tags": [
+          "DataTransfer"
+        ],
         "summary": "Send HTTP GET to Job node",
         "requestBody": {
           "description": "",
@@ -1171,7 +1191,9 @@
     },
     "/heappe/DataTransfer/HttpPostToJobNode": {
       "post": {
-        "tags": ["DataTransfer"],
+        "tags": [
+          "DataTransfer"
+        ],
         "summary": "Send HTTP POST to Job node",
         "requestBody": {
           "description": "",
@@ -1259,7 +1281,9 @@
     },
     "/heappe/DataTransfer/HttpPostToJobNodeStream": {
       "post": {
-        "tags": ["DataTransfer"],
+        "tags": [
+          "DataTransfer"
+        ],
         "summary": "HttpPostToJobNodeStream",
         "requestBody": {
           "description": "",
@@ -1347,7 +1371,9 @@
     },
     "/heappe/Dictionary/GetClusterAuthenticationCredentialsAuthTypes": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get cluster authentication credentials auth types mapping (External)",
         "responses": {
           "200": {
@@ -1378,8 +1404,43 @@
     },
     "/heappe/Dictionary/GetJobStates": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get job states mapping (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DictionaryItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Dictionary/GetJobStateSources": {
+      "get": {
+        "tags": [
+          "Dictionary"
+        ],
+        "summary": "Get job state sources mapping (External)",
         "responses": {
           "200": {
             "description": "OK",
@@ -1409,7 +1470,9 @@
     },
     "/heappe/Dictionary/GetTaskStates": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get task states mapping (External)",
         "responses": {
           "200": {
@@ -1440,7 +1503,9 @@
     },
     "/heappe/Dictionary/GetTaskPriorities": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get task priorities mapping (External)",
         "responses": {
           "200": {
@@ -1471,7 +1536,9 @@
     },
     "/heappe/Dictionary/GetAdaptorUserTypes": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get adaptor user types mapping (External)",
         "responses": {
           "200": {
@@ -1502,7 +1569,9 @@
     },
     "/heappe/Dictionary/GetSchedulerTypes": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get scheduler types mapping (External)",
         "responses": {
           "200": {
@@ -1533,7 +1602,9 @@
     },
     "/heappe/Dictionary/GetFileTransferProtocols": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get file transfer protocols mapping (External)",
         "responses": {
           "200": {
@@ -1564,7 +1635,9 @@
     },
     "/heappe/Dictionary/GetProxyTypes": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get proxy types mapping (External)",
         "responses": {
           "200": {
@@ -1595,7 +1668,9 @@
     },
     "/heappe/Dictionary/GetDatabaseBackupTypes": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get database backup types mapping (External)",
         "responses": {
           "200": {
@@ -1626,7 +1701,9 @@
     },
     "/heappe/Dictionary/GetClusterConnectionProtocols": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get cluster connection protocols mapping (External)",
         "responses": {
           "200": {
@@ -1657,7 +1734,9 @@
     },
     "/heappe/Dictionary/GetAccountingStateTypes": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get accounting state types mapping (External)",
         "responses": {
           "200": {
@@ -1688,7 +1767,9 @@
     },
     "/heappe/Dictionary/GetResourceAllocationTypes": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get resource allocation types mapping (External)",
         "responses": {
           "200": {
@@ -1719,7 +1800,9 @@
     },
     "/heappe/Dictionary/GetDeploymentTypes": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get deployment types mapping (External)",
         "responses": {
           "200": {
@@ -1750,7 +1833,9 @@
     },
     "/heappe/Dictionary/GetUsageTypes": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get usage types mapping (External)",
         "responses": {
           "200": {
@@ -1781,7 +1866,9 @@
     },
     "/heappe/Dictionary/GetSynchronizableFiles": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get synchronizable files mapping (External)",
         "responses": {
           "200": {
@@ -1812,7 +1899,9 @@
     },
     "/heappe/Dictionary/GetFileTransferCipherTypes": {
       "get": {
-        "tags": ["Dictionary"],
+        "tags": [
+          "Dictionary"
+        ],
         "summary": "Get file transfer cipher types mapping (External)",
         "responses": {
           "200": {
@@ -1841,9 +1930,114 @@
         }
       }
     },
+    "/heappe/Dictionary/GetClusterCustomConfigurationKeys": {
+      "get": {
+        "tags": [
+          "Dictionary"
+        ],
+        "summary": "Get cluster custom configuration keys mapping with scheduler type compatibility flags (External)",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClusterCustomConfigurationKeyItemModel"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Events": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Establish a WebSocket connection for real-time CloudEvents (v1.0) streaming.",
+        "parameters": [
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "Optional session code for authentication via query parameter.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "101": {
+            "description": "Switching Protocols - WebSocket connection established for streaming CloudEvents.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudEventExt"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK - Returns CloudEvent stream schema representation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudEventExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Request is not a valid WebSocket request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication failed or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - Server failure during event hub processing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/heappe/FileTransfer/RequestFileTransfer": {
       "post": {
-        "tags": ["FileTransfer"],
+        "tags": [
+          "FileTransfer"
+        ],
         "summary": "Create file transfer tunnel",
         "requestBody": {
           "description": "",
@@ -1931,7 +2125,9 @@
     },
     "/heappe/FileTransfer/CloseFileTransfer": {
       "post": {
-        "tags": ["FileTransfer"],
+        "tags": [
+          "FileTransfer"
+        ],
         "summary": "Close file transfer tunnel",
         "requestBody": {
           "description": "",
@@ -2019,7 +2215,9 @@
     },
     "/heappe/FileTransfer/DownloadPartsOfJobFilesFromCluster": {
       "post": {
-        "tags": ["FileTransfer"],
+        "tags": [
+          "FileTransfer"
+        ],
         "summary": "Download part of job files from Cluster",
         "requestBody": {
           "description": "",
@@ -2110,7 +2308,9 @@
     },
     "/heappe/FileTransfer/ListChangedFilesForJob": {
       "get": {
-        "tags": ["FileTransfer"],
+        "tags": [
+          "FileTransfer"
+        ],
         "summary": "Get all changes files during job execution",
         "parameters": [
           {
@@ -2203,7 +2403,9 @@
     },
     "/heappe/FileTransfer/DownloadFileFromCluster": {
       "post": {
-        "tags": ["FileTransfer"],
+        "tags": [
+          "FileTransfer"
+        ],
         "summary": "Download specific file from Cluster",
         "requestBody": {
           "description": "",
@@ -2291,7 +2493,9 @@
     },
     "/heappe/FileTransfer/UploadFilesToJobExecutionDir": {
       "post": {
-        "tags": ["FileTransfer"],
+        "tags": [
+          "FileTransfer"
+        ],
         "summary": "Upload job to file to job execution dir",
         "parameters": [
           {
@@ -2414,7 +2618,9 @@
     },
     "/heappe/Health": {
       "get": {
-        "tags": ["Health"],
+        "tags": [
+          "Health"
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -2431,7 +2637,9 @@
     },
     "/heappe/JobManagement/CreateJob": {
       "post": {
-        "tags": ["JobManagement"],
+        "tags": [
+          "JobManagement"
+        ],
         "summary": "Create job specification",
         "requestBody": {
           "description": "",
@@ -2519,7 +2727,9 @@
     },
     "/heappe/JobManagement/SubmitJob": {
       "put": {
-        "tags": ["JobManagement"],
+        "tags": [
+          "JobManagement"
+        ],
         "summary": "Submit job",
         "requestBody": {
           "description": "",
@@ -2607,7 +2817,9 @@
     },
     "/heappe/JobManagement/CancelJob": {
       "put": {
-        "tags": ["JobManagement"],
+        "tags": [
+          "JobManagement"
+        ],
         "summary": "Cancel job",
         "requestBody": {
           "description": "",
@@ -2695,7 +2907,9 @@
     },
     "/heappe/JobManagement/DeleteJob": {
       "delete": {
-        "tags": ["JobManagement"],
+        "tags": [
+          "JobManagement"
+        ],
         "summary": "Delete job",
         "requestBody": {
           "description": "",
@@ -2783,7 +2997,9 @@
     },
     "/heappe/JobManagement/ListJobsForCurrentUser": {
       "get": {
-        "tags": ["JobManagement"],
+        "tags": [
+          "JobManagement"
+        ],
         "summary": "Get all jobs for user",
         "parameters": [
           {
@@ -2924,9 +3140,161 @@
         }
       }
     },
+    "/heappe/JobManagement/ListDetailedJobsForAdmin": {
+      "get": {
+        "tags": [
+          "JobManagement"
+        ],
+        "summary": "List detailed jobs for project admin or manager with pagination and filters",
+        "parameters": [
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "Session code",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "JobStates",
+            "in": "query",
+            "description": "Comma separated string of job state IDs (e.g. \"1,2,4,8,128\")",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Limit",
+            "in": "query",
+            "description": "Max number of jobs to return",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "description": "Number of jobs to skip",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "UserId",
+            "in": "query",
+            "description": "Filter by user ID",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "ClusterId",
+            "in": "query",
+            "description": "Filter by cluster ID",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "SubProjectId",
+            "in": "query",
+            "description": "Filter by subproject ID",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "ProjectId",
+            "in": "query",
+            "description": "Filter by project ID",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "Search",
+            "in": "query",
+            "description": "Search term (job or task name)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminJobPagedResultExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/heappe/JobManagement/CurrentInfoForJob": {
       "get": {
-        "tags": ["JobManagement"],
+        "tags": [
+          "JobManagement"
+        ],
         "summary": "Get current info for job",
         "parameters": [
           {
@@ -2944,6 +3312,14 @@
             "schema": {
               "type": "integer",
               "format": "int64"
+            }
+          },
+          {
+            "name": "ForceDirectQuery",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "default": false
             }
           }
         ],
@@ -3013,7 +3389,9 @@
     },
     "/heappe/JobManagement/CopyJobDataToTemp": {
       "post": {
-        "tags": ["JobManagement"],
+        "tags": [
+          "JobManagement"
+        ],
         "summary": "Copy job data to temp folder",
         "requestBody": {
           "description": "",
@@ -3101,7 +3479,9 @@
     },
     "/heappe/JobManagement/CopyJobDataFromTemp": {
       "post": {
-        "tags": ["JobManagement"],
+        "tags": [
+          "JobManagement"
+        ],
         "summary": "Copy job data from temp folder",
         "requestBody": {
           "description": "",
@@ -3189,7 +3569,9 @@
     },
     "/heappe/JobManagement/AllocatedNodesIPs": {
       "get": {
-        "tags": ["JobManagement"],
+        "tags": [
+          "JobManagement"
+        ],
         "summary": "Get Allocated Nodes IPs",
         "parameters": [
           {
@@ -3279,7 +3661,9 @@
     },
     "/heappe/JobManagement/DryRunJob": {
       "post": {
-        "tags": ["JobManagement"],
+        "tags": [
+          "JobManagement"
+        ],
         "summary": "Dry run job",
         "requestBody": {
           "description": "",
@@ -3355,9 +3739,81 @@
         }
       }
     },
+    "/heappe/JobManagement/TaskCallback": {
+      "post": {
+        "tags": [
+          "JobManagement"
+        ],
+        "summary": "Update task status callback",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskCallbackModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskCallbackModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TaskCallbackModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/heappe/JobReporting/ListAdaptorUserGroups": {
       "get": {
-        "tags": ["JobReporting"],
+        "tags": [
+          "JobReporting"
+        ],
         "summary": "Get user groups",
         "parameters": [
           {
@@ -3435,7 +3891,9 @@
     },
     "/heappe/JobReporting/UserResourceUsageReport": {
       "get": {
-        "tags": ["JobReporting"],
+        "tags": [
+          "JobReporting"
+        ],
         "summary": "Get resource usage report for user",
         "parameters": [
           {
@@ -3579,7 +4037,9 @@
     },
     "/heappe/JobReporting/UserGroupResourceUsageReport": {
       "get": {
-        "tags": ["JobReporting"],
+        "tags": [
+          "JobReporting"
+        ],
         "summary": "Get resource usage for user group",
         "parameters": [
           {
@@ -3728,7 +4188,9 @@
     },
     "/heappe/JobReporting/ResourceUsageReportForJob": {
       "get": {
-        "tags": ["JobReporting"],
+        "tags": [
+          "JobReporting"
+        ],
         "summary": "Get resource usage for executed job",
         "parameters": [
           {
@@ -3816,7 +4278,9 @@
     },
     "/heappe/JobReporting/JobsStateAgregationReport": {
       "get": {
-        "tags": ["JobReporting"],
+        "tags": [
+          "JobReporting"
+        ],
         "summary": "Get job state aggregation report",
         "parameters": [
           {
@@ -3897,7 +4361,9 @@
     },
     "/heappe/JobReporting/AggregatedUserGroupResourceUsageReport": {
       "get": {
-        "tags": ["JobReporting"],
+        "tags": [
+          "JobReporting"
+        ],
         "summary": "Get aggregated resource report usage for user groups",
         "parameters": [
           {
@@ -4028,7 +4494,9 @@
     },
     "/heappe/JobReporting/JobsDetailedReport": {
       "get": {
-        "tags": ["JobReporting"],
+        "tags": [
+          "JobReporting"
+        ],
         "summary": "Get job detailed report",
         "parameters": [
           {
@@ -4170,7 +4638,9 @@
     },
     "/heappe/Management/InstanceInformation": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get HEAppE Information",
         "parameters": [
           {
@@ -4248,7 +4718,9 @@
     },
     "/heappe/Management/VersionInformation": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get HEAppE Version Information",
         "parameters": [
           {
@@ -4326,7 +4798,9 @@
     },
     "/heappe/Management/CommandTemplate": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List Command Template",
         "parameters": [
           {
@@ -4411,7 +4885,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create Static Command Template",
         "requestBody": {
           "description": "CreateCommandTemplateModel",
@@ -4497,7 +4973,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify Static Command Template",
         "requestBody": {
           "description": "ModifyCommandTemplateModel",
@@ -4585,7 +5063,9 @@
     },
     "/heappe/Management/CommandTemplates": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List Command Templates",
         "parameters": [
           {
@@ -4675,7 +5155,9 @@
     },
     "/heappe/Management/GenericCommandTemplate": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create Generic Command Template",
         "requestBody": {
           "description": "",
@@ -4761,7 +5243,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify Generic Command Template",
         "requestBody": {
           "description": "",
@@ -4849,7 +5333,9 @@
     },
     "/heappe/Management/CommandTemplateFromGeneric": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create Command Template from Generic Command Template",
         "requestBody": {
           "description": "CreateCommandTemplateFromGenericModel",
@@ -4935,7 +5421,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify Command Template based on Generic Command Template",
         "requestBody": {
           "description": "ModifyCommandTemplateFromGenericModel",
@@ -5023,7 +5511,9 @@
     },
     "/heappe/Management/RemoveCommandTemplate": {
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove Command Template",
         "requestBody": {
           "description": "RemoveCommandTemplateModel",
@@ -5111,7 +5601,9 @@
     },
     "/heappe/Management/CommandTemplateParameter": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get Command Template Parameter by id",
         "parameters": [
           {
@@ -5186,7 +5678,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create a new Command Template Parameter",
         "requestBody": {
           "description": "CreateCommandTemplateModel",
@@ -5272,7 +5766,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify an existing Command Template Parameter",
         "requestBody": {
           "description": "ModifyCommandTemplateParameterModel",
@@ -5358,7 +5854,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove an existing Command Template Parameter",
         "requestBody": {
           "description": "RemoveCommandTemplateParameterModel",
@@ -5446,7 +5944,9 @@
     },
     "/heappe/Management/AdaptorUser": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get Adaptor User by Username",
         "parameters": [
           {
@@ -5520,7 +6020,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create Adaptor User",
         "requestBody": {
           "description": "",
@@ -5596,7 +6098,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify Adaptor User",
         "requestBody": {
           "description": "",
@@ -5672,7 +6176,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Delete Adaptor User",
         "requestBody": {
           "description": "",
@@ -5748,9 +6254,91 @@
         }
       }
     },
+    "/heappe/Management/SetAdaptorUserBlockStatus": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Set Adaptor User Block Status",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetAdaptorUserBlockStatusModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetAdaptorUserBlockStatusModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetAdaptorUserBlockStatusModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdaptorUserCreatedExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/heappe/Management/AdaptorUsers": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List Adaptor Users",
         "parameters": [
           {
@@ -5821,7 +6409,9 @@
     },
     "/heappe/Management/AdaptorUsersInProject": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List Adaptor Users in Project",
         "parameters": [
           {
@@ -5901,7 +6491,9 @@
     },
     "/heappe/Management/AssignAdaptorUserToProject": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Assign Adaptor User to Project",
         "requestBody": {
           "description": "",
@@ -5979,7 +6571,9 @@
     },
     "/heappe/Management/RemoveAdaptorUserFromProject": {
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove Adaptor User from Project",
         "requestBody": {
           "description": "",
@@ -6057,7 +6651,9 @@
     },
     "/heappe/Management/AdaptorUsersInUserGroup": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List Adaptor Users in User Group",
         "parameters": [
           {
@@ -6137,7 +6733,9 @@
     },
     "/heappe/Management/AssignAdaptorUserToUserGroup": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Assign Adaptor User to User Group",
         "requestBody": {
           "description": "",
@@ -6215,7 +6813,9 @@
     },
     "/heappe/Management/RemoveAdaptorUserFromUserGroup": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Unassign Adaptor User from User Group",
         "requestBody": {
           "description": "",
@@ -6291,22 +6891,173 @@
         }
       }
     },
-    "/heappe/Management/ProjectsByAccountingStrings": {
-      "get": {
-        "tags": ["Management"],
-        "summary": "Get project by accounting string",
-        "parameters": [
-          {
-            "name": "AccountingString",
-            "in": "query",
-            "description": "",
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "string"
+    "/heappe/Management/AssignSystemRoleToUser": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Assign System Role to User across all projects",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignSystemRoleToUserModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignSystemRoleToUserModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignSystemRoleToUserModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemRoleAssignmentExt"
+                }
               }
             }
           },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/RemoveSystemRoleFromUser": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Remove System Role from User across all projects",
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveSystemRoleFromUserModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveSystemRoleFromUserModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveSystemRoleFromUserModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SystemRoleAssignmentExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/SystemRoleAssignments": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "List all System Role Assignments",
+        "parameters": [
           {
             "name": "SessionCode",
             "in": "query",
@@ -6324,7 +7075,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/ProjectExt"
+                    "$ref": "#/components/schemas/SystemRoleAssignmentExt"
                   }
                 }
               }
@@ -6373,9 +7124,115 @@
         }
       }
     },
+    "/heappe/Management/ProjectsByAccountingStrings": {
+      "get": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Get project by accounting string",
+        "parameters": [
+          {
+            "name": "AccountingString",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProjectExt"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/heappe/Management/Projects": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List Projects",
         "parameters": [
           {
@@ -6456,7 +7313,9 @@
     },
     "/heappe/Management/Project": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get Project by id",
         "parameters": [
           {
@@ -6531,7 +7390,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create project",
         "requestBody": {
           "description": "",
@@ -6617,7 +7478,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify project",
         "requestBody": {
           "description": "",
@@ -6703,7 +7566,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove project",
         "requestBody": {
           "description": "",
@@ -6791,7 +7656,9 @@
     },
     "/heappe/Management/ProjectAssignmentToCluster": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get ProjectAssignmentToCluster by id",
         "parameters": [
           {
@@ -6875,7 +7742,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Assign project to the cluster",
         "requestBody": {
           "description": "",
@@ -6961,7 +7830,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify project assignment to the cluster",
         "requestBody": {
           "description": "",
@@ -7047,7 +7918,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove project assignment to the cluster",
         "requestBody": {
           "description": "",
@@ -7135,7 +8008,9 @@
     },
     "/heappe/Management/ProjectAssignmentToClusters": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "parameters": [
           {
             "name": "ProjectId",
@@ -7212,7 +8087,9 @@
     },
     "/heappe/Management/Cluster": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get Cluster by id",
         "parameters": [
           {
@@ -7287,7 +8164,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create Cluster",
         "requestBody": {
           "description": "",
@@ -7373,7 +8252,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Update Cluster",
         "requestBody": {
           "description": "",
@@ -7459,7 +8340,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove Cluster",
         "requestBody": {
           "description": "",
@@ -7547,7 +8430,9 @@
     },
     "/heappe/Management/Clusters": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get all clusters",
         "parameters": [
           {
@@ -7618,7 +8503,9 @@
     },
     "/heappe/Management/ClusterNodeTypes": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List ClusterNodeTypes",
         "parameters": [
           {
@@ -7699,7 +8586,9 @@
     },
     "/heappe/Management/ClusterNodeType": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get ClusterNodeType by id",
         "parameters": [
           {
@@ -7774,7 +8663,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create ClusterNodeType",
         "requestBody": {
           "description": "",
@@ -7860,7 +8751,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify ClusterNodeType",
         "requestBody": {
           "description": "",
@@ -7946,7 +8839,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove ClusterNodeType",
         "requestBody": {
           "description": "",
@@ -8034,7 +8929,9 @@
     },
     "/heappe/Management/ClusterProxyConnection": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get ClusterProxyConnection by id",
         "parameters": [
           {
@@ -8109,7 +9006,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create ClusterProxyConnection",
         "requestBody": {
           "description": "",
@@ -8195,7 +9094,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify ClusterProxyConnection",
         "requestBody": {
           "description": "",
@@ -8281,7 +9182,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove ClusterProxyConnection",
         "requestBody": {
           "description": "",
@@ -8369,7 +9272,9 @@
     },
     "/heappe/Management/ClusterProxyConnections": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get ClusterProxyConnections",
         "parameters": [
           {
@@ -8440,7 +9345,9 @@
     },
     "/heappe/Management/FileTransferMethods": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List FileTransferMethods",
         "parameters": [
           {
@@ -8521,7 +9428,9 @@
     },
     "/heappe/Management/FileTransferMethod": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get FileTransferMethod by id",
         "parameters": [
           {
@@ -8596,7 +9505,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create FileTransferMethod",
         "requestBody": {
           "description": "",
@@ -8682,7 +9593,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify FileTransferMethod",
         "requestBody": {
           "description": "",
@@ -8768,7 +9681,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove FileTransferMethod",
         "requestBody": {
           "description": "",
@@ -8856,7 +9771,9 @@
     },
     "/heappe/Management/ClusterNodeTypeAggregation": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get ClusterNodeTypeAggregation by id",
         "parameters": [
           {
@@ -8931,7 +9848,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create ClusterNodeTypeAggregations",
         "requestBody": {
           "description": "",
@@ -9017,7 +9936,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify ClusterNodeTypeAggregations",
         "requestBody": {
           "description": "",
@@ -9103,7 +10024,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove ClusterNodeTypeAggregation",
         "requestBody": {
           "description": "",
@@ -9191,7 +10114,9 @@
     },
     "/heappe/Management/ClusterNodeTypeAggregations": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get all ClusterNodeTypeAggregations",
         "parameters": [
           {
@@ -9262,7 +10187,9 @@
     },
     "/heappe/Management/ClusterNodeTypeAggregationAccountings": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List ClusterNodeTypeAggregationAccountings",
         "parameters": [
           {
@@ -9343,7 +10270,9 @@
     },
     "/heappe/Management/ClusterNodeTypeAggregationAccounting": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get ClusterNodeTypeAggregationAccounting by id",
         "parameters": [
           {
@@ -9427,7 +10356,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create ClusterNodeTypeAggregationAccounting",
         "requestBody": {
           "description": "",
@@ -9513,7 +10444,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove ClusterNodeTypeAggregationAccounting",
         "requestBody": {
           "description": "",
@@ -9601,7 +10534,9 @@
     },
     "/heappe/Management/Accountings": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List Accountings",
         "parameters": [
           {
@@ -9682,7 +10617,9 @@
     },
     "/heappe/Management/Accounting": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get Accounting by id",
         "parameters": [
           {
@@ -9757,7 +10694,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create Accounting",
         "requestBody": {
           "description": "",
@@ -9843,7 +10782,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify Accounting",
         "requestBody": {
           "description": "",
@@ -9929,7 +10870,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove Accounting",
         "requestBody": {
           "description": "",
@@ -10017,7 +10960,9 @@
     },
     "/heappe/Management/ProjectClusterNodeTypeAggregation": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get ProjectClusterNodeTypeAggregation by id",
         "parameters": [
           {
@@ -10101,7 +11046,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create ProjectClusterNodeTypeAggregation",
         "requestBody": {
           "description": "",
@@ -10187,7 +11134,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify ProjectClusterNodeTypeAggregation",
         "requestBody": {
           "description": "",
@@ -10273,7 +11222,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove ProjectClusterNodeTypeAggregation",
         "requestBody": {
           "description": "",
@@ -10361,7 +11312,9 @@
     },
     "/heappe/Management/ProjectClusterNodeTypeAggregations": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get ProjectClusterNodeTypeAggregations by ProjectId",
         "parameters": [
           {
@@ -10441,7 +11394,9 @@
     },
     "/heappe/Management/SubProjects": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List SubProjects",
         "parameters": [
           {
@@ -10531,7 +11486,9 @@
     },
     "/heappe/Management/SubProject": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List SubProject",
         "parameters": [
           {
@@ -10616,7 +11573,9 @@
         }
       },
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Create SubProject",
         "requestBody": {
           "description": "",
@@ -10702,7 +11661,9 @@
         }
       },
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify SubProject",
         "requestBody": {
           "description": "",
@@ -10788,7 +11749,9 @@
         }
       },
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove SubProject",
         "requestBody": {
           "description": "",
@@ -10876,7 +11839,9 @@
     },
     "/heappe/Management/SecureShellKeys": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Get SSH keys for project",
         "parameters": [
           {
@@ -10966,7 +11931,9 @@
     },
     "/heappe/Management/GenerateSecureShellKey": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Generate SSH key",
         "requestBody": {
           "description": "",
@@ -11057,7 +12024,9 @@
     },
     "/heappe/Management/ModifyClusterAuthenticationCredential": {
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Modify Cluster Authentication Credential",
         "requestBody": {
           "description": "",
@@ -11138,7 +12107,9 @@
     },
     "/heappe/Management/RegenerateSecureShellKey": {
       "put": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Regenerate SSH key",
         "requestBody": {
           "description": "",
@@ -11226,7 +12197,9 @@
     },
     "/heappe/Management/RemoveSecureShellKey": {
       "delete": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Remove SSH key",
         "requestBody": {
           "description": "",
@@ -11314,7 +12287,9 @@
     },
     "/heappe/Management/InitializeClusterScriptDirectory": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Initialize cluster script directory for SSH HPC Account",
         "requestBody": {
           "description": "",
@@ -11405,7 +12380,9 @@
     },
     "/heappe/Management/TestClusterAccessForAccount": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Test cluster access for robot account",
         "parameters": [
           {
@@ -11503,7 +12480,9 @@
     },
     "/heappe/Management/ClusterAccountStatus": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "",
         "parameters": [
           {
@@ -11601,7 +12580,9 @@
     },
     "/heappe/Management/ComputeAccounting": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Compute accounting - calculate accounting via accounting formulas",
         "requestBody": {
           "description": "",
@@ -11689,7 +12670,9 @@
     },
     "/heappe/Management/AccountingState": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "parameters": [
           {
             "name": "ProjectId",
@@ -11773,7 +12756,9 @@
     },
     "/heappe/Management/Status": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "parameters": [
           {
             "name": "ProjectId",
@@ -11873,7 +12858,9 @@
     },
     "/heappe/Management/StatusErrorLogs": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "parameters": [
           {
             "name": "ProjectId",
@@ -11973,7 +12960,9 @@
     },
     "/heappe/Management/Backups": {
       "get": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "List database backups",
         "parameters": [
           {
@@ -12084,7 +13073,9 @@
     },
     "/heappe/Management/BackupDatabase": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Full backup database",
         "parameters": [
           {
@@ -12162,7 +13153,9 @@
     },
     "/heappe/Management/BackupDatabaseTransactionLogs": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Backup database transaction logs",
         "parameters": [
           {
@@ -12240,7 +13233,9 @@
     },
     "/heappe/Management/RestoreDatabase": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Restore database from specified backup file",
         "requestBody": {
           "description": "",
@@ -12328,7 +13323,9 @@
     },
     "/heappe/Management/ExportMigrationPackage": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Export migration package containing database and vault secrets (encrypted).",
         "parameters": [
           {
@@ -12415,7 +13412,9 @@
     },
     "/heappe/Management/ImportMigrationPackage": {
       "post": {
-        "tags": ["Management"],
+        "tags": [
+          "Management"
+        ],
         "summary": "Import migration package, decrypting and restoring database and vault secrets.",
         "parameters": [
           {
@@ -12520,9 +13519,1333 @@
         }
       }
     },
+    "/heappe/Management/GetJobsMonitoring": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Get jobs monitoring list with keyset pagination (admin only).",
+        "requestBody": {
+          "description": "Request parameters containing page size and cursor",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetJobsMonitoringModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetJobsMonitoringModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetJobsMonitoringModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobMonitoringPageExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/GetExternalServicesReport": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Get external services health report and telemetry stats (admin only).",
+        "requestBody": {
+          "description": "Request parameters containing optional time window",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetExternalServicesReportModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetExternalServicesReportModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetExternalServicesReportModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalServicesReportExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/GetJobExternalServiceLogs": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Get external service and database telemetry logs for a specific job.",
+        "requestBody": {
+          "description": "Request parameters containing job ID and session code",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetJobExternalServiceLogsModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetJobExternalServiceLogsModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetJobExternalServiceLogsModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobExternalServiceLogExt"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/GetExternalServicesStatistics": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Get aggregated external service and database telemetry statistics for a time window (admin only).",
+        "requestBody": {
+          "description": "Request parameters containing time window and optional filters",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetExternalServicesStatisticsModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetExternalServicesStatisticsModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetExternalServicesStatisticsModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalServiceStatisticsExt"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/Management/GetExternalServicesLiveStatus": {
+      "post": {
+        "tags": [
+          "Management"
+        ],
+        "summary": "Get live availability and latency status for all registered external services (admin only).",
+        "requestBody": {
+          "description": "Request parameters containing session code",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalServicesLiveStatusModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalServicesLiveStatusModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalServicesLiveStatusModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ExternalServiceLiveStatusExt"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Content Too Large",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/QScheduler/OpenSession": {
+      "post": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "Open QScheduler session explicitly",
+        "requestBody": {
+          "description": "Session specification",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenQSchedulerSessionModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenQSchedulerSessionModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OpenQSchedulerSessionModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/QScheduler/CloseSession": {
+      "delete": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "Close QScheduler session explicitly",
+        "requestBody": {
+          "description": "Session identification",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloseQSchedulerSessionModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloseQSchedulerSessionModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CloseQSchedulerSessionModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/QScheduler/GetSessionInfo": {
+      "get": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "Get QScheduler session info and state",
+        "parameters": [
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "HEAppE session code",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SessionId",
+            "in": "query",
+            "description": "QScheduler session ID (returned by OpenSession)",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QSchedulerSessionInfoExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/QScheduler/ListSessions": {
+      "get": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "List QScheduler sessions with optional state, cluster, and project filters.",
+        "parameters": [
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "HEAppE session code",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "State",
+            "in": "query",
+            "description": "Optional state filter (\"Open\" or \"Closed\")",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ClusterId",
+            "in": "query",
+            "description": "Optional cluster ID filter",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "ProjectId",
+            "in": "query",
+            "description": "Optional project ID filter",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QSchedulerSessionInfoExt"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/QScheduler/CreateAndSubmitJob": {
+      "post": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "Create a QScheduler job with simplified specification and optional multipart payload upload per task, and submit it immediately.",
+        "description": "Sample JSON structure to enter into the 'model' form field:\n\n    {\n      \"SessionCode\": \"your-heappe-session-code\",\n      \"JobSpecification\": {\n        \"Name\": \"QuantumJob\",\n        \"ClusterId\": 1,\n        \"ProjectId\": 1,\n        \"Tasks\": [\n          {\n            \"Name\": \"GroverTask\",\n            \"MachineId\": \"iqm_simulator\",\n            \"WalltimeLimitSecs\": 3600,\n            \"PayloadPartName\": \"circuit1\",\n            \"UseSessions\": false\n          }\n        ]\n      }\n    }\n\nNote: Attach your circuit payload file in the multipart/form-data request using the key name specified in 'PayloadPartName' (e.g. 'circuit1').",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "model": {
+                    "type": "string",
+                    "description": "JSON string of CreateAndSubmitQSchedulerJobModel (see remarks for example JSON format)"
+                  }
+                }
+              },
+              "encoding": {
+                "model": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubmittedJobInfoExt"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/QScheduler/GetTaskResult": {
+      "get": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "Get QScheduler task result (IQM metadata, timeline, etc.)",
+        "parameters": [
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "HEAppE session code",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SubmittedTaskId",
+            "in": "query",
+            "description": "HEAppE Task ID",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/QScheduler/GetTaskArtifact": {
+      "get": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "Get QScheduler task artifact by name.",
+        "parameters": [
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "HEAppE session code",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SubmittedTaskId",
+            "in": "query",
+            "description": "HEAppE Task ID",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "ArtifactName",
+            "in": "query",
+            "description": "Artifact name (e.g. measurements, measurements_counts, sweep_results)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/QScheduler/MachineArchitecture": {
+      "get": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "Get QScheduler machine architecture",
+        "parameters": [
+          {
+            "name": "ClusterNodeTypeId",
+            "in": "query",
+            "description": "Cluster node type id",
+            "schema": {
+              "type": "integer",
+              "description": "Cluster node type id",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "ProjectId",
+            "in": "query",
+            "description": "Project id",
+            "schema": {
+              "type": "integer",
+              "description": "Project id",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "Session code",
+            "schema": {
+              "maxLength": 50,
+              "minLength": 0,
+              "type": "string",
+              "description": "Session code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/ClusterInformation/MachineArchitecture": {
+      "get": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "Get QScheduler machine architecture",
+        "parameters": [
+          {
+            "name": "ClusterNodeTypeId",
+            "in": "query",
+            "description": "Cluster node type id",
+            "schema": {
+              "type": "integer",
+              "description": "Cluster node type id",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "ProjectId",
+            "in": "query",
+            "description": "Project id",
+            "schema": {
+              "type": "integer",
+              "description": "Project id",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "Session code",
+            "schema": {
+              "maxLength": 50,
+              "minLength": 0,
+              "type": "string",
+              "description": "Session code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/QScheduler/MachineCalibration": {
+      "get": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "Get QScheduler machine calibration",
+        "parameters": [
+          {
+            "name": "ClusterNodeTypeId",
+            "in": "query",
+            "description": "Cluster node type id",
+            "schema": {
+              "type": "integer",
+              "description": "Cluster node type id",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "CalibrationId",
+            "in": "query",
+            "description": "Calibration identifier",
+            "schema": {
+              "type": "string",
+              "description": "Calibration identifier"
+            }
+          },
+          {
+            "name": "Endpoint",
+            "in": "query",
+            "description": "Calibration endpoint",
+            "schema": {
+              "type": "string",
+              "description": "Calibration endpoint"
+            }
+          },
+          {
+            "name": "ProjectId",
+            "in": "query",
+            "description": "Project id",
+            "schema": {
+              "type": "integer",
+              "description": "Project id",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "Session code",
+            "schema": {
+              "maxLength": 50,
+              "minLength": 0,
+              "type": "string",
+              "description": "Session code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/heappe/ClusterInformation/MachineCalibration": {
+      "get": {
+        "tags": [
+          "QScheduler"
+        ],
+        "summary": "Get QScheduler machine calibration",
+        "parameters": [
+          {
+            "name": "ClusterNodeTypeId",
+            "in": "query",
+            "description": "Cluster node type id",
+            "schema": {
+              "type": "integer",
+              "description": "Cluster node type id",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "CalibrationId",
+            "in": "query",
+            "description": "Calibration identifier",
+            "schema": {
+              "type": "string",
+              "description": "Calibration identifier"
+            }
+          },
+          {
+            "name": "Endpoint",
+            "in": "query",
+            "description": "Calibration endpoint",
+            "schema": {
+              "type": "string",
+              "description": "Calibration endpoint"
+            }
+          },
+          {
+            "name": "ProjectId",
+            "in": "query",
+            "description": "Project id",
+            "schema": {
+              "type": "integer",
+              "description": "Project id",
+              "format": "int64"
+            }
+          },
+          {
+            "name": "SessionCode",
+            "in": "query",
+            "description": "Session code",
+            "schema": {
+              "maxLength": 50,
+              "minLength": 0,
+              "type": "string",
+              "description": "Session code"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResult"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too Many Requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/heappe/UserAndLimitationManagement/AuthenticateLexisToken": {
       "post": {
-        "tags": ["UserAndLimitationManagement"],
+        "tags": [
+          "UserAndLimitationManagement"
+        ],
         "summary": "Provide user authentication via OpenId token.",
         "requestBody": {
           "description": "Authentication credentials",
@@ -12620,7 +14943,9 @@
     },
     "/heappe/UserAndLimitationManagement/AuthenticateUserOpenId": {
       "post": {
-        "tags": ["UserAndLimitationManagement"],
+        "tags": [
+          "UserAndLimitationManagement"
+        ],
         "summary": "Provide user authentication via OpenId token.",
         "requestBody": {
           "description": "Authentication credentials",
@@ -12718,7 +15043,9 @@
     },
     "/heappe/UserAndLimitationManagement/AuthenticateUserOpenStack": {
       "post": {
-        "tags": ["UserAndLimitationManagement"],
+        "tags": [
+          "UserAndLimitationManagement"
+        ],
         "summary": "Provide user authentication to OpenStack.",
         "requestBody": {
           "description": "Authentication credentials",
@@ -12806,7 +15133,9 @@
     },
     "/heappe/UserAndLimitationManagement/AuthenticateUserPassword": {
       "post": {
-        "tags": ["UserAndLimitationManagement"],
+        "tags": [
+          "UserAndLimitationManagement"
+        ],
         "summary": "Provide user authentication",
         "requestBody": {
           "description": "Authentication credentials",
@@ -12894,7 +15223,9 @@
     },
     "/heappe/UserAndLimitationManagement/AuthenticateUserDigitalSignature": {
       "post": {
-        "tags": ["UserAndLimitationManagement"],
+        "tags": [
+          "UserAndLimitationManagement"
+        ],
         "summary": "Provide user authentication",
         "requestBody": {
           "description": "Authentication credentials",
@@ -12982,7 +15313,9 @@
     },
     "/heappe/UserAndLimitationManagement/CurrentUsageAndLimitationsForCurrentUser": {
       "get": {
-        "tags": ["UserAndLimitationManagement"],
+        "tags": [
+          "UserAndLimitationManagement"
+        ],
         "summary": "Get current resource usage",
         "parameters": [
           {
@@ -13063,7 +15396,9 @@
     },
     "/heappe/UserAndLimitationManagement/ProjectsForCurrentUser": {
       "get": {
-        "tags": ["UserAndLimitationManagement"],
+        "tags": [
+          "UserAndLimitationManagement"
+        ],
         "summary": "Get projects for current user",
         "parameters": [
           {
@@ -13144,7 +15479,9 @@
     },
     "/heappe/UserAndLimitationManagement/CurrentUserInfo": {
       "get": {
-        "tags": ["UserAndLimitationManagement"],
+        "tags": [
+          "UserAndLimitationManagement"
+        ],
         "summary": "Get current user info",
         "parameters": [
           {
@@ -13299,7 +15636,13 @@
         "additionalProperties": false
       },
       "AccountingStateTypeExt": {
-        "enum": [0, 1, 2, 4, 8],
+        "enum": [
+          0,
+          1,
+          2,
+          4,
+          8
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -13352,6 +15695,10 @@
           "UserType": {
             "$ref": "#/components/schemas/AdaptorUserTypeExt"
           },
+          "IsBlocked": {
+            "type": "boolean",
+            "description": "Is blocked"
+          },
           "AdaptorUserGroups": {
             "type": "array",
             "items": {
@@ -13397,7 +15744,10 @@
         "additionalProperties": false
       },
       "AdaptorUserRoleExt": {
-        "required": ["Description", "Name"],
+        "required": [
+          "Description",
+          "Name"
+        ],
         "type": "object",
         "properties": {
           "Name": {
@@ -13416,14 +15766,391 @@
         "additionalProperties": false
       },
       "AdaptorUserRoleType": {
-        "enum": [1, 2, 3, 4, 5, 6, 7],
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
         "type": "integer",
         "format": "int32"
       },
       "AdaptorUserTypeExt": {
-        "enum": [1, 2, 3],
+        "enum": [
+          1,
+          2,
+          3
+        ],
         "type": "integer",
         "format": "int32"
+      },
+      "AdminJobPagedResultExt": {
+        "type": "object",
+        "properties": {
+          "TotalCount": {
+            "type": "integer",
+            "description": "Total count of matching jobs for pagination calculation",
+            "format": "int32"
+          },
+          "Limit": {
+            "type": "integer",
+            "description": "Max items requested per page",
+            "format": "int32",
+            "nullable": true
+          },
+          "Offset": {
+            "type": "integer",
+            "description": "Items skipped for pagination",
+            "format": "int32",
+            "nullable": true
+          },
+          "Items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminSubmittedJobInfoExt"
+            },
+            "description": "Array of enriched jobs",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AdminSubmittedJobInfoExt": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "description": "Id",
+            "format": "int64",
+            "nullable": true
+          },
+          "Name": {
+            "type": "string",
+            "description": "Name",
+            "nullable": true
+          },
+          "State": {
+            "$ref": "#/components/schemas/JobStateExt"
+          },
+          "StateSource": {
+            "$ref": "#/components/schemas/JobStateSourceExt"
+          },
+          "StateUpdatedAt": {
+            "type": "string",
+            "description": "Timestamp of last state update",
+            "format": "date-time",
+            "nullable": true
+          },
+          "CreationTime": {
+            "type": "string",
+            "description": "Creation time",
+            "format": "date-time",
+            "nullable": true
+          },
+          "SubmitTime": {
+            "type": "string",
+            "description": "Submit time",
+            "format": "date-time",
+            "nullable": true
+          },
+          "StartTime": {
+            "type": "string",
+            "description": "Start time",
+            "format": "date-time",
+            "nullable": true
+          },
+          "EndTime": {
+            "type": "string",
+            "description": "End time",
+            "format": "date-time",
+            "nullable": true
+          },
+          "TotalAllocatedTime": {
+            "type": "number",
+            "description": "Total allocation time",
+            "format": "double",
+            "nullable": true
+          },
+          "Submitter": {
+            "$ref": "#/components/schemas/AdminSubmitterInfoExt"
+          },
+          "SubmitterGroup": {
+            "type": "string",
+            "description": "Submitter group name",
+            "nullable": true
+          },
+          "ClusterUsername": {
+            "type": "string",
+            "description": "Cluster username used internally on HPC cluster",
+            "nullable": true
+          },
+          "ClusterAuthenticationType": {
+            "$ref": "#/components/schemas/ClusterAuthenticationCredentialsAuthTypeExt"
+          },
+          "ProjectId": {
+            "type": "integer",
+            "description": "Project ID",
+            "format": "int64",
+            "nullable": true
+          },
+          "ProjectName": {
+            "type": "string",
+            "description": "Project name",
+            "nullable": true
+          },
+          "SubProjectId": {
+            "type": "integer",
+            "description": "SubProject ID",
+            "format": "int64",
+            "nullable": true
+          },
+          "SubProjectIdentifier": {
+            "type": "string",
+            "description": "SubProject identifier",
+            "nullable": true
+          },
+          "ClusterId": {
+            "type": "integer",
+            "description": "Cluster ID",
+            "format": "int64",
+            "nullable": true
+          },
+          "ClusterName": {
+            "type": "string",
+            "description": "Cluster name",
+            "nullable": true
+          },
+          "Reservation": {
+            "type": "string",
+            "description": "HPC reservation string",
+            "nullable": true
+          },
+          "Tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AdminTaskInfoExt"
+            },
+            "description": "Array of tasks",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AdminSubmitterInfoExt": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "description": "User Id",
+            "format": "int64",
+            "nullable": true
+          },
+          "Username": {
+            "type": "string",
+            "description": "Username",
+            "nullable": true
+          },
+          "Email": {
+            "type": "string",
+            "description": "Email",
+            "nullable": true
+          },
+          "IdpSid": {
+            "type": "string",
+            "description": "Identity Provider Subject ID (e.g. Keycloak / OIDC SID)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AdminTaskInfoExt": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "description": "Id",
+            "format": "int64",
+            "nullable": true
+          },
+          "Name": {
+            "type": "string",
+            "description": "Name",
+            "nullable": true
+          },
+          "State": {
+            "$ref": "#/components/schemas/TaskStateExt"
+          },
+          "StateSource": {
+            "$ref": "#/components/schemas/JobStateSourceExt"
+          },
+          "StateUpdatedAt": {
+            "type": "string",
+            "description": "Timestamp of last state update",
+            "format": "date-time",
+            "nullable": true
+          },
+          "Priority": {
+            "$ref": "#/components/schemas/TaskPriorityExt"
+          },
+          "AllocatedTime": {
+            "type": "number",
+            "description": "Allocated time",
+            "format": "double",
+            "nullable": true
+          },
+          "AllocatedCoreIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of allocated core ids",
+            "nullable": true
+          },
+          "StartTime": {
+            "type": "string",
+            "description": "Start time",
+            "format": "date-time",
+            "nullable": true
+          },
+          "EndTime": {
+            "type": "string",
+            "description": "End time",
+            "format": "date-time",
+            "nullable": true
+          },
+          "NodeType": {
+            "$ref": "#/components/schemas/ClusterNodeTypeForTaskExt"
+          },
+          "ErrorMessage": {
+            "type": "string",
+            "description": "Error message",
+            "nullable": true
+          },
+          "CpuHyperThreading": {
+            "type": "boolean",
+            "description": "Cpu hyper threading",
+            "nullable": true
+          },
+          "Reason": {
+            "type": "string",
+            "description": "Reason (parsed from scheduler, e.g. SLURM)",
+            "nullable": true
+          },
+          "MinCores": {
+            "type": "integer",
+            "description": "Minimum CPU cores",
+            "format": "int32",
+            "nullable": true
+          },
+          "MaxCores": {
+            "type": "integer",
+            "description": "Maximum CPU cores",
+            "format": "int32",
+            "nullable": true
+          },
+          "GpuCores": {
+            "type": "integer",
+            "description": "GPU cores",
+            "format": "int32",
+            "nullable": true
+          },
+          "GpuNodes": {
+            "type": "integer",
+            "description": "GPU nodes",
+            "format": "int32",
+            "nullable": true
+          },
+          "WalltimeLimit": {
+            "type": "integer",
+            "description": "Walltime limit",
+            "format": "int32",
+            "nullable": true
+          },
+          "Memory": {
+            "type": "integer",
+            "description": "Memory",
+            "format": "int64",
+            "nullable": true
+          },
+          "MemoryPerCPU": {
+            "type": "integer",
+            "description": "Memory per CPU",
+            "format": "int64",
+            "nullable": true
+          },
+          "MemoryPerGPU": {
+            "type": "integer",
+            "description": "Memory per GPU",
+            "format": "int64",
+            "nullable": true
+          },
+          "PlacementPolicy": {
+            "type": "string",
+            "description": "Placement policy",
+            "nullable": true
+          },
+          "IsExclusive": {
+            "type": "boolean",
+            "description": "Is exclusive",
+            "nullable": true
+          },
+          "IsRerunnable": {
+            "type": "boolean",
+            "description": "Is rerunnable",
+            "nullable": true
+          },
+          "JobArrays": {
+            "type": "string",
+            "description": "Job arrays",
+            "nullable": true
+          },
+          "StandardInputFile": {
+            "type": "string",
+            "description": "Standard input file",
+            "nullable": true
+          },
+          "StandardOutputFile": {
+            "type": "string",
+            "description": "Standard output file",
+            "nullable": true
+          },
+          "StandardErrorFile": {
+            "type": "string",
+            "description": "Standard error file",
+            "nullable": true
+          },
+          "ClusterTaskSubdirectory": {
+            "type": "string",
+            "description": "Cluster task subdirectory",
+            "nullable": true
+          },
+          "CommandTemplateId": {
+            "type": "integer",
+            "description": "Command template id",
+            "format": "int64",
+            "nullable": true
+          },
+          "TemplateParameterValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommandTemplateParameterValueExt"
+            },
+            "description": "Command template parameter values submitted by user",
+            "nullable": true
+          },
+          "EnvironmentVariables": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EnvironmentVariableExt"
+            },
+            "description": "Environment variables",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "AssignAdaptorUserToProjectModel": {
         "type": "object",
@@ -13474,6 +16201,29 @@
             "type": "integer",
             "description": "UserGroupId",
             "format": "int64"
+          },
+          "Role": {
+            "$ref": "#/components/schemas/AdaptorUserRoleType"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AssignSystemRoleToUserModel": {
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "Username": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "Username",
+            "nullable": true
           },
           "Role": {
             "$ref": "#/components/schemas/AdaptorUserRoleType"
@@ -13638,6 +16388,74 @@
         },
         "additionalProperties": false
       },
+      "CloseQSchedulerSessionModel": {
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "ClusterId": {
+            "type": "integer",
+            "description": "Cluster ID",
+            "format": "int64"
+          },
+          "ProjectId": {
+            "type": "integer",
+            "description": "Project ID",
+            "format": "int64"
+          },
+          "SessionId": {
+            "type": "integer",
+            "description": "Session ID to close",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CloudEventExt": {
+        "type": "object",
+        "properties": {
+          "specversion": {
+            "type": "string",
+            "description": "Version of the CloudEvents specification (1.0).",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of occurrence related to the event (e.g. org.heappe.job.state-changed).",
+            "nullable": true
+          },
+          "source": {
+            "type": "string",
+            "description": "Identifies the context in which an event happened.",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "description": "Identifies the event.",
+            "nullable": true
+          },
+          "time": {
+            "type": "string",
+            "description": "Timestamp of when the event occurred.",
+            "nullable": true
+          },
+          "datacontenttype": {
+            "type": "string",
+            "description": "Content type of the data value.",
+            "nullable": true
+          },
+          "data": {
+            "description": "The event payload.",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "ClusterAccessReportExt": {
         "type": "object",
         "properties": {
@@ -13732,12 +16550,44 @@
         "additionalProperties": false
       },
       "ClusterAuthenticationCredentialsAuthType": {
-        "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
         "type": "integer",
         "format": "int32"
       },
       "ClusterAuthenticationCredentialsAuthTypeExt": {
-        "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -13758,9 +16608,41 @@
         "additionalProperties": false
       },
       "ClusterConnectionProtocolExt": {
-        "enum": [0, 1, 2, 4, 8, 16],
+        "enum": [
+          0,
+          1,
+          2,
+          4,
+          8,
+          16
+        ],
         "type": "integer",
         "format": "int32"
+      },
+      "ClusterCustomConfigurationKeyItemModel": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "DefaultValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "SupportedSchedulerTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DictionaryItemModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "ClusterDetailedReportExt": {
         "type": "object",
@@ -13837,12 +16719,18 @@
             },
             "description": "Array of node types",
             "nullable": true
+          },
+          "UseCallback": {
+            "type": "boolean",
+            "description": "Use callback"
           }
         },
         "additionalProperties": false
       },
       "ClusterExtendedReportExt": {
-        "required": ["Description"],
+        "required": [
+          "Description"
+        ],
         "type": "object",
         "properties": {
           "Id": {
@@ -14728,6 +17616,14 @@
             },
             "description": "Custom configuration",
             "nullable": true
+          },
+          "CustomConfigurationVaultToggles": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "description": "Custom configuration vault toggles",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -15563,7 +18459,10 @@
         "additionalProperties": false
       },
       "DatabaseBackupTypeExt": {
-        "enum": [0, 1],
+        "enum": [
+          0,
+          1
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -15619,7 +18518,11 @@
         "additionalProperties": false
       },
       "DeploymentTypeExt": {
-        "enum": [1, 2, 3],
+        "enum": [
+          1,
+          2,
+          3
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -15974,6 +18877,18 @@
             },
             "description": "Custom configuration",
             "nullable": true
+          },
+          "CustomConfigurationVaultToggles": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "description": "Custom configuration vault toggles",
+            "nullable": true
+          },
+          "UseCallback": {
+            "type": "boolean",
+            "description": "Use callback"
           }
         },
         "additionalProperties": false
@@ -16135,6 +19050,127 @@
         },
         "additionalProperties": false
       },
+      "ExternalServiceLiveStatusExt": {
+        "type": "object",
+        "properties": {
+          "ServiceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "Type": {
+            "type": "string",
+            "nullable": true
+          },
+          "Protocol": {
+            "type": "string",
+            "nullable": true
+          },
+          "EndpointOrHost": {
+            "type": "string",
+            "nullable": true
+          },
+          "Port": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "IsAvailable": {
+            "type": "boolean"
+          },
+          "ResponseTimeMs": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ErrorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "LastCheck": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalServiceStatisticsExt": {
+        "type": "object",
+        "properties": {
+          "ServiceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ServiceType": {
+            "type": "string",
+            "nullable": true
+          },
+          "CommandOrPath": {
+            "type": "string",
+            "nullable": true
+          },
+          "AvailabilityPercentage": {
+            "type": "number",
+            "format": "double"
+          },
+          "AverageResponseTimeMs": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "MinResponseTimeMs": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "MaxResponseTimeMs": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "P95ResponseTimeMs": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "TotalChecks": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "FailedChecks": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalServicesLiveStatusModel": {
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ExternalServicesReportExt": {
+        "type": "object",
+        "properties": {
+          "LiveStatus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalServiceLiveStatusExt"
+            },
+            "nullable": true
+          },
+          "Statistics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ExternalServiceStatisticsExt"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "FileInformationExt": {
         "type": "object",
         "properties": {
@@ -16153,7 +19189,14 @@
         "additionalProperties": false
       },
       "FileTransferCipherTypeExt": {
-        "enum": [1, 2, 3, 4, 5, 6],
+        "enum": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -16277,12 +19320,24 @@
         "additionalProperties": false
       },
       "FileTransferProtocol": {
-        "enum": [1, 2, 4, 8, 16],
+        "enum": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ],
         "type": "integer",
         "format": "int32"
       },
       "FileTransferProtocolExt": {
-        "enum": [1, 2, 4, 8, 16],
+        "enum": [
+          1,
+          2,
+          4,
+          8,
+          16
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -16366,6 +19421,67 @@
         },
         "additionalProperties": false
       },
+      "GetExternalServicesReportModel": {
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "From": {
+            "type": "string",
+            "description": "Start of the statistics time window (UTC)",
+            "format": "date-time",
+            "nullable": true
+          },
+          "To": {
+            "type": "string",
+            "description": "End of the statistics time window (UTC)",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetExternalServicesStatisticsModel": {
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "From": {
+            "type": "string",
+            "description": "Start of the statistics time window (UTC)",
+            "format": "date-time",
+            "nullable": true
+          },
+          "To": {
+            "type": "string",
+            "description": "End of the statistics time window (UTC)",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ServiceName": {
+            "type": "string",
+            "description": "Optional filter by service name",
+            "nullable": true
+          },
+          "ClusterId": {
+            "type": "integer",
+            "description": "Optional filter by cluster ID",
+            "format": "int64",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "GetFileTransferMethodModel": {
         "type": "object",
         "properties": {
@@ -16380,6 +19496,53 @@
             "type": "integer",
             "description": "Subbmited job info id",
             "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetJobExternalServiceLogsModel": {
+        "required": [
+          "SubmittedJobInfoId"
+        ],
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "SubmittedJobInfoId": {
+            "type": "integer",
+            "description": "Submitted job info identifier",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetJobsMonitoringModel": {
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "PageSize": {
+            "maximum": 200,
+            "minimum": 1,
+            "type": "integer",
+            "description": "Number of jobs per page (1–200)",
+            "format": "int32"
+          },
+          "LastJobId": {
+            "type": "integer",
+            "description": "Cursor for keyset pagination – Id from the previous page's NextCursorId",
+            "format": "int64",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -16445,7 +19608,9 @@
         "additionalProperties": false
       },
       "HttpGetToJobNodeModel": {
-        "required": ["NodePort"],
+        "required": [
+          "NodePort"
+        ],
         "type": "object",
         "properties": {
           "SessionCode": {
@@ -16489,7 +19654,9 @@
         "additionalProperties": false
       },
       "HttpPostToJobNodeModel": {
-        "required": ["NodePort"],
+        "required": [
+          "NodePort"
+        ],
         "type": "object",
         "properties": {
           "SessionCode": {
@@ -16706,6 +19873,83 @@
         },
         "additionalProperties": false
       },
+      "JobExternalServiceLogExt": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ServiceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "ServiceType": {
+            "type": "string",
+            "nullable": true
+          },
+          "Protocol": {
+            "type": "string",
+            "nullable": true
+          },
+          "EndpointOrHost": {
+            "type": "string",
+            "nullable": true
+          },
+          "Port": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "Operation": {
+            "type": "string",
+            "nullable": true
+          },
+          "Timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "IsSuccess": {
+            "type": "boolean"
+          },
+          "ResponseTimeMs": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "StatusCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "ErrorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "JobId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "TaskId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "ClusterId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "RequestId": {
+            "type": "string",
+            "nullable": true
+          },
+          "Source": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "JobFileContentExt": {
         "type": "object",
         "properties": {
@@ -16732,6 +19976,264 @@
             "type": "integer",
             "description": "Submitted task info id",
             "format": "int64",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobMonitoringExt": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "State": {
+            "type": "string",
+            "nullable": true
+          },
+          "SubmittedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "Project": {
+            "type": "string",
+            "nullable": true
+          },
+          "Cluster": {
+            "type": "string",
+            "nullable": true
+          },
+          "CreationTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "SubmitTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "StartTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "EndTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "TotalAllocatedTime": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "WaitingLimit": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "NotificationEmail": {
+            "type": "string",
+            "nullable": true
+          },
+          "PhoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "NotifyOnAbort": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "NotifyOnFinish": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "NotifyOnStart": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "Reservation": {
+            "type": "string",
+            "nullable": true
+          },
+          "Tasks": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JobMonitoringTaskExt"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobMonitoringPageExt": {
+        "type": "object",
+        "properties": {
+          "Jobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/JobMonitoringExt"
+            },
+            "nullable": true
+          },
+          "NextCursorId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "Count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobMonitoringTaskExt": {
+        "type": "object",
+        "properties": {
+          "Id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "Name": {
+            "type": "string",
+            "nullable": true
+          },
+          "State": {
+            "type": "string",
+            "nullable": true
+          },
+          "ScheduledJobId": {
+            "type": "string",
+            "nullable": true
+          },
+          "AllocatedCores": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "AllocatedGpus": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "AllocatedTime": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "StartTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "EndTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "ErrorMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "Priority": {
+            "type": "string",
+            "nullable": true
+          },
+          "Reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "AllParameters": {
+            "type": "string",
+            "nullable": true
+          },
+          "MinCores": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "MaxCores": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "WalltimeLimit": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "Memory": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "MemoryPerCPU": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "MemoryPerGPU": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "IsExclusive": {
+            "type": "boolean"
+          },
+          "IsRerunnable": {
+            "type": "boolean"
+          },
+          "StandardInputFile": {
+            "type": "string",
+            "nullable": true
+          },
+          "StandardOutputFile": {
+            "type": "string",
+            "nullable": true
+          },
+          "StandardErrorFile": {
+            "type": "string",
+            "nullable": true
+          },
+          "LocalDirectory": {
+            "type": "string",
+            "nullable": true
+          },
+          "ClusterTaskSubdirectory": {
+            "type": "string",
+            "nullable": true
+          },
+          "CpuHyperThreading": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "CommandTemplateId": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true
+          },
+          "CommandTemplateName": {
+            "type": "string",
+            "nullable": true
+          },
+          "CommandParameterValues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CommandTemplateParameterValueExt"
+            },
+            "nullable": true
+          },
+          "EnvironmentVariables": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EnvironmentVariableExt"
+            },
             "nullable": true
           }
         },
@@ -16892,12 +20394,34 @@
         "additionalProperties": false
       },
       "JobStateExt": {
-        "enum": [1, 2, 4, 8, 16, 32, 64, 128, 256],
+        "enum": [
+          1,
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "JobStateSourceExt": {
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
         "type": "integer",
         "format": "int32"
       },
       "LexisCredentialsExt": {
-        "required": ["OpenIdAccessToken"],
+        "required": [
+          "OpenIdAccessToken"
+        ],
         "type": "object",
         "properties": {
           "Username": {
@@ -17090,6 +20614,14 @@
               "nullable": true
             },
             "description": "Custom configuration",
+            "nullable": true
+          },
+          "CustomConfigurationVaultToggles": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "description": "Custom configuration vault toggles",
             "nullable": true
           }
         },
@@ -17746,7 +21278,9 @@
         "additionalProperties": false
       },
       "OpenIdCredentialsExt": {
-        "required": ["OpenIdAccessToken"],
+        "required": [
+          "OpenIdAccessToken"
+        ],
         "type": "object",
         "properties": {
           "Username": {
@@ -17760,6 +21294,39 @@
             "minLength": 1,
             "type": "string",
             "description": "OpenId access token"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OpenQSchedulerSessionModel": {
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "ClusterId": {
+            "type": "integer",
+            "description": "Cluster ID",
+            "format": "int64"
+          },
+          "ProjectId": {
+            "type": "integer",
+            "description": "Project ID",
+            "format": "int64"
+          },
+          "MachineId": {
+            "type": "string",
+            "description": "Target Machine ID",
+            "nullable": true
+          },
+          "WalltimeLimit": {
+            "type": "integer",
+            "description": "Walltime limit for the session in seconds",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -17825,7 +21392,7 @@
             "nullable": true
           }
         },
-        "additionalProperties": {}
+        "additionalProperties": { }
       },
       "ProjectAggregatedReportExt": {
         "type": "object",
@@ -18129,7 +21696,9 @@
         "additionalProperties": false
       },
       "ProjectReferenceExt": {
-        "required": ["Project"],
+        "required": [
+          "Project"
+        ],
         "type": "object",
         "properties": {
           "Project": {
@@ -18224,12 +21793,22 @@
         "additionalProperties": false
       },
       "ProxyType": {
-        "enum": [1, 2, 3, 16],
+        "enum": [
+          1,
+          2,
+          3,
+          16
+        ],
         "type": "integer",
         "format": "int32"
       },
       "ProxyTypeExt": {
-        "enum": [1, 2, 3, 16],
+        "enum": [
+          1,
+          2,
+          3,
+          16
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -18252,6 +21831,37 @@
           "PublicKeyPEM": {
             "type": "string",
             "description": "Public key PEM",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "QSchedulerSessionInfoExt": {
+        "type": "object",
+        "properties": {
+          "SessionId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ClusterId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ProjectId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "State": {
+            "type": "string",
+            "nullable": true
+          },
+          "CreatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ClosedAt": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },
@@ -18588,8 +22198,35 @@
         },
         "additionalProperties": false
       },
+      "RemoveSystemRoleFromUserModel": {
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "Username": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "Username",
+            "nullable": true
+          },
+          "Role": {
+            "$ref": "#/components/schemas/AdaptorUserRoleType"
+          }
+        },
+        "additionalProperties": false
+      },
       "ResourceAllocationTypeExt": {
-        "enum": [1, 2, 3],
+        "enum": [
+          1,
+          2,
+          3
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -18616,9 +22253,40 @@
         "additionalProperties": false
       },
       "SchedulerTypeExt": {
-        "enum": [1, 2, 4, 8, 16],
+        "enum": [
+          1,
+          2,
+          4,
+          8,
+          16,
+          32
+        ],
         "type": "integer",
         "format": "int32"
+      },
+      "SetAdaptorUserBlockStatusModel": {
+        "type": "object",
+        "properties": {
+          "SessionCode": {
+            "maxLength": 50,
+            "minLength": 0,
+            "type": "string",
+            "description": "Session code",
+            "nullable": true
+          },
+          "Username": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "description": "Username",
+            "nullable": true
+          },
+          "IsBlocked": {
+            "type": "boolean",
+            "description": "IsBlocked"
+          }
+        },
+        "additionalProperties": false
       },
       "SshKeyUserCredentialsModel": {
         "type": "object",
@@ -18810,6 +22478,15 @@
           "State": {
             "$ref": "#/components/schemas/JobStateExt"
           },
+          "StateSource": {
+            "$ref": "#/components/schemas/JobStateSourceExt"
+          },
+          "StateUpdatedAt": {
+            "type": "string",
+            "description": "Timestamp of last state update",
+            "format": "date-time",
+            "nullable": true
+          },
           "CreationTime": {
             "type": "string",
             "description": "Creation time",
@@ -18873,6 +22550,15 @@
           "State": {
             "$ref": "#/components/schemas/TaskStateExt"
           },
+          "StateSource": {
+            "$ref": "#/components/schemas/JobStateSourceExt"
+          },
+          "StateUpdatedAt": {
+            "type": "string",
+            "description": "Timestamp of last state update",
+            "format": "date-time",
+            "nullable": true
+          },
           "Priority": {
             "$ref": "#/components/schemas/TaskPriorityExt"
           },
@@ -18924,9 +22610,79 @@
         "additionalProperties": false
       },
       "SynchronizableFilesExt": {
-        "enum": [0, 1, 2, 3],
+        "enum": [
+          0,
+          1,
+          2,
+          3
+        ],
         "type": "integer",
         "format": "int32"
+      },
+      "SystemRoleAssignmentExt": {
+        "type": "object",
+        "properties": {
+          "Username": {
+            "type": "string",
+            "description": "Username",
+            "nullable": true
+          },
+          "Role": {
+            "type": "string",
+            "description": "Role name",
+            "nullable": true
+          },
+          "Source": {
+            "type": "string",
+            "description": "Assignment source (Appsettings, Dynamic, or Both)",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TaskCallbackModel": {
+        "required": [
+          "token"
+        ],
+        "type": "object",
+        "properties": {
+          "task_id": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "session_id": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string",
+            "nullable": true
+          },
+          "token": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "raw_response": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true
+          },
+          "event": {
+            "type": "string",
+            "nullable": true
+          },
+          "task": {
+            "nullable": true
+          },
+          "session": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "TaskDetailedReportExt": {
         "type": "object",
@@ -19067,7 +22823,17 @@
         "additionalProperties": false
       },
       "TaskPriorityExt": {
-        "enum": [0, 1, 2, 3, 4, 5, 6, 7, 8],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -19275,7 +23041,18 @@
         "additionalProperties": false
       },
       "TaskStateExt": {
-        "enum": [0, 1, 2, 4, 8, 16, 32, 64, 128, 256],
+        "enum": [
+          0,
+          1,
+          2,
+          4,
+          8,
+          16,
+          32,
+          64,
+          128,
+          256
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -19290,7 +23067,12 @@
         "additionalProperties": false
       },
       "UsageTypeExt": {
-        "enum": [1, 2, 3, 4],
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ],
         "type": "integer",
         "format": "int32"
       },
@@ -19415,10 +23197,10 @@
   },
   "security": [
     {
-      "ServiceApiKey": []
+      "ServiceApiKey": [ ]
     },
     {
-      "Bearer": []
+      "Bearer": [ ]
     }
   ]
 }
