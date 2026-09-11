@@ -7,7 +7,6 @@ API_client_generation:
   rules:
     - if: '$CI_COMMIT_BRANCH != "develop" && $CI_COMMIT_BRANCH != "main"'
   before_script:
-    - apt-get update 
     - apt-get install -y wget zip
     - wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.71/swagger-codegen-cli-3.0.71.jar -O /swagger-codegen-cli.jar
   script:
