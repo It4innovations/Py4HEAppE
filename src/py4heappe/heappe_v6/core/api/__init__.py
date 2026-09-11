@@ -7,9 +7,11 @@ from py4heappe.heappe_v6.core.api.cluster_information_api import ClusterInformat
 from py4heappe.heappe_v6.core.api.credentials_api import CredentialsApi
 from py4heappe.heappe_v6.core.api.data_transfer_api import DataTransferApi
 from py4heappe.heappe_v6.core.api.dictionary_api import DictionaryApi
+from py4heappe.heappe_v6.core.api.events_api import EventsApi
 from py4heappe.heappe_v6.core.api.file_transfer_api import FileTransferApi
 from py4heappe.heappe_v6.core.api.health_api import HealthApi
 from py4heappe.heappe_v6.core.api.job_management_api import JobManagementApi
 from py4heappe.heappe_v6.core.api.job_reporting_api import JobReportingApi
 from py4heappe.heappe_v6.core.api.management_api import ManagementApi
+from py4heappe.heappe_v6.core.api.q_scheduler_api import QSchedulerApi
 from py4heappe.heappe_v6.core.api.user_and_limitation_management_api import UserAndLimitationManagementApi
