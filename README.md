@@ -8,19 +8,20 @@ You can use it in two ways:
 - Versioned Python API wrappers for direct integration into your own applications
 
 ## Supported HEAppE Versions
-| Py4HEAppE | HEAppE Version | Notes |
-| :-------: | :------------- | :---- |
-| 2.9.X | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
-| 2.8.X | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
-| 2.7.X | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
-| 2.6.X | 6.3.X, 6.2.X, 6.1.X, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
-| 2.5.X | 6.3.X, 6.2.X, 6.1.X, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
-| 2.4.X | 6.1.X, 6.0.X, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
-| 2.3.X | 6.0.X, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
-| 2.2.X | 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
-| 2.1.X | 5.0.X, 4.3.X, 4.2.X | Without Admin, Job, and File CLI sections |
-| 2.0.X | 5.0.X | Without Admin, Job, and File CLI sections |
-| 1.X.X | 4.3.X, 4.2.X | Without Admin, Job, and File CLI sections |
+| Py4HEAppE | HEAppE Version                                         | Notes |
+|:---------:|:-------------------------------------------------------| :---- |
+|   3.0.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
+|   2.9.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
+|   2.8.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
+|   2.7.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
+|   2.6.X   | 6.3.X, 6.2.X, 6.1.X, 5.0.X, 4.3.X, 4.2.X               | Without Admin CLI section |
+|   2.5.X   | 6.3.X, 6.2.X, 6.1.X, 5.0.X, 4.3.X, 4.2.X               | Without Admin CLI section |
+|   2.4.X   | 6.1.X, 6.0.X, 5.0.X, 4.3.X, 4.2.X                      | Without Admin CLI section |
+|   2.3.X   | 6.0.X, 5.0.X, 4.3.X, 4.2.X                             | Without Admin CLI section |
+|   2.2.X   | 5.0.X, 4.3.X, 4.2.X                                    | Without Admin CLI section |
+|   2.1.X   | 5.0.X, 4.3.X, 4.2.X                                    | Without Admin, Job, and File CLI sections |
+|   2.0.X   | 5.0.X                                                  | Without Admin, Job, and File CLI sections |
+|   1.X.X   | 4.3.X, 4.2.X                                           | Without Admin, Job, and File CLI sections |
 
 ## Requirements
 - Python 3.11 or newer
