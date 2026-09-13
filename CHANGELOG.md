@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.0.0
+
+### Compatible with HEAppE V6.5.X, V6.4.X, V6.3.X, V6.2.X, V6.2.1, V5.0.X, V4.3.X and V4.2.X
+
+### Changed
+- Updated Py4HEAppE wrapper to support new changes in HEAppE Version 6.5.0 [See HEAppE v6.4.0 CHANGELOG.md](https://github.com/It4innovations/HEAppE/blob/master/CHANGELOG.md#v650)
+
+
 ## 2.9.0
 
 ### Compatible with HEAppE V6.4.X, V6.3.X, V6.2.X, V6.2.1, V5.0.X, V4.3.X and V4.2.X
