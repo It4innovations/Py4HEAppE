@@ -1,6 +1,8 @@
 <img align="right" width="35%" src="https://raw.githubusercontent.com/It4innovations/Py4HEAppE/refs/heads/master/docs/imgs/logo.png">
 
 # Py4HEAppE (Python for HEAppE Middleware)
+Release: 3.1.0
+
 Py4HEAppE provides both a command-line interface and versioned Python wrappers for the [HEAppE](https://heappe.eu) middleware API.
 
 You can use it in two ways:
@@ -10,7 +12,7 @@ You can use it in two ways:
 ## Supported HEAppE Versions
 | Py4HEAppE | HEAppE Version                                         | Notes |
 |:---------:|:-------------------------------------------------------| :---- |
-|   3.0.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
+|   3.1.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 |   2.9.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
 |   2.8.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
 |   2.7.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
@@ -303,6 +305,26 @@ finally:
     api_client.pool.close()
     api_client.pool.join()
 ```
+
+## Running CLI tests
+
+The repository includes live CLI integration tests under `tests/` that require a reachable HEAppE instance and several environment variables.
+
+Quick steps:
+
+- Create a `tests/.env` from the example and edit it:
+  - Unix: `cp tests/.env.example tests/.env`
+  - Windows (PowerShell): `Copy-Item tests\.env.example tests\.env`
+- Populate required values in `tests/.env` (or export the variables). At minimum set `PY4HEAPPE_RUN_LIVE_CLI_TESTS=1` and `PY4HEAPPE_TEST_URL` and `PY4HEAPPE_TEST_PROJECT`. To allow tests that change remote state also set `PY4HEAPPE_TEST_RUN_MUTATING_COMMANDS=1`.
+- Run the CLI tests (default, using the standard library's unittest):
+  - Run all CLI tests: `python -m unittest discover -s tests -p "test_cli_*.py" -v`
+  - Run a single test module: `python -m unittest tests.test_cli_auth -v`
+
+- Optional: run with pytest (pytest can run unittest-style tests and offers improved output):
+  - Install pytest: `python -m pip install -U pytest`
+  - Run with pytest: `python -m pytest -q tests/test_cli_*.py`
+
+Do NOT commit `tests/.env` with real credentials or session tokens.
 
 ## Notes
 
