@@ -7,9 +7,8 @@ import py4heappe.heappe_v6.core.base.utils as utils
 import py4heappe.heappe_v6.core as heappeCore
 
 from py4heappe.heappe_v6.core.base import exceptions
-from py4heappe.heappe_v6.core  import rest 
-# from py4lexis.session import LexisSession
-
+from py4heappe.heappe_v6.core  import rest
+#from py4lexis import LexisSession
 
 app = typer.Typer(name="HEAppEAuthCLI", no_args_is_help=True, pretty_exceptions_short=True)
 
@@ -45,9 +44,6 @@ def authentication_credentials():
         if "CREDENTIALS_PASSWORD" in os.environ:
             print(session_code)
 
-        utils.print_and_log("User was authenticated.")
-        utils.store_session(session_code)
-
     except rest.ApiException as exception:
         try:
             response_data = json.loads(exception.body)
@@ -63,6 +59,11 @@ def authentication_credentials():
     
     except Exception as exception:
         raise exceptions.Py4HEAppEInternalException(f"Other exception: {str(exception)}") from None
+
+    else:
+        utils.print_and_log("User was authenticated.")
+        utils.store_session(session_code)
+
 
 @app.command(name="OpenId")
 def authentication_openid():
