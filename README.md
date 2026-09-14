@@ -1,6 +1,8 @@
 <img align="right" width="35%" src="https://raw.githubusercontent.com/It4innovations/Py4HEAppE/refs/heads/master/docs/imgs/logo.png">
 
 # Py4HEAppE (Python for HEAppE Middleware)
+Release: 3.1.0
+
 Py4HEAppE provides both a command-line interface and versioned Python wrappers for the [HEAppE](https://heappe.eu) middleware API.
 
 You can use it in two ways:
@@ -10,7 +12,7 @@ You can use it in two ways:
 ## Supported HEAppE Versions
 | Py4HEAppE | HEAppE Version                                         | Notes |
 |:---------:|:-------------------------------------------------------| :---- |
-|   3.0.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
+|   3.1.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 |   2.9.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
 |   2.8.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
 |   2.7.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
