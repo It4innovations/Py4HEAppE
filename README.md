@@ -304,6 +304,26 @@ finally:
     api_client.pool.join()
 ```
 
+## Running CLI tests
+
+The repository includes live CLI integration tests under `tests/` that require a reachable HEAppE instance and several environment variables.
+
+Quick steps:
+
+- Create a `tests/.env` from the example and edit it:
+  - Unix: `cp tests/.env.example tests/.env`
+  - Windows (PowerShell): `Copy-Item tests\.env.example tests\.env`
+- Populate required values in `tests/.env` (or export the variables). At minimum set `PY4HEAPPE_RUN_LIVE_CLI_TESTS=1` and `PY4HEAPPE_TEST_URL` and `PY4HEAPPE_TEST_PROJECT`. To allow tests that change remote state also set `PY4HEAPPE_TEST_RUN_MUTATING_COMMANDS=1`.
+- Run the CLI tests (default, using the standard library's unittest):
+  - Run all CLI tests: `python -m unittest discover -s tests -p "test_cli_*.py" -v`
+  - Run a single test module: `python -m unittest tests.test_cli_auth -v`
+
+- Optional: run with pytest (pytest can run unittest-style tests and offers improved output):
+  - Install pytest: `python -m pip install -U pytest`
+  - Run with pytest: `python -m pytest -q tests/test_cli_*.py`
+
+Do NOT commit `tests/.env` with real credentials or session tokens.
+
 ## Notes
 
 - CLI configuration is stored locally after `py4heappe Conf Init`.
