@@ -1,7 +1,7 @@
 <img align="right" width="35%" src="https://raw.githubusercontent.com/It4innovations/Py4HEAppE/refs/heads/master/docs/imgs/logo.png">
 
 # Py4HEAppE (Python for HEAppE Middleware)
-Release: 3.1.0
+Release: 3.2.0
 
 Py4HEAppE provides both a command-line interface and versioned Python wrappers for the [HEAppE](https://heappe.eu) middleware API.
 
@@ -12,6 +12,7 @@ You can use it in two ways:
 ## Supported HEAppE Versions
 | Py4HEAppE | HEAppE Version                                         | Notes |
 |:---------:|:-------------------------------------------------------| :---- |
+|   3.2.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 |   3.1.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 |   2.9.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
 |   2.8.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
@@ -184,7 +185,14 @@ py4heappe FileTransfer Download --help
 Upload files directly into the job execution directory:
 
 ```shell
-py4heappe FileTransfer Stream --help
+# Upload one or more local files from disk
+py4heappe FileTransfer Stream --id 12345 --files ./input_a.dat --files ./input_b.dat
+
+# Upload a single file from stdin bytes
+Get-Content -Path .\input.dat -AsByteStream | py4heappe FileTransfer Stream --id 12345 --stdin --upload-filename input.dat
+
+# Upload a single file from base64 content
+py4heappe FileTransfer Stream --id 12345 --base64 aGVsbG8gd29ybGQ= --upload-filename hello.txt
 ```
 
 ## Python API Wrapper
@@ -201,6 +209,40 @@ import py4heappe.heappe_v6.core as hp
 ```
 
 There is no single unversioned `py4heappe.core` module. Use the versioned wrapper explicitly.
+
+### Dedicated In-Memory Upload API (`file_transfer_api_ext.py`)
+
+For uploads that should not touch local disk files, use the dedicated implementation in
+`src/py4heappe/heappe_v6/core/api/file_transfer_api_ext.py`.
+
+It provides `FileTransferApiExt.heappe_file_transfer_upload_file_objects_to_job_execution_dir_post`,
+which accepts byte-like payloads or file-like objects.
+
+```python
+import io
+
+import py4heappe.heappe_v6.core as hp
+from py4heappe.heappe_v6.core.api.file_transfer_api_ext import (
+    FileTransferApiExt,
+    InMemoryUploadFile,
+)
+
+configuration = hp.Configuration()
+configuration.host = "https://heappe.example.org"
+api_client = hp.ApiClient(configuration)
+
+stream_api = FileTransferApiExt(api_client)
+stream_api.heappe_file_transfer_upload_file_objects_to_job_execution_dir_post(
+    files=[
+        InMemoryUploadFile("bytes-input.txt", b"hello from bytes"),
+        ("stream-input.bin", io.BytesIO(b"\\x00\\x01\\x02"), "application/octet-stream"),
+    ],
+    session_code="your-session-code",
+    job_id=12345,
+    task_id=1,
+    _preload_content=False,
+)
+```
 
 ### Minimal Python Example
 
