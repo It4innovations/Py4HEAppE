@@ -1,3 +1,4 @@
+import base64
 import tempfile
 from pathlib import Path
 
@@ -137,3 +138,52 @@ class FileTransferCliExampleTests(LiveCliExampleTestCase):
             result = self.run_cli(*args, extra_env=self.session_env())
 
         self.assertIn("Upload results:", result.stdout)
+
+    def test_file_transfer_stream_stdin_example(self):
+        self.ensure_mutating_commands_enabled()
+        env_values = self.require_env("PY4HEAPPE_TEST_STREAM_JOB_ID")
+        task_id = self.split_env_list("PY4HEAPPE_TEST_STREAM_TASK_ID")
+
+        args = [
+            "FileTransfer",
+            "Stream",
+            "--id",
+            env_values["PY4HEAPPE_TEST_STREAM_JOB_ID"],
+            "--stdin",
+            "--upload-filename",
+            "stdin-upload.txt",
+        ]
+        if task_id:
+            args.extend(["--taskId", task_id[0]])
+
+        result = self.run_cli(
+            *args,
+            input_text="py4heappe stdin upload example",
+            extra_env=self.session_env(),
+        )
+
+        self.assertIn("Upload results:", result.stdout)
+
+    def test_file_transfer_stream_base64_example(self):
+        self.ensure_mutating_commands_enabled()
+        env_values = self.require_env("PY4HEAPPE_TEST_STREAM_JOB_ID")
+        task_id = self.split_env_list("PY4HEAPPE_TEST_STREAM_TASK_ID")
+
+        content = base64.b64encode(b"py4heappe base64 upload example").decode("ascii")
+        args = [
+            "FileTransfer",
+            "Stream",
+            "--id",
+            env_values["PY4HEAPPE_TEST_STREAM_JOB_ID"],
+            "--base64",
+            content,
+            "--upload-filename",
+            "base64-upload.txt",
+        ]
+        if task_id:
+            args.extend(["--taskId", task_id[0]])
+
+        result = self.run_cli(*args, extra_env=self.session_env())
+
+        self.assertIn("Upload results:", result.stdout)
+

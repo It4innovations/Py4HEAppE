@@ -2,6 +2,7 @@ import base64
 import binascii
 import json
 import os
+import sys
 import typer
 import paramiko
 from scp import SCPClient
@@ -10,6 +11,10 @@ from io import StringIO
 import py4heappe.heappe_v6.cli.configuration as configuration
 import py4heappe.heappe_v6.core.base.utils as utils
 import py4heappe.heappe_v6.core as heappeCore
+from py4heappe.heappe_v6.core.api.file_transfer_api_ext import (
+    FileTransferApiExt,
+    InMemoryUploadFile,
+)
 
 from py4heappe.heappe_v6.core.base import exceptions
 from py4heappe.heappe_v6.core import rest
@@ -260,6 +265,33 @@ def _validate_upload_paths(paths: List[str]) -> List[str]:
         normalized_paths.append(normalized_path)
 
     return normalized_paths
+
+
+def _decode_base64_upload_content(encoded_content: str) -> bytes:
+    try:
+        return base64.b64decode(encoded_content, validate=True)
+    except (binascii.Error, ValueError) as exception:
+        raise exceptions.Py4HEAppEInternalException(
+            f"Invalid --base64 content: {str(exception)}"
+        ) from None
+
+
+def _read_stdin_upload_content() -> bytes:
+    if hasattr(sys.stdin, "buffer"):
+        return sys.stdin.buffer.read()
+    return sys.stdin.read().encode("utf-8")
+
+
+def _validate_stream_upload_mode(
+    files: Optional[List[str]],
+    upload_from_stdin: bool,
+    base64_content: Optional[str],
+):
+    selected_modes = [bool(files), upload_from_stdin, base64_content is not None]
+    if sum(selected_modes) != 1:
+        raise exceptions.Py4HEAppEInternalException(
+            "Specify exactly one upload source: --files, --stdin, or --base64."
+        ) from None
 
 
 def _parse_task_file_offsets(task_file_offsets: List[str]) -> List[dict]:
@@ -600,34 +632,78 @@ def upload_files_to_job_execution_dir(
     id: int = typer.Option(..., help="Id (Created or submitted HPC job)"),
     taskId: int = typer.Option(None, help="Id (Task)"),
     files: Annotated[
-        List[str],
+        Optional[List[str]],
         typer.Option(
             help="Local file paths to upload; repeat the option for multiple files",
         ),
-    ] = ...,
+    ] = None,
+    upload_from_stdin: bool = typer.Option(
+        False,
+        "--stdin",
+        help="Read upload content as raw bytes from stdin.",
+    ),
+    base64_content: Optional[str] = typer.Option(
+        None,
+        "--base64",
+        help="Upload a single file from base64-encoded content.",
+    ),
+    upload_filename: str = typer.Option(
+        "stdin-upload.bin",
+        "--upload-filename",
+        help="Filename used with --stdin or --base64 modes.",
+    ),
 ):
     """Upload files to job execution directory"""
     try:
         utils.print_and_log("Uploading files to job execution directory ...")
-        upload_paths = _validate_upload_paths(files)
-        if id and taskId:
-            parameters = {
-                "_preload_content": False,
-                "files": upload_paths,
-                "JobId": id,
-                "TaskId": taskId,
-                "SessionCode": utils.load_stored_session(),
-            }
+
+        _validate_stream_upload_mode(files, upload_from_stdin, base64_content)
+
+        if files:
+            upload_paths = _validate_upload_paths(files)
+            if id and taskId:
+                parameters = {
+                    "_preload_content": False,
+                    "files": upload_paths,
+                    "JobId": id,
+                    "TaskId": taskId,
+                    "SessionCode": utils.load_stored_session(),
+                }
+            else:
+                parameters = {
+                    "_preload_content": False,
+                    "files": upload_paths,
+                    "JobId": id,
+                    "SessionCode": utils.load_stored_session(),
+                }
+
+            response = heappeCore.FileTransferApi(
+                configuration.get_api_instance()
+            ).heappe_file_transfer_upload_files_to_job_execution_dir_post(**parameters)
         else:
-            parameters = {
-                "_preload_content": False,
-                "files": upload_paths,
-                "JobId": id,
-                "SessionCode": utils.load_stored_session(),
-            }
-        response = heappeCore.FileTransferApi(
-            configuration.get_api_instance()
-        ).heappe_file_transfer_upload_files_to_job_execution_dir_post(**parameters)
+            if not upload_filename:
+                raise exceptions.Py4HEAppEInternalException(
+                    "--upload-filename must not be empty when using --stdin or --base64."
+                ) from None
+
+            if upload_from_stdin:
+                content = _read_stdin_upload_content()
+            else:
+                if base64_content is None:
+                    raise exceptions.Py4HEAppEInternalException(
+                        "Missing --base64 content for upload."
+                    ) from None
+                content = _decode_base64_upload_content(base64_content)
+
+            response = FileTransferApiExt(
+                configuration.get_api_instance()
+            ).heappe_file_transfer_upload_file_objects_to_job_execution_dir_post(
+                files=[InMemoryUploadFile(upload_filename, content)],
+                session_code=utils.load_stored_session(),
+                job_id=id,
+                task_id=taskId,
+                _preload_content=False,
+            )
         _print_response("Upload results", response.data)
 
     except rest.ApiException as exception:
