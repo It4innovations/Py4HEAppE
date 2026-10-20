@@ -1,6 +1,8 @@
 import json
 import os
 import time
+import base64
+import binascii
 from io import StringIO
 from pathlib import Path
 
@@ -9,6 +11,10 @@ from paramiko import SSHClient
 from scp import SCPClient
 
 import py4heappe.heappe_v6.core as hp
+from py4heappe.heappe_v6.core.api.file_transfer_api_ext import (
+    FileTransferApiExt,
+    InMemoryUploadFile,
+)
 
 POLL_INTERVAL_SECONDS = 30
 OUTPUT_DIRECTORY = Path("data_transfer/output")
@@ -60,6 +66,44 @@ def wait_for_job_completion(
 
         print(f"Waiting for job {job_id} to finish... current state: {state}")
         time.sleep(POLL_INTERVAL_SECONDS)
+
+
+def upload_job_input_from_memory(
+    api_client: hp.ApiClient,
+    session_code: str,
+    job_id: int,
+) -> None:
+    """Optional example: upload one file from base64 env content via Stream API extension."""
+    encoded_content = os.environ.get("HEAPPE_STREAM_UPLOAD_BASE64", "").strip()
+    if not encoded_content:
+        print(
+            "Skipping in-memory stream upload (set HEAPPE_STREAM_UPLOAD_BASE64 to enable this example)."
+        )
+        return
+
+    try:
+        file_bytes = base64.b64decode(encoded_content, validate=True)
+    except (binascii.Error, ValueError) as exception:
+        raise RuntimeError(
+            "HEAPPE_STREAM_UPLOAD_BASE64 contains invalid base64 content"
+        ) from exception
+
+    filename = os.environ.get("HEAPPE_STREAM_UPLOAD_FILENAME", "input.dat").strip()
+    if not filename:
+        filename = "input.dat"
+
+    task_id_raw = os.environ.get("HEAPPE_STREAM_UPLOAD_TASK_ID", "").strip()
+    task_id = int(task_id_raw) if task_id_raw else None
+
+    stream_api = FileTransferApiExt(api_client)
+    stream_api.heappe_file_transfer_upload_file_objects_to_job_execution_dir_post(
+        files=[InMemoryUploadFile(filename=filename, content=file_bytes)],
+        session_code=session_code,
+        job_id=job_id,
+        task_id=task_id,
+        _preload_content=False,
+    )
+    print(f"Uploaded in-memory file '{filename}' to job {job_id}.")
 
 
 def download_job_outputs(
@@ -233,6 +277,8 @@ def main() -> None:
         created_job = json.loads(create_job_response.data)
         job_id = created_job["Id"]
         print(f"Job ID: {job_id}")
+
+        upload_job_input_from_memory(api_client, session_code, job_id)
 
         print(f"\nSubmitting job {job_id}...")
         job_api.heappe_job_management_submit_job_put(

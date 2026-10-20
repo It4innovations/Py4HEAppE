@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.2.0
+
+### Added
+- Extended `py4heappe FileTransfer Stream` with alternate upload sources: `--stdin` for raw piped bytes and `--base64` for inline base64 content.
+- Added `--upload-filename` for naming uploaded content when using `--stdin` or `--base64`.
+- Added dedicated in-memory upload implementation in `src/py4heappe/heappe_v6/core/api/file_transfer_api_ext.py` via `FileTransferApiExt.heappe_file_transfer_upload_file_objects_to_job_execution_dir_post`, supporting byte-like and file-like objects.
+- Added live CLI examples for `Stream --stdin` and `Stream --base64` in `tests/test_cli_file_transfer.py`.
+
+### Changed
+- Updated `README.md` File Transfer examples to include concrete `Stream` upload commands for disk files, stdin bytes, and base64 payloads.
+- Updated `docs/examples/example.py` with an optional in-memory upload example using `FileTransferApiExt` and `InMemoryUploadFile`.
+
 ## 3.1.0
 
 ### Added
