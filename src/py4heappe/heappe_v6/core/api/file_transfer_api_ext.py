@@ -1,7 +1,3 @@
-from __future__ import absolute_import
-
-import mimetypes
-
 from dataclasses import dataclass
 from typing import Any, Optional, Sequence, Tuple, Union, cast
 
@@ -75,7 +71,6 @@ class FileTransferApiExt(FileTransferApi):
         session_code: str,
         job_id: int,
         task_id: Optional[int] = None,
-        async_req: Optional[bool] = None,
         _preload_content: bool = True,
         _request_timeout=None,
     ):
@@ -85,7 +80,6 @@ class FileTransferApiExt(FileTransferApi):
             session_code=session_code,
             job_id=job_id,
             task_id=task_id,
-            async_req=async_req,
             _return_http_data_only=True,
             _preload_content=_preload_content,
             _request_timeout=_request_timeout,
@@ -97,7 +91,6 @@ class FileTransferApiExt(FileTransferApi):
         session_code: str,
         job_id: int,
         task_id: Optional[int] = None,
-        async_req: Optional[bool] = None,
         _return_http_data_only: Optional[bool] = None,
         _preload_content: bool = True,
         _request_timeout=None,
@@ -106,49 +99,30 @@ class FileTransferApiExt(FileTransferApi):
         if not files:
             raise ValueError("'files' must contain at least one upload entry.")
 
-        query_params = [("SessionCode", session_code), ("JobId", job_id)]
-        if task_id is not None:
-            query_params.append(("TaskId", task_id))
-
-        post_params = []
+        # OpenAPI-generated upload supports multipart `files` entries as
+        # `(filename, bytes)` tuples. Keep legacy extension input API and map it.
+        multipart_files = []
         for entry in files:
             normalized = _normalize_upload_entry(entry)
             if not normalized.filename:
                 raise ValueError("Upload filename must not be empty.")
-
             file_bytes = _read_upload_bytes(normalized.content)
-            content_type = (
-                normalized.content_type
-                or mimetypes.guess_type(normalized.filename)[0]
-                or "application/octet-stream"
+            multipart_files.append((normalized.filename, file_bytes))
+
+
+        if _preload_content:
+            return self.heappe_file_transfer_upload_files_to_job_execution_dir_post(
+                session_code=session_code,
+                job_id=job_id,
+                task_id=task_id,
+                files=multipart_files,
+                _request_timeout=_request_timeout,
             )
-            post_params.append(
-                ("files", (normalized.filename, file_bytes, content_type))
-            )
 
-        header_params = {
-            "Accept": self.api_client.select_header_accept(["application/json"]),
-            "Content-Type": self.api_client.select_header_content_type(
-                ["multipart/form-data"]
-            ),
-        }
-
-        auth_settings = ["Bearer", "ServiceApiKey"]
-
-        return self.api_client.call_api(
-            "/heappe/FileTransfer/UploadFilesToJobExecutionDir",
-            "POST",
-            {},
-            query_params,
-            header_params,
-            body=None,
-            post_params=post_params,
-            files=None,
-            response_type="list[FileUploadResultExt]",
-            auth_settings=auth_settings,
-            async_req=async_req,
-            _return_http_data_only=_return_http_data_only,
-            _preload_content=_preload_content,
+        return self.heappe_file_transfer_upload_files_to_job_execution_dir_post_without_preload_content(
+            session_code=session_code,
+            job_id=job_id,
+            task_id=task_id,
+            files=multipart_files,
             _request_timeout=_request_timeout,
-            collection_formats={},
         )

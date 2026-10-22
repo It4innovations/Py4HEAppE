@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.0.0
+
+### Changed
+- Replaced the `heappe_v6` wrapper implementation with OpenAPI Generator output.
+- Migrated API client generation pipeline from Swagger Codegen CLI to OpenAPI Generator CLI (`openapi-generator-cli` 7.26.0).
+- Updated API wrapper generation docs in `Tools/APIWrapperGen/README.md` for the OpenAPI Generator workflow.
+- Updated project documentation for release `4.0.0` and OpenAPI-shaped wrapper generation terminology.
+
+### Added
+- Added a compatibility shim in `src/py4heappe/heappe_v6/core/__init__.py` so existing CLI calls using legacy keyword names (for example `SessionCode`) and `_preload_content=False` continue to work.
+- Added OpenAPI runtime dependencies required by the generated client (`pydantic`, `python-dateutil`).
+
+### Fixed
+- Reworked `src/py4heappe/heappe_v6/core/api/file_transfer_api_ext.py` to use OpenAPI-generated upload endpoints and keep in-memory upload workflows operational.
+
 ## 3.2.0
 
 ### Added

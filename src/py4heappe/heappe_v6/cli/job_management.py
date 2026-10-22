@@ -6,6 +6,7 @@ import typer
 import py4heappe.heappe_v6.cli.configuration as configuration
 import py4heappe.heappe_v6.core.base.utils as utils
 import py4heappe.heappe_v6.cli.information as infoCLI
+from py4heappe.heappe_v6.cli.response_utils import extract_id, parse_response_payload
 import py4heappe.heappe_v6.core as heappeCore
 
 from py4heappe.heappe_v6.core.base import exceptions
@@ -289,11 +290,7 @@ def _load_job_specification_file(json_job_spec_file: Path) -> dict:
 
 def _deserialize_generated_model(data: dict, model_class: type) -> Any:
     api_client = heappeCore.ApiClient()
-    try:
-        return api_client._ApiClient__deserialize_model(data, model_class)
-    finally:
-        api_client.pool.close()
-        api_client.pool.join()
+    return api_client._ApiClient__deserialize_model(data, model_class)
 
 
 def _normalize_task_specification_data(task_specification: dict) -> None:
@@ -1102,7 +1099,12 @@ def create_job(
         response = heappeCore.JobManagementApi(
             configuration.get_api_instance()
         ).heappe_job_management_create_job_post(**body)
-        jobId = json.loads(response.data)["Id"]
+        payload = parse_response_payload(
+            response,
+            debug_env_var="PY4HEAPPE_DEBUG_CREATE_JOB_RESPONSE",
+            debug_context="Create-job",
+        )
+        jobId = extract_id(payload)
         utils.print_and_log(f"\nHPC job was created (Id: {jobId})")
 
     except rest.ApiException as exception:

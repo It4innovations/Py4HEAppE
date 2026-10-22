@@ -3,6 +3,7 @@ import typer
 
 import py4heappe.heappe_v6.cli.configuration as configuration
 import py4heappe.heappe_v6.cli.information as infoCLI
+from py4heappe.heappe_v6.cli.response_utils import extract_id, parse_response_payload
 import py4heappe.heappe_v6.core.base.utils as utils
 import py4heappe.heappe_v6.core as heappeCore
 
@@ -11,6 +12,7 @@ from py4heappe.heappe_v6.core  import rest
 
 
 app = typer.Typer(name="HEAppECommandTemplateCLI", no_args_is_help=True, pretty_exceptions_short=True)
+
 
 @app.command(name="List")
 def get_command_templates_for_project():
@@ -25,7 +27,7 @@ def get_command_templates_for_project():
         }
 
         response = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_templates_get(**parameters)
-        commandTemplates =  json.loads(response.data)
+        commandTemplates = parse_response_payload(response)
         print(f"\nList of command templates for HEAppE project {projectId}:")
         print(json.dumps(commandTemplates, indent = 3))
         
@@ -71,7 +73,7 @@ def create_command_template(Name:str = typer.Option(..., help='Name'),
         }
 
         response = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_post(**body)
-        commandTemplateId =  json.loads(response.data)["Id"]
+        commandTemplateId = extract_id(parse_response_payload(response))
         utils.print_and_log(f"\nCommand template was created (Id: {commandTemplateId})")
 
     except rest.ApiException as exception:
@@ -193,8 +195,8 @@ def create_command_template_from_generic(id:str = typer.Option(..., help='Id (Ge
         }
 
         response = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_from_generic_post(**body)
-        jsonData =  json.loads(response.data)
-        commandTemplateId= jsonData["Id"]
+        jsonData = parse_response_payload(response)
+        commandTemplateId = extract_id(jsonData)
         utils.print_and_log(f"\nCommand template was created (Id: {commandTemplateId}):")
         print(json.dumps(jsonData, indent = 3))
 
@@ -270,7 +272,7 @@ def get_command_template_parameter(id:int = typer.Option(..., help='Id (Command 
         }
 
         response = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_parameter_get(**parameters)
-        commandTemplateParameter =  json.loads(response.data)
+        commandTemplateParameter = parse_response_payload(response)
         print(f"\nCommand template parameter:")
         print(json.dumps(commandTemplateParameter, indent = 3))
         
@@ -310,7 +312,7 @@ def create_command_template_parameter(uniqueName:str = typer.Option(..., help='I
         }
 
         response = heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_command_template_parameter_post(**body)
-        commandTemplateParameterId =  json.loads(response.data)["Id"]
+        commandTemplateParameterId = extract_id(parse_response_payload(response))
         utils.print_and_log(f"\nCommand template parameter was created  (Id: {commandTemplateParameterId})")
 
     except rest.ApiException as exception:
