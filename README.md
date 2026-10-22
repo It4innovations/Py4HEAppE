@@ -1,7 +1,7 @@
 <img align="right" width="35%" src="https://raw.githubusercontent.com/It4innovations/Py4HEAppE/refs/heads/master/docs/imgs/logo.png">
 
 # Py4HEAppE (Python for HEAppE Middleware)
-Release: 3.2.0
+Release: 4.0.0
 
 Py4HEAppE provides both a command-line interface and versioned Python wrappers for the [HEAppE](https://heappe.eu) middleware API.
 
@@ -12,6 +12,7 @@ You can use it in two ways:
 ## Supported HEAppE Versions
 | Py4HEAppE | HEAppE Version                                         | Notes |
 |:---------:|:-------------------------------------------------------| :---- |
+|   4.0.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | OpenAPI Generator-based v6 wrapper |
 |   3.2.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 |   3.1.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 |   2.9.X   | 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X        | Without Admin CLI section |
@@ -108,7 +109,7 @@ Generate a minimal job specification template in the current directory:
 py4heappe Job InitJobSpecification
 ```
 
-Generate the full swagger-shaped job specification template instead:
+Generate the full OpenAPI-shaped job specification template instead:
 
 ```shell
 py4heappe Job InitJobSpecification --full
@@ -198,6 +199,10 @@ py4heappe FileTransfer Stream --id 12345 --base64 aGVsbG8gd29ybGQ= --upload-file
 ## Python API Wrapper
 
 Py4HEAppE also ships versioned Python wrappers generated from the HEAppE API.
+
+The `heappe_v6` wrapper in 4.0.0 is generated with OpenAPI Generator. Legacy
+CLI call signatures (for example `SessionCode` and `_preload_content=False`)
+remain supported through an internal compatibility shim.
 
 Use the wrapper that matches your target HEAppE version:
 

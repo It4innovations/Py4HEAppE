@@ -1,72 +1,60 @@
 # {{packageName}}.{{classname}}{{#description}}
-{{description}}{{/description}}
+{{.}}{{/description}}
 
 All URIs are relative to *{{basePath}}*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-{{#operations}}{{#operation}}[**{{operationId}}**]({{classname}}.md#{{operationId}}) | **{{httpMethod}}** {{path}} | {{#summary}}{{summary}}{{/summary}}
+{{#operations}}{{#operation}}[**{{operationId}}**]({{classname}}.md#{{operationId}}) | **{{httpMethod}}** {{path}} | {{summary}}
 {{/operation}}{{/operations}}
 
 {{#operations}}
 {{#operation}}
-{{#contents}}
-{{#@first}}
 # **{{{operationId}}}**
-> {{#returnType}}{{{returnType}}} {{/returnType}}{{{operationId}}}({{#parameters}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}={{{paramName}}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/parameters}})
+> {{#returnType}}{{{.}}} {{/returnType}}{{{operationId}}}({{#allParams}}{{#required}}{{{paramName}}}{{/required}}{{^required}}{{{paramName}}}={{{paramName}}}{{/required}}{{^-last}}, {{/-last}}{{/allParams}})
+{{#supportHttpxSync}}
 
-{{{summary}}}{{#notes}}
+**Synchronous variant:** `{{{operationId}}}_sync(...)` — same parameters and return type, but blocks until completion instead of requiring `await`.
+{{/supportHttpxSync}}
 
-{{{notes}}}{{/notes}}
+{{#summary}}
+{{{summary}}}
 
+{{/summary}}
+{{#unescapedNotes}}
+{{{.}}}
+
+{{/unescapedNotes}}
 ### Example
-```python
-from __future__ import print_function
-import time
-import {{{packageName}}}
-from {{{packageName}}}.rest import ApiException
-from pprint import pprint
-{{#hasAuthMethods}}{{#authMethods}}{{#isBasic}}
-# Configure HTTP basic authorization: {{{name}}}
-configuration = {{{packageName}}}.Configuration()
-configuration.username = 'YOUR_USERNAME'
-configuration.password = 'YOUR_PASSWORD'{{/isBasic}}{{#isApiKey}}
-# Configure API key authorization: {{{name}}}
-configuration = {{{packageName}}}.Configuration()
-configuration.api_key['{{{keyParamName}}}'] = 'YOUR_API_KEY'
-# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-# configuration.api_key_prefix['{{{keyParamName}}}'] = 'Bearer'{{/isApiKey}}{{#isOAuth}}
-# Configure OAuth2 access token for authorization: {{{name}}}
-configuration = {{{packageName}}}.Configuration()
-configuration.access_token = 'YOUR_ACCESS_TOKEN'{{/isOAuth}}{{/authMethods}}
 
-# create an instance of the API class
-api_instance = {{{packageName}}}.{{{classname}}}({{{packageName}}}.ApiClient(configuration))
-{{#parameters}}{{paramName}} = {{{example}}} # {{{dataType}}} | {{{description}}}{{^required}} (optional){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
-{{/parameters}}
+{{#hasAuthMethods}}
+{{#authMethods}}
+{{#isBasic}}
+{{#isBasicBasic}}
+* Basic Authentication ({{name}}):
+{{/isBasicBasic}}
+{{#isBasicBearer}}
+* Bearer{{#bearerFormat}} ({{{.}}}){{/bearerFormat}} Authentication ({{name}}):
+{{/isBasicBearer}}
+{{/isBasic}}
+{{#isApiKey}}
+* Api Key Authentication ({{name}}):
+{{/isApiKey }}
+{{#isOAuth}}
+* OAuth Authentication ({{name}}):
+{{/isOAuth }}
+{{/authMethods}}
 {{/hasAuthMethods}}
-{{^hasAuthMethods}}
+{{> api_doc_example }}
 
-# create an instance of the API class
-api_instance = {{{packageName}}}.{{{classname}}}()
-{{#parameters}}{{paramName}} = {{{example}}} # {{{dataType}}} | {{{description}}}{{^required}} (optional){{/required}}{{#defaultValue}} (default to {{{.}}}){{/defaultValue}}
-{{/parameters}}
-{{/hasAuthMethods}}
-
-try:
-{{#summary}}    # {{{.}}}
-{{/summary}}    {{#returnType}}api_response = {{/returnType}}api_instance.{{{operationId}}}({{#parameters}}{{#required}}{{paramName}}{{/required}}{{^required}}{{paramName}}={{paramName}}{{/required}}{{#hasMore}}, {{/hasMore}}{{/parameters}}){{#returnType}}
-    pprint(api_response){{/returnType}}
-except ApiException as e:
-    print("Exception when calling {{classname}}->{{operationId}}: %s\n" % e)
-```
 
 ### Parameters
-{{^parameters}}This endpoint does not need any parameter.{{/parameters}}{{#parameters}}{{#@last}}
+
+{{^allParams}}This endpoint does not need any parameter.{{/allParams}}{{#allParams}}{{#-last}}
 Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------{{/@last}}{{/parameters}}
-{{#parameters}} **{{paramName}}** | {{#isBinary}}**{{dataType}}**{{/isBinary}}{{^isBinary}}{{#isPrimitiveType}}**{{dataType}}**{{/isPrimitiveType}}{{^isPrimitiveType}}[**{{dataType}}**]({{baseType}}.md){{/isPrimitiveType}}{{/isBinary}}| {{description}} | {{^required}}[optional] {{/required}}{{#defaultValue}}[default to {{defaultValue}}]{{/defaultValue}}
-{{/parameters}}
+------------- | ------------- | ------------- | -------------{{/-last}}{{/allParams}}
+{{#allParams}} **{{paramName}}** | {{#isFile}}**{{dataType}}**{{/isFile}}{{^isFile}}{{#isPrimitiveType}}**{{dataType}}**{{/isPrimitiveType}}{{^isPrimitiveType}}[**{{dataType}}**]({{baseType}}.md){{/isPrimitiveType}}{{/isFile}}| {{description}} | {{^required}}[optional] {{/required}}{{#defaultValue}}[default to {{.}}]{{/defaultValue}}
+{{/allParams}}
 
 ### Return type
 
@@ -74,16 +62,24 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-{{^authMethods}}No authorization required{{/authMethods}}{{#authMethods}}[{{{name}}}](../README.md#{{{name}}}){{^@last}}, {{/@last}}{{/authMethods}}
+{{^authMethods}}No authorization required{{/authMethods}}{{#authMethods}}[{{{name}}}](../README.md#{{{name}}}){{^-last}}, {{/-last}}{{/authMethods}}
 
 ### HTTP request headers
 
- - **Content-Type**: {{#consumes}}{{{mediaType}}}{{#hasMore}}, {{/hasMore}}{{/consumes}}{{^consumes}}Not defined{{/consumes}}
- - **Accept**: {{#produces}}{{{mediaType}}}{{#hasMore}}, {{/hasMore}}{{/produces}}{{^produces}}Not defined{{/produces}}
+ - **Content-Type**: {{#consumes}}{{{mediaType}}}{{^-last}}, {{/-last}}{{/consumes}}{{^consumes}}Not defined{{/consumes}}
+ - **Accept**: {{#produces}}{{{mediaType}}}{{^-last}}, {{/-last}}{{/produces}}{{^produces}}Not defined{{/produces}}
+
+{{#responses.0}}
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+{{#responses}}
+**{{code}}** | {{message}} | {{#headers}} * {{baseName}} - {{description}} <br> {{/headers}}{{^headers.0}} - {{/headers.0}} |
+{{/responses}}
+{{/responses.0}}
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-{{/@first}}
-{{/contents}}
 {{/operation}}
 {{/operations}}

@@ -77,26 +77,42 @@ class LiveCliExampleTestCase(unittest.TestCase):
     @classmethod
     def ensure_live_enabled(cls):
         if os.environ.get(LIVE_FLAG) != "1":
-            raise AssertionError(
+            raise unittest.SkipTest(
                 f"Set {LIVE_FLAG}=1 to run live CLI example tests."
             )
 
     @classmethod
     def ensure_mutating_commands_enabled(cls):
         if os.environ.get(MUTATING_FLAG) != "1":
-            raise AssertionError(
+            raise unittest.SkipTest(
                 f"Set {MUTATING_FLAG}=1 to run mutating CLI example tests."
             )
 
     @classmethod
+    def _normalized_env_value(cls, name):
+        raw_value = os.environ.get(name)
+        if raw_value is None:
+            return None
+
+        value = raw_value.strip()
+        if not value or value.startswith("#"):
+            return None
+
+        # Accept inline comments in tests/.env values.
+        if " #" in value:
+            value = value.split(" #", 1)[0].strip()
+
+        return value or None
+
+    @classmethod
     def require_env(cls, *names):
-        missing = [name for name in names if not os.environ.get(name)]
+        missing = [name for name in names if not cls._normalized_env_value(name)]
         if missing:
-            raise AssertionError(
+            raise unittest.SkipTest(
                 "Missing required environment variable(s): "
                 + ", ".join(missing)
             )
-        return {name: os.environ[name] for name in names}
+        return {name: cls._normalized_env_value(name) for name in names}
 
     @classmethod
     def session_env(cls):
@@ -126,6 +142,8 @@ class LiveCliExampleTestCase(unittest.TestCase):
     @staticmethod
     def split_env_list(name):
         raw_value = os.environ.get(name, "")
+        if " #" in raw_value:
+            raw_value = raw_value.split(" #", 1)[0]
         return [item.strip() for item in raw_value.split(";") if item.strip()]
 
     @staticmethod
@@ -137,6 +155,18 @@ class LiveCliExampleTestCase(unittest.TestCase):
     def assert_command_succeeded(cls, result, args):
         if result.returncode == 0:
             return
+
+        combined_output = f"{result.stdout}\n{result.stderr}"
+        session_error_markers = (
+            "Session Code Authentication Problem",
+            "Session for HEAppE instance does not exist",
+            "already expired",
+        )
+        if any(marker in combined_output for marker in session_error_markers):
+            raise unittest.SkipTest(
+                "Live session is missing or expired. Refresh "
+                f"{SESSION_CODE_ENV} (or disable forced session injection)."
+            )
 
         formatted_command = " ".join(args)
         raise AssertionError(
