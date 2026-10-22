@@ -25,9 +25,8 @@ class {{classname}}(object):
             api_client = ApiClient()
         self.api_client = api_client
 {{#operation}}
-{{#contents}}
 
-    def {{operationId}}(self, {{#sortParamsByRequiredFlag}}{{#parameters}}{{#required}}{{baseName}}, {{/required}}{{/parameters}}{{/sortParamsByRequiredFlag}}**kwargs):  # noqa: E501
+    def {{operationId}}(self, {{#sortParamsByRequiredFlag}}{{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{/sortParamsByRequiredFlag}}**kwargs):  # noqa: E501
         """{{#summary}}{{{.}}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}  # noqa: E501
 
 {{#notes}}
@@ -36,29 +35,29 @@ class {{classname}}(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 {{#sortParamsByRequiredFlag}}
-        >>> thread = api.{{operationId}}({{#parameters}}{{#required}}{{baseName}}, {{/required}}{{/parameters}}async_req=True)
+        >>> thread = api.{{operationId}}({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}async_req=True)
 {{/sortParamsByRequiredFlag}}
 {{^sortParamsByRequiredFlag}}
-        >>> thread = api.{{operationId}}({{#parameters}}{{#required}}{{baseName}}={{baseName}}_value, {{/required}}{{/parameters}}async_req=True)
+        >>> thread = api.{{operationId}}({{#allParams}}{{#required}}{{paramName}}={{paramName}}_value, {{/required}}{{/allParams}}async_req=True)
 {{/sortParamsByRequiredFlag}}
         >>> result = thread.get()
 
         :param async_req bool
-{{#parameters}}
-        :param {{dataType}} {{baseName}}:{{#description}} {{{description}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
-{{/parameters}}
+{{#allParams}}
+        :param {{dataType}} {{paramName}}:{{#description}} {{{description}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional){{/optional}}
+{{/allParams}}
         :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}
                  If the method is called asynchronously,
                  returns the request thread.
         """
         kwargs['_return_http_data_only'] = True
         if kwargs.get('async_req'):
-            return self.{{operationId}}_with_http_info({{#sortParamsByRequiredFlag}}{{#parameters}}{{#required}}{{baseName}}, {{/required}}{{/parameters}}{{/sortParamsByRequiredFlag}}**kwargs)  # noqa: E501
+            return self.{{operationId}}_with_http_info({{#sortParamsByRequiredFlag}}{{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{/sortParamsByRequiredFlag}}**kwargs)  # noqa: E501
         else:
-            (data) = self.{{operationId}}_with_http_info({{#sortParamsByRequiredFlag}}{{#parameters}}{{#required}}{{baseName}}, {{/required}}{{/parameters}}{{/sortParamsByRequiredFlag}}**kwargs)  # noqa: E501
+            (data) = self.{{operationId}}_with_http_info({{#sortParamsByRequiredFlag}}{{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{/sortParamsByRequiredFlag}}**kwargs)  # noqa: E501
             return data
 
-    def {{operationId}}_with_http_info(self, {{#sortParamsByRequiredFlag}}{{#parameters}}{{#required}}{{baseName}}, {{/required}}{{/parameters}}{{/sortParamsByRequiredFlag}}**kwargs):  # noqa: E501
+    def {{operationId}}_with_http_info(self, {{#sortParamsByRequiredFlag}}{{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}{{/sortParamsByRequiredFlag}}**kwargs):  # noqa: E501
         """{{#summary}}{{{.}}}{{/summary}}{{^summary}}{{operationId}}{{/summary}}  # noqa: E501
 
 {{#notes}}
@@ -67,23 +66,23 @@ class {{classname}}(object):
         This method makes a synchronous HTTP request by default. To make an
         asynchronous HTTP request, please pass async_req=True
 {{#sortParamsByRequiredFlag}}
-        >>> thread = api.{{operationId}}_with_http_info({{#parameters}}{{#required}}{{baseName}}, {{/required}}{{/parameters}}async_req=True)
+        >>> thread = api.{{operationId}}_with_http_info({{#allParams}}{{#required}}{{paramName}}, {{/required}}{{/allParams}}async_req=True)
 {{/sortParamsByRequiredFlag}}
 {{^sortParamsByRequiredFlag}}
-        >>> thread = api.{{operationId}}_with_http_info({{#parameters}}{{#required}}{{baseName}}={{baseName}}_value, {{/required}}{{/parameters}}async_req=True)
+        >>> thread = api.{{operationId}}_with_http_info({{#allParams}}{{#required}}{{paramName}}={{paramName}}_value, {{/required}}{{/allParams}}async_req=True)
 {{/sortParamsByRequiredFlag}}
         >>> result = thread.get()
 
         :param async_req bool
-{{#parameters}}
-        :param {{dataType}} {{baseName}}:{{#description}} {{{description}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/optional}}
-{{/parameters}}
+{{#allParams}}
+        :param {{dataType}} {{paramName}}:{{#description}} {{{description}}}{{/description}}{{#required}} (required){{/required}}{{#optional}}(optional{{#defaultValue}}, default to {{{.}}}{{/defaultValue}}){{/optional}}
+{{/allParams}}
         :return: {{#returnType}}{{returnType}}{{/returnType}}{{^returnType}}None{{/returnType}}
                  If the method is called asynchronously,
                  returns the request thread.
         """
 
-        all_params = [{{#parameters}}'{{baseName}}'{{#hasMore}}, {{/hasMore}}{{/parameters}}]  # noqa: E501
+        all_params = [{{#allParams}}'{{paramName}}'{{#hasMore}}, {{/hasMore}}{{/allParams}}]  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -98,97 +97,88 @@ class {{classname}}(object):
                 )
             params[key] = val
         del params['kwargs']
-{{#parameters}}
+{{#allParams}}
 {{#required}}
-        # verify the required parameter '{{baseName}}' is set
-        if ('{{baseName}}' not in params or
-                params['{{baseName}}'] is None):
-            raise ValueError("Missing the required parameter `{{baseName}}` when calling `{{operationId}}`")  # noqa: E501
+        # verify the required parameter '{{paramName}}' is set
+        if self.api_client.client_side_validation and ('{{paramName}}' not in params or
+                                                       params['{{paramName}}'] is None):  # noqa: E501
+            raise ValueError("Missing the required parameter `{{paramName}}` when calling `{{operationId}}`")  # noqa: E501
 {{/required}}
-{{/parameters}}
+{{/allParams}}
 
-{{#parameters}}
+{{#allParams}}
 {{#hasValidation}}
     {{#maxLength}}
-        if ('{{baseName}}' in params and
-                len(params['{{baseName}}']) > {{maxLength}}):
-            raise ValueError("Invalid value for parameter `{{baseName}}` when calling `{{operationId}}`, length must be less than or equal to `{{maxLength}}`")  # noqa: E501
+        if self.api_client.client_side_validation and ('{{paramName}}' in params and
+                                                       len(params['{{paramName}}']) > {{maxLength}}):
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be less than or equal to `{{maxLength}}`")  # noqa: E501
     {{/maxLength}}
     {{#minLength}}
-        if ('{{baseName}}' in params and
-                len(params['{{baseName}}']) < {{minLength}}):
-            raise ValueError("Invalid value for parameter `{{baseName}}` when calling `{{operationId}}`, length must be greater than or equal to `{{minLength}}`")  # noqa: E501
+        if self.api_client.client_side_validation and ('{{paramName}}' in params and
+                                                       len(params['{{paramName}}']) < {{minLength}}):
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, length must be greater than or equal to `{{minLength}}`")  # noqa: E501
     {{/minLength}}
     {{#maximum}}
-        if '{{baseName}}' in params and params['{{baseName}}'] >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}}:  # noqa: E501
-            raise ValueError("Invalid value for parameter `{{baseName}}` when calling `{{operationId}}`, must be a value less than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}`{{maximum}}`")  # noqa: E501
+        if self.api_client.client_side_validation and ('{{paramName}}' in params and params['{{paramName}}'] >{{#exclusiveMaximum}}={{/exclusiveMaximum}} {{maximum}}):  # noqa: E501
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must be a value less than {{^exclusiveMaximum}}or equal to {{/exclusiveMaximum}}`{{maximum}}`")  # noqa: E501
     {{/maximum}}
     {{#minimum}}
-        if '{{baseName}}' in params and params['{{baseName}}'] <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}}:  # noqa: E501
-            raise ValueError("Invalid value for parameter `{{baseName}}` when calling `{{operationId}}`, must be a value greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}`{{minimum}}`")  # noqa: E501
+        if self.api_client.client_side_validation and ('{{paramName}}' in params and params['{{paramName}}'] <{{#exclusiveMinimum}}={{/exclusiveMinimum}} {{minimum}}):  # noqa: E501
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must be a value greater than {{^exclusiveMinimum}}or equal to {{/exclusiveMinimum}}`{{minimum}}`")  # noqa: E501
     {{/minimum}}
     {{#pattern}}
-        if '{{baseName}}' in params and not re.search(r'{{{vendorExtensions.x-regex}}}', params['{{baseName}}']{{#vendorExtensions.x-modifiers}}{{#@first}}, flags={{/@first}}re.{{.}}{{^@last}} | {{/@last}}{{/vendorExtensions.x-modifiers}}):  # noqa: E501
-            raise ValueError("Invalid value for parameter `{{baseName}}` when calling `{{operationId}}`, must conform to the pattern `{{{pattern}}}`")  # noqa: E501
+        if self.api_client.client_side_validation and ('{{paramName}}' in params and not re.search(r'{{{vendorExtensions.x-regex}}}', params['{{paramName}}']{{#vendorExtensions.x-modifiers}}{{#-first}}, flags={{/-first}}re.{{.}}{{^-last}} | {{/-last}}{{/vendorExtensions.x-modifiers}})):  # noqa: E501
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, must conform to the pattern `{{{pattern}}}`")  # noqa: E501
     {{/pattern}}
     {{#maxItems}}
-        if ('{{baseName}}' in params and
-                len(params['{{baseName}}']) > {{maxItems}}):
-            raise ValueError("Invalid value for parameter `{{baseName}}` when calling `{{operationId}}`, number of items must be less than or equal to `{{maxItems}}`")  # noqa: E501
+        if self.api_client.client_side_validation and ('{{paramName}}' in params and
+                                            len(params['{{paramName}}']) > {{maxItems}}):
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be less than or equal to `{{maxItems}}`")  # noqa: E501
     {{/maxItems}}
     {{#minItems}}
-        if ('{{baseName}}' in params and
-                len(params['{{baseName}}']) < {{minItems}}):
-            raise ValueError("Invalid value for parameter `{{baseName}}` when calling `{{operationId}}`, number of items must be greater than or equal to `{{minItems}}`")  # noqa: E501
+        if self.api_client.client_side_validation and ('{{paramName}}' in params and
+                                            len(params['{{paramName}}']) < {{minItems}}):
+            raise ValueError("Invalid value for parameter `{{paramName}}` when calling `{{operationId}}`, number of items must be greater than or equal to `{{minItems}}`")  # noqa: E501
     {{/minItems}}
 {{/hasValidation}}
-{{#@last}}
-{{/@last}}
-{{/parameters}}
+{{#-last}}
+{{/-last}}
+{{/allParams}}
         collection_formats = {}
 
         path_params = {}
 {{#pathParams}}
-        if '{{baseName}}' in params:
-            path_params['{{baseName}}'] = params['{{baseName}}']{{#isListContainer}}  # noqa: E501
+        if '{{paramName}}' in params:
+            path_params['{{baseName}}'] = params['{{paramName}}']{{#isListContainer}}  # noqa: E501
             collection_formats['{{baseName}}'] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
 {{/pathParams}}
 
         query_params = []
 {{#queryParams}}
-        if '{{baseName}}' in params:
-            query_params.append(('{{baseName}}', params['{{baseName}}'])){{#isListContainer}}  # noqa: E501
+        if '{{paramName}}' in params:
+            query_params.append(('{{baseName}}', params['{{paramName}}'])){{#isListContainer}}  # noqa: E501
             collection_formats['{{baseName}}'] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
 {{/queryParams}}
 
         header_params = {}
 {{#headerParams}}
-        if '{{baseName}}' in params:
-            header_params['{{baseName}}'] = params['{{baseName}}']{{#isListContainer}}  # noqa: E501
+        if '{{paramName}}' in params:
+            header_params['{{baseName}}'] = params['{{paramName}}']{{#isListContainer}}  # noqa: E501
             collection_formats['{{baseName}}'] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
 {{/headerParams}}
 
         form_params = []
         local_var_files = {}
 {{#formParams}}
-        if '{{baseName}}' in params:
-            {{#isBinary}}
-            local_var_files['{{baseName}}'] = params['{{baseName}}']  # noqa: E501
-            {{/isBinary}}
-            {{^isBinary}}
-            {{#items.isBinary}}
-            local_var_files['{{baseName}}'] = params['{{baseName}}']  # noqa: E501
-            {{/items.isBinary}}
-            {{^items.isBinary}}
-            form_params.append(('{{baseName}}', params['{{baseName}}']))  # noqa: E501
-            {{/items.isBinary}}
-            {{/isBinary}}
+        if '{{paramName}}' in params:
+            {{#notFile}}form_params.append(('{{baseName}}', params['{{paramName}}'])){{/notFile}}{{#isFile}}local_var_files['{{baseName}}'] = params['{{paramName}}']{{/isFile}}{{#isListContainer}}  # noqa: E501
+            collection_formats['{{baseName}}'] = '{{collectionFormat}}'{{/isListContainer}}  # noqa: E501
 {{/formParams}}
 
         body_params = None
 {{#bodyParam}}
-        if '{{baseName}}' in params:
-            body_params = params['{{baseName}}']
+        if '{{paramName}}' in params:
+            body_params = params['{{paramName}}']
 {{/bodyParam}}
         {{#hasProduces}}
         # HTTP header `Accept`
@@ -220,6 +210,5 @@ class {{classname}}(object):
             _preload_content=params.get('_preload_content', True),
             _request_timeout=params.get('_request_timeout'),
             collection_formats=collection_formats)
-{{/contents}}
 {{/operation}}
 {{/operations}}
