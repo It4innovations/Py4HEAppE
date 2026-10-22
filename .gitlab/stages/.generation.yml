@@ -18,10 +18,11 @@ API_client_generation:
         apt-get install -y --no-install-recommends wget zip
         rm -rf /var/lib/apt/lists/*
       fi
-    - wget https://repo1.maven.org/maven2/io/swagger/codegen/v3/swagger-codegen-cli/3.0.71/swagger-codegen-cli-3.0.71.jar -O /swagger-codegen-cli.jar
+    - wget https://repo1.maven.org/maven2/io/swagger/swagger-codegen-cli/2.4.50/swagger-codegen-cli-2.4.50.jar -O /swagger-codegen-cli.jar
   script:
     - echo "Generation API client"
     - java -jar /swagger-codegen-cli.jar generate -i Tools/APIWrapperGen/swagger.json -l python -t Tools/APIWrapperGen/Templates/python/ -o ./app/client -c Tools/APIWrapperGen/config.json
+    - test -d app/client || { echo "Generation did not produce app/client"; exit 1; }
     - cd app/client
     - zip -r ../../APIWrapperGen.zip .
   tags:
