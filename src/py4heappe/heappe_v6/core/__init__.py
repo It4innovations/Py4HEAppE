@@ -531,6 +531,8 @@ def _to_snake_case(name):
 
 
 def _patch_legacy_api_methods():
+    import inspect
+
     api_classes = [
         ClusterInformationApi,
         CredentialsApi,
@@ -558,7 +560,26 @@ def _patch_legacy_api_methods():
             if without_preload is None:
                 continue
 
-            def _compat(self, *args, __orig=original, __without=without_preload, **kwargs):
+            accepted_params = [
+                param_name
+                for param_name in inspect.signature(original).parameters
+                if param_name != "self"
+            ]
+            body_candidates = [
+                param_name
+                for param_name in accepted_params
+                if param_name.endswith("_model")
+            ]
+
+            def _compat(
+                self,
+                *args,
+                __orig=original,
+                __without=without_preload,
+                __accepted=accepted_params,
+                __body_candidates=body_candidates,
+                **kwargs,
+            ):
                 preload_content = kwargs.pop("_preload_content", True)
                 mapped_kwargs = {}
                 for key, value in kwargs.items():
@@ -566,6 +587,22 @@ def _patch_legacy_api_methods():
                         mapped_kwargs[key] = value
                     else:
                         mapped_kwargs[_to_snake_case(key)] = value
+
+                # Legacy CLI sends JSON payloads as `body={...}`; map to
+                # OpenAPI-generated request model argument (usually `*_model`).
+                if "body" in mapped_kwargs and "body" not in __accepted:
+                    body_value = mapped_kwargs.pop("body")
+                    target_param = next(
+                        (name for name in __body_candidates if name not in mapped_kwargs),
+                        None,
+                    )
+                    if target_param is None:
+                        non_internal = [name for name in __accepted if not name.startswith("_")]
+                        if len(non_internal) == 1 and non_internal[0] not in mapped_kwargs:
+                            target_param = non_internal[0]
+                    if target_param is not None:
+                        mapped_kwargs[target_param] = body_value
+
                 if preload_content is False:
                     return __without(self, *args, **mapped_kwargs)
                 return __orig(self, *args, **mapped_kwargs)
