@@ -22,8 +22,8 @@ API_client_generation:
   script:
     - echo "Generation API client"
     - java -jar /swagger-codegen-cli.jar generate -i Tools/APIWrapperGen/swagger.json -l python -t Tools/APIWrapperGen/Templates/python/ -o ./app/client -c Tools/APIWrapperGen/config.json
-    - cd app/client/py4heappe
-    - zip -r ../../../APIWrapperGen.zip .
+    - cd app/client
+    - zip -r ../../APIWrapperGen.zip .
   tags:
     - Docker
     - Centos9
