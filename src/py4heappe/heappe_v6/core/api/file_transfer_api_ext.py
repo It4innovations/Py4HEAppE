@@ -71,7 +71,6 @@ class FileTransferApiExt(FileTransferApi):
         session_code: str,
         job_id: int,
         task_id: Optional[int] = None,
-        async_req: Optional[bool] = None,
         _preload_content: bool = True,
         _request_timeout=None,
     ):
@@ -81,7 +80,6 @@ class FileTransferApiExt(FileTransferApi):
             session_code=session_code,
             job_id=job_id,
             task_id=task_id,
-            async_req=async_req,
             _return_http_data_only=True,
             _preload_content=_preload_content,
             _request_timeout=_request_timeout,
@@ -93,7 +91,6 @@ class FileTransferApiExt(FileTransferApi):
         session_code: str,
         job_id: int,
         task_id: Optional[int] = None,
-        async_req: Optional[bool] = None,
         _return_http_data_only: Optional[bool] = None,
         _preload_content: bool = True,
         _request_timeout=None,
@@ -112,10 +109,6 @@ class FileTransferApiExt(FileTransferApi):
             file_bytes = _read_upload_bytes(normalized.content)
             multipart_files.append((normalized.filename, file_bytes))
 
-        if async_req:
-            raise NotImplementedError(
-                "async_req mode is not supported by FileTransferApiExt with OpenAPI-generated client."
-            )
 
         if _preload_content:
             return self.heappe_file_transfer_upload_files_to_job_execution_dir_post(
