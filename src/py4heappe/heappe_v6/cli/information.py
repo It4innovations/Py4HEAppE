@@ -2,6 +2,10 @@ import json
 import typer
 
 import py4heappe.heappe_v6.cli.configuration as configuration
+from py4heappe.heappe_v6.cli.response_utils import (
+    extract_first_value,
+    parse_response_payload,
+)
 import py4heappe.heappe_v6.core.base.utils as utils
 import py4heappe.heappe_v6.core as heappeCore
 
@@ -13,6 +17,7 @@ from typing_extensions import Annotated
 
 app = typer.Typer(name="HEAppEInfoCLI", no_args_is_help=True, pretty_exceptions_short=True)
 
+
 def get_hpc_project():
     try:
         utils.log_info("Fetching computational project ...")
@@ -22,7 +27,12 @@ def get_hpc_project():
         }    
 
         response = heappeCore.UserAndLimitationManagementApi(configuration.get_api_instance()).heappe_user_and_limitation_management_projects_for_current_user_get(**parameters)
-        project = next((f["Project"] for f in json.loads(response.data)if f["Project"]["AccountingString"] == configuration.get_project_from_configuration()), None)
+        project_payload = parse_response_payload(response)
+        if not isinstance(project_payload, list):
+            raise exceptions.Py4HEAppEInternalException(
+                f"Unexpected projects response payload: {project_payload}"
+            ) from None
+        project = next((f["Project"] for f in project_payload if f["Project"]["AccountingString"] == configuration.get_project_from_configuration()), None)
 
         if project is None:
             raise exceptions.Py4HEAppEInternalException("The computational project does not exist.") from None
@@ -53,7 +63,8 @@ def get_api_version():
         }    
 
         response= heappeCore.ManagementApi(configuration.get_api_instance()).heappe_management_version_information_get(**parameters)
-        version: str = json.loads(response.data)["Version"]
+        payload = parse_response_payload(response)
+        version: str = extract_first_value(payload, "Version", "version")
         utils.print_and_log(f"\nVersion of API: {version}")
 
     except rest.ApiException as exception:
@@ -96,7 +107,7 @@ def get_cluster_information(clusterName:str = typer.Option(None, help='Cluster n
             parameters["AccountingString"] = accountingString
 
         response= heappeCore.ClusterInformationApi(configuration.get_api_instance()).heappe_cluster_information_list_available_clusters_get(**parameters)
-        print(f"\nCluster information:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nCluster information:\n{json.dumps(parse_response_payload(response), indent = 3)}")
 
     except rest.ApiException as exception:
         try:
@@ -128,7 +139,7 @@ def get_parameters_from_generic_cmd_template_script(id:int = typer.Option(..., h
         }
 
         response = heappeCore.ClusterInformationApi(configuration.get_api_instance()).heappe_cluster_information_request_command_template_parameters_name_post(**body)
-        print(f"\nCommand template parameters:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nCommand template parameters:\n{json.dumps(parse_response_payload(response), indent = 3)}")
 
     except rest.ApiException as exception:
         try:
@@ -159,7 +170,7 @@ def get_cluster_node_usage(clusterNodeTypeId :int = typer.Option(default=...,  h
         }    
     
         response= heappeCore.ClusterInformationApi(configuration.get_api_instance()).heappe_cluster_information_current_cluster_node_usage_get(**parameters)
-        print(f"\nCluster node type usage:\n{json.dumps(json.loads(response.data), indent = 3)}")
+        print(f"\nCluster node type usage:\n{json.dumps(parse_response_payload(response), indent = 3)}")
 
     except rest.ApiException as exception:
         try:
