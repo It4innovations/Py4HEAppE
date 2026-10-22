@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 4.0.0
 
 ### Changed
-- Replaced the `heappe_v6` wrapper implementation with OpenAPI Generator output.
+- Replaced the `heappe_v6` wrapper implementation with OpenAPI Generator outputs.
 - Migrated API client generation pipeline from Swagger Codegen CLI to OpenAPI Generator CLI (`openapi-generator-cli` 7.26.0).
 - Updated API wrapper generation docs in `Tools/APIWrapperGen/README.md` for the OpenAPI Generator workflow.
 - Updated project documentation for release `4.0.0` and OpenAPI-shaped wrapper generation terminology.
