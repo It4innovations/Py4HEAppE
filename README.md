@@ -38,6 +38,12 @@ If the `py4heappe` executable is not on your `PATH`, use the full path to the in
 
 On Windows, use `py4heappe.exe` instead of `py4heappe`.
 
+To use the asynchronous Python wrapper (`heappe_v6.core_async`), install the optional `async` extra, which adds `aiohttp` and `aiohttp-retry`:
+
+```shell
+pip install "py4heappe[async]"
+```
+
 ## HEAppE CLI
 The CLI is intended for users who want to work with HEAppE directly from a terminal without writing Python code.
 
@@ -352,6 +358,80 @@ finally:
     api_client.pool.close()
     api_client.pool.join()
 ```
+
+### Asynchronous Python API Wrapper
+
+`heappe_v6` also ships an asyncio wrapper, `py4heappe.heappe_v6.core_async`, generated
+from the same OpenAPI definition with OpenAPI Generator's `asyncio` (aiohttp) library.
+It requires the optional extra: `pip install "py4heappe[async]"`.
+
+It differs from the synchronous wrapper in a few ways:
+
+- Every API method is a coroutine and must be awaited.
+- Methods use the generated snake_case signatures and request models
+  (for example `session_code=...`). The legacy `SessionCode`, `body=` and
+  `_preload_content=False` compatibility shim applies only to the synchronous wrapper.
+- Each operation comes in three variants: the plain method returns the deserialized
+  data, `..._with_http_info` returns an `ApiResponse` (status code, headers, data), and
+  `..._without_preload_content` returns the raw, unread response.
+- Close the client with `async with hpa.ApiClient(...)` or `await api_client.close()`.
+  The `api_client.pool` cleanup used by the synchronous wrapper does not apply.
+
+```python
+import asyncio
+
+import py4heappe.heappe_v6.core_async as hpa
+
+
+async def main():
+    configuration = hpa.Configuration(host="https://heappe.example.org")
+
+    async with hpa.ApiClient(configuration) as api_client:
+        session_code = await hpa.UserAndLimitationManagementApi(
+            api_client
+        ).heappe_user_and_limitation_management_authenticate_user_password_post(
+            authenticate_user_password_model=hpa.AuthenticateUserPasswordModel(
+                credentials=hpa.PasswordCredentialsExt(
+                    username="your-username", password="your-password"
+                )
+            )
+        )
+
+        # Independent requests run concurrently on one client.
+        version, clusters = await asyncio.gather(
+            hpa.ManagementApi(api_client).heappe_management_version_information_get(
+                session_code=session_code
+            ),
+            hpa.ClusterInformationApi(
+                api_client
+            ).heappe_cluster_information_list_available_clusters_get(
+                session_code=session_code
+            ),
+        )
+        print(version.version, [cluster.name for cluster in clusters])
+
+
+asyncio.run(main())
+```
+
+For in-memory uploads, use the async counterpart of `FileTransferApiExt`:
+
+```python
+from py4heappe.heappe_v6.extensions.file_transfer_api_ext_async import (
+    FileTransferApiExt,
+    InMemoryUploadFile,
+)
+
+await FileTransferApiExt(
+    api_client
+).heappe_file_transfer_upload_file_objects_to_job_execution_dir_post(
+    files=[InMemoryUploadFile("bytes-input.txt", b"hello from bytes")],
+    session_code=session_code,
+    job_id=12345,
+)
+```
+
+A complete runnable example is in `docs/examples/example_async.py`.
 
 ## Running CLI tests
 
