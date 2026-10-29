@@ -218,7 +218,7 @@ There is no single unversioned `py4heappe.core` module. Use the versioned wrappe
 ### Dedicated In-Memory Upload API (`file_transfer_api_ext.py`)
 
 For uploads that should not touch local disk files, use the dedicated implementation in
-`src/py4heappe/heappe_v6/core/api/file_transfer_api_ext.py`.
+`src/py4heappe/heappe_v6/extensions/file_transfer_api_ext.py`.
 
 It provides `FileTransferApiExt.heappe_file_transfer_upload_file_objects_to_job_execution_dir_post`,
 which accepts byte-like payloads or file-like objects.
@@ -227,7 +227,7 @@ which accepts byte-like payloads or file-like objects.
 import io
 
 import py4heappe.heappe_v6.core as hp
-from py4heappe.heappe_v6.core.api.file_transfer_api_ext import (
+from py4heappe.heappe_v6.extensions.file_transfer_api_ext import (
     FileTransferApiExt,
     InMemoryUploadFile,
 )

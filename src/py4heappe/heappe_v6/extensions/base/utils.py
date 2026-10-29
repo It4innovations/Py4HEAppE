@@ -2,8 +2,8 @@ import os
 import platform
 import subprocess
 
-from py4heappe.heappe_v6.core.base import exceptions
-from py4heappe.heappe_v6.core.base.logger import logger
+from py4heappe.heappe_v6.extensions.base import exceptions
+from py4heappe.heappe_v6.extensions.base.logger import logger
 
 def print_and_log(message: str):
     print(message)

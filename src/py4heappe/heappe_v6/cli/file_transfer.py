@@ -9,14 +9,14 @@ from scp import SCPClient
 from io import StringIO
 
 import py4heappe.heappe_v6.cli.configuration as configuration
-import py4heappe.heappe_v6.core.base.utils as utils
+import py4heappe.heappe_v6.extensions.base.utils as utils
 import py4heappe.heappe_v6.core as heappeCore
-from py4heappe.heappe_v6.core.api.file_transfer_api_ext import (
+from py4heappe.heappe_v6.extensions.file_transfer_api_ext import (
     FileTransferApiExt,
     InMemoryUploadFile,
 )
 
-from py4heappe.heappe_v6.core.base import exceptions
+from py4heappe.heappe_v6.extensions.base import exceptions
 from py4heappe.heappe_v6.core import rest
 from typing import List, Optional
 from typing import Annotated

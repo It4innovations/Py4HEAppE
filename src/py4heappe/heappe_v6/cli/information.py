@@ -6,10 +6,10 @@ from py4heappe.heappe_v6.cli.response_utils import (
     extract_first_value,
     parse_response_payload,
 )
-import py4heappe.heappe_v6.core.base.utils as utils
+import py4heappe.heappe_v6.extensions.base.utils as utils
 import py4heappe.heappe_v6.core as heappeCore
 
-from py4heappe.heappe_v6.core.base import exceptions
+from py4heappe.heappe_v6.extensions.base import exceptions
 from py4heappe.heappe_v6.core  import rest 
 from typing import List, Optional
 from typing_extensions import Annotated
