@@ -20,11 +20,26 @@ API_client_generation:
       fi
     - wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.26.0/openapi-generator-cli-7.26.0.jar -O /openapi-generator-cli.jar
   script:
-    - echo "Generation API client"
-    - java -jar /openapi-generator-cli.jar generate -i Tools/APIWrapperGen/swagger.json -g python -t Tools/APIWrapperGen/Templates/python/ -o ./app/client -c Tools/APIWrapperGen/config.json
-    - test -d app/client || { echo "Generation did not produce app/client"; exit 1; }
-    - cd app/client
-    - zip -r ../../APIWrapperGen.zip .
+    - |
+      for VARIANT in sync async; do
+        case "$VARIANT" in
+          sync)  GEN_CONFIG=Tools/APIWrapperGen/config.json ;;
+          async) GEN_CONFIG=Tools/APIWrapperGen/config_async.json ;;
+        esac
+
+        echo "Generating $VARIANT API client using $GEN_CONFIG"
+        java -jar /openapi-generator-cli.jar generate \
+          -i Tools/APIWrapperGen/swagger.json \
+          -g python \
+          -t Tools/APIWrapperGen/Templates/python/ \
+          -o "./app/$VARIANT" \
+          -c "$GEN_CONFIG" \
+          || { echo "Generation failed for $VARIANT"; exit 1; }
+
+        test -d "app/$VARIANT" || { echo "Generation did not produce app/$VARIANT"; exit 1; }
+      done
+    - cd app
+    - zip -r ../APIWrapperGen.zip sync async
   tags:
     - Docker
     - Centos9
