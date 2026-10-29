@@ -5,6 +5,30 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.0.0
+
+Major release: the hand-written `heappe_v6` modules moved out of the generated `core/` package, so their import paths changed (see **Breaking** under *Changed*).
+
+### Added
+- Added an asyncio wrapper, `py4heappe.heappe_v6.core_async`, generated with OpenAPI Generator's `asyncio` (aiohttp) library from the same OpenAPI definition and templates as the synchronous `heappe_v6.core`. All API methods are coroutines and use the generated snake_case signatures. Each operation has plain, `_with_http_info` and `_without_preload_content` variants.
+- Added the optional `async` extra (`pip install "py4heappe[async]"`), which installs `aiohttp` and `aiohttp-retry`. Sync-only installs are unchanged.
+- Added an async `FileTransferApiExt` in `src/py4heappe/heappe_v6/extensions/file_transfer_api_ext_async.py` for in-memory uploads (bytes or file-like objects) with the async wrapper.
+- Added `docs/examples/example_async.py`, which authenticates, runs requests concurrently with `asyncio.gather` and optionally uploads an in-memory file.
+- Added install instructions for the `async` extra and an "Asynchronous Python API Wrapper" section to `README.md`.
+- Added `Tools/APIWrapperGen/config_async.json` (`library: asyncio`) for generating the async wrapper.
+
+### Changed
+- **Breaking:** Moved hand-written `heappe_v6` code out of the generated `core/` package into `src/py4heappe/heappe_v6/extensions/`, so regenerating the API wrapper no longer overwrites it:
+  - `py4heappe.heappe_v6.core.base` (`exceptions`, `logger`, `utils`) is now `py4heappe.heappe_v6.extensions.base`.
+  - `py4heappe.heappe_v6.core.api.file_transfer_api_ext` is now `py4heappe.heappe_v6.extensions.file_transfer_api_ext`.
+  - The old import paths are removed. Update imports, for example:
+    `from py4heappe.heappe_v6.extensions.file_transfer_api_ext import FileTransferApiExt, InMemoryUploadFile`.
+- Moved the in-memory upload types and helpers (`InMemoryUploadFile`, `UploadEntry`) into `src/py4heappe/heappe_v6/extensions/file_upload.py`, shared by the sync and async `FileTransferApiExt`. `InMemoryUploadFile` and `UploadEntry` are still importable from both extension modules.
+- The `API_client_generation` pipeline job now runs OpenAPI Generator once per variant (sync with `config.json`, async with `config_async.json`). It packages both into a single `APIWrapperGen.zip` with `sync/` and `async/` folders, and fails if either variant fails to generate.
+- Updated `Tools/APIWrapperGen/README.md` for the two-variant workflow: both config files, where to copy each folder from the artifact, local generation commands, and which hand-written code lives in `extensions/` (including the sync legacy shim that must be re-applied after regeneration).
+- Ignored the local `_gen/` API wrapper generation output folder in `.gitignore`.
+- Updated `README.md` for release `5.0.0`: release number, a `5.0.X` row in the supported HEAppE versions table, and a note on the async wrapper and the `extensions/` package.
+
 ## 4.0.0
 
 ### Changed

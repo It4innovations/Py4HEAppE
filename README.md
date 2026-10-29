@@ -1,7 +1,7 @@
 <img align="right" width="35%" src="https://raw.githubusercontent.com/It4innovations/Py4HEAppE/refs/heads/master/docs/imgs/logo.png">
 
 # Py4HEAppE (Python for HEAppE Middleware)
-Release: 4.0.0
+Release: 5.0.0
 
 Py4HEAppE provides both a command-line interface and versioned Python wrappers for the [HEAppE](https://heappe.eu) middleware API.
 
@@ -12,6 +12,7 @@ You can use it in two ways:
 ## Supported HEAppE Versions
 | Py4HEAppE | HEAppE Version                                         | Notes |
 |:---------:|:-------------------------------------------------------| :---- |
+|   5.0.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Adds asyncio v6 wrapper (`core_async`); hand-written v6 code moved to `extensions/` |
 |   4.0.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | OpenAPI Generator-based v6 wrapper |
 |   3.2.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 |   3.1.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
@@ -206,9 +207,13 @@ py4heappe FileTransfer Stream --id 12345 --base64 aGVsbG8gd29ybGQ= --upload-file
 
 Py4HEAppE also ships versioned Python wrappers generated from the HEAppE API.
 
-The `heappe_v6` wrapper in 4.0.0 is generated with OpenAPI Generator. Legacy
+Since 4.0.0, the `heappe_v6` wrapper is generated with OpenAPI Generator. Legacy
 CLI call signatures (for example `SessionCode` and `_preload_content=False`)
-remain supported through an internal compatibility shim.
+remain supported through an internal compatibility shim. Since 5.0.0, `heappe_v6`
+also ships an asyncio wrapper (see [Asynchronous Python API Wrapper](#asynchronous-python-api-wrapper)).
+
+Hand-written `heappe_v6` code lives in `py4heappe.heappe_v6.extensions` (moved from `core/` in 5.0.0):
+the in-memory upload extension is `py4heappe.heappe_v6.extensions.file_transfer_api_ext`.
 
 Use the wrapper that matches your target HEAppE version:
 
