@@ -3,12 +3,37 @@
 check_changelog:
   image: ${RELEASE_CLI_IMAGE}
   stage: check
+  variables:
+    # Full history and tags, so the whole pushed range can be inspected.
+    GIT_STRATEGY: clone
+    GIT_DEPTH: 0
   script:
     - |
-      if git diff --name-only HEAD~1 HEAD | grep -q "CHANGELOG.md"; then
-        echo "CHANGELOG.md was modified."
+      # Check every commit pushed to master in this push, not only the last one.
+      # CI_COMMIT_BEFORE_SHA is master's previous tip; it is all zeros for
+      # pipelines not started by a push (web, API, schedule), so fall back to the
+      # commits since the latest release tag.
+      ZERO_SHA="0000000000000000000000000000000000000000"
+      if [ -n "${CI_COMMIT_BEFORE_SHA}" ] && [ "${CI_COMMIT_BEFORE_SHA}" != "${ZERO_SHA}" ] \
+        && git cat-file -e "${CI_COMMIT_BEFORE_SHA}^{commit}" 2>/dev/null; then
+        BASE="${CI_COMMIT_BEFORE_SHA}"
       else
-        echo "CHANGELOG.md was not modified."
+        BASE=$(git describe --tags --abbrev=0 "${CI_COMMIT_SHA}^" 2>/dev/null || true)
+      fi
+
+      if [ -n "${BASE}" ]; then
+        RANGE="${BASE}..${CI_COMMIT_SHA}"
+      else
+        RANGE="${CI_COMMIT_SHA}^!"
+      fi
+
+      echo "Checking commits in ${RANGE} for CHANGELOG.md changes:"
+      git log --oneline "${RANGE}"
+
+      if git log --format= --name-only "${RANGE}" | grep -qx "CHANGELOG.md"; then
+        echo "CHANGELOG.md was modified in the pushed commits."
+      else
+        echo "CHANGELOG.md was not modified in any of the pushed commits."
         exit 1
       fi
   tags:
