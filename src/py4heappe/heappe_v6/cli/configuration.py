@@ -5,8 +5,8 @@ import validators
 from pathlib import Path
 
 import py4heappe.heappe_v6.core as hp
-import py4heappe.heappe_v6.core.base.utils as utils
-from py4heappe.heappe_v6.core.base import exceptions
+import py4heappe.heappe_v6.extensions.base.utils as utils
+from py4heappe.heappe_v6.extensions.base import exceptions
 from urllib.parse import urlparse
 
 ENV_FILE_PATH = Path(__file__).with_name(".env")

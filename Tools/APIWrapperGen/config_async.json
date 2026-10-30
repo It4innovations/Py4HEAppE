@@ -1,0 +1,5 @@
+{
+  "packageName": "py4heappe.heappe_v6.core_async",
+  "projectName": "Py4HEAppE",
+  "library": "asyncio"
+}

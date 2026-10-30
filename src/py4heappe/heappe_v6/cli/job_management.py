@@ -4,12 +4,12 @@ from pathlib import Path
 import typer
 
 import py4heappe.heappe_v6.cli.configuration as configuration
-import py4heappe.heappe_v6.core.base.utils as utils
+import py4heappe.heappe_v6.extensions.base.utils as utils
 import py4heappe.heappe_v6.cli.information as infoCLI
 from py4heappe.heappe_v6.cli.response_utils import extract_id, parse_response_payload
 import py4heappe.heappe_v6.core as heappeCore
 
-from py4heappe.heappe_v6.core.base import exceptions
+from py4heappe.heappe_v6.extensions.base import exceptions
 from py4heappe.heappe_v6.core import rest
 
 from typing import Any, Callable, List, Optional

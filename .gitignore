@@ -14,3 +14,6 @@ Py4HEAppE.egg-info/
 src/Py4HEAppE.egg-info/
 data_transfer/
 tests/cli_test_results.xml
+
+# Local API wrapper generation output (see Tools/APIWrapperGen/README.md)
+_gen/

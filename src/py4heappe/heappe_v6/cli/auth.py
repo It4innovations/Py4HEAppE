@@ -3,10 +3,10 @@ import typer
 import os
 
 import py4heappe.heappe_v6.cli.configuration as configuration
-import py4heappe.heappe_v6.core.base.utils as utils
+import py4heappe.heappe_v6.extensions.base.utils as utils
 import py4heappe.heappe_v6.core as heappeCore
 
-from py4heappe.heappe_v6.core.base import exceptions
+from py4heappe.heappe_v6.extensions.base import exceptions
 from py4heappe.heappe_v6.core  import rest
 #from py4lexis import LexisSession
 
