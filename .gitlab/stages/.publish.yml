@@ -18,8 +18,20 @@ publish_package:
     - pip install build
     - pip install twine
     - python -m build
-    - TWINE_USERNAME=__token__ TWINE_PASSWORD=${PYPI_TOKEN}  python -m twine upload --repository pypi dist/*
-    - TWINE_USERNAME=gitlab-ci-token TWINE_PASSWORD=${CI_JOB_TOKEN} python -m twine upload --skip-existing --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+    - TWINE_USERNAME=__token__ TWINE_PASSWORD=${PYPI_TOKEN} python -m twine upload --skip-existing --repository pypi dist/*
+    # twine only supports --skip-existing for PyPI/TestPyPI, so emulate it for the
+    # GitLab package registry: an already-published version is skipped, not fatal.
+    - |
+      GITLAB_UPLOAD_STATUS=0
+      GITLAB_UPLOAD_OUTPUT=$(TWINE_USERNAME=gitlab-ci-token TWINE_PASSWORD=${CI_JOB_TOKEN} python -m twine upload --disable-progress-bar --repository-url "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi" dist/* 2>&1) || GITLAB_UPLOAD_STATUS=$?
+      echo "${GITLAB_UPLOAD_OUTPUT}"
+      if [ "${GITLAB_UPLOAD_STATUS}" -ne 0 ]; then
+        if echo "${GITLAB_UPLOAD_OUTPUT}" | grep -qiE "already been taken|already exists"; then
+          echo "Package version already exists in the GitLab package registry, skipping upload."
+        else
+          exit "${GITLAB_UPLOAD_STATUS}"
+        fi
+      fi
   tags:
     - Docker
     - Centos9

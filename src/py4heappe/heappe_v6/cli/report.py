@@ -2,11 +2,11 @@ import json
 import typer
 
 import py4heappe.heappe_v6.cli.configuration as configuration
-import py4heappe.heappe_v6.core.base.utils as utils
+import py4heappe.heappe_v6.extensions.base.utils as utils
 import py4heappe.heappe_v6.core as heappeCore
 
 from datetime import datetime
-from py4heappe.heappe_v6.core.base import exceptions
+from py4heappe.heappe_v6.extensions.base import exceptions
 from py4heappe.heappe_v6.core import rest 
 from typing import List, Optional
 from typing_extensions import Annotated

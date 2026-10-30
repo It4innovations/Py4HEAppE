@@ -2,8 +2,8 @@ import json
 import os
 from typing import Any
 
-import py4heappe.heappe_v6.core.base.utils as utils
-from py4heappe.heappe_v6.core.base import exceptions
+import py4heappe.heappe_v6.extensions.base.utils as utils
+from py4heappe.heappe_v6.extensions.base import exceptions
 
 
 def _is_env_flag_enabled(env_var_name: str) -> bool:

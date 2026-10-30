@@ -1,7 +1,7 @@
 <img align="right" width="35%" src="https://raw.githubusercontent.com/It4innovations/Py4HEAppE/refs/heads/master/docs/imgs/logo.png">
 
 # Py4HEAppE (Python for HEAppE Middleware)
-Release: 4.0.0
+Release: 5.0.0
 
 Py4HEAppE provides both a command-line interface and versioned Python wrappers for the [HEAppE](https://heappe.eu) middleware API.
 
@@ -12,6 +12,7 @@ You can use it in two ways:
 ## Supported HEAppE Versions
 | Py4HEAppE | HEAppE Version                                         | Notes |
 |:---------:|:-------------------------------------------------------| :---- |
+|   5.0.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Adds asyncio v6 wrapper (`core_async`); hand-written v6 code moved to `extensions/` |
 |   4.0.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | OpenAPI Generator-based v6 wrapper |
 |   3.2.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
 |   3.1.X   | 6.5.X, 6.4.X, 6.3.X, 6.2.X, 6.2.1, 5.0.X, 4.3.X, 4.2.X | Without Admin CLI section |
@@ -37,6 +38,12 @@ You can use it in two ways:
 If the `py4heappe` executable is not on your `PATH`, use the full path to the installed script or add the script directory to `PATH`.
 
 On Windows, use `py4heappe.exe` instead of `py4heappe`.
+
+To use the asynchronous Python wrapper (`heappe_v6.core_async`), install the optional `async` extra, which adds `aiohttp` and `aiohttp-retry`:
+
+```shell
+pip install "py4heappe[async]"
+```
 
 ## HEAppE CLI
 The CLI is intended for users who want to work with HEAppE directly from a terminal without writing Python code.
@@ -200,9 +207,13 @@ py4heappe FileTransfer Stream --id 12345 --base64 aGVsbG8gd29ybGQ= --upload-file
 
 Py4HEAppE also ships versioned Python wrappers generated from the HEAppE API.
 
-The `heappe_v6` wrapper in 4.0.0 is generated with OpenAPI Generator. Legacy
+Since 4.0.0, the `heappe_v6` wrapper is generated with OpenAPI Generator. Legacy
 CLI call signatures (for example `SessionCode` and `_preload_content=False`)
-remain supported through an internal compatibility shim.
+remain supported through an internal compatibility shim. Since 5.0.0, `heappe_v6`
+also ships an asyncio wrapper (see [Asynchronous Python API Wrapper](#asynchronous-python-api-wrapper)).
+
+Hand-written `heappe_v6` code lives in `py4heappe.heappe_v6.extensions` (moved from `core/` in 5.0.0):
+the in-memory upload extension is `py4heappe.heappe_v6.extensions.file_transfer_api_ext`.
 
 Use the wrapper that matches your target HEAppE version:
 
@@ -218,7 +229,7 @@ There is no single unversioned `py4heappe.core` module. Use the versioned wrappe
 ### Dedicated In-Memory Upload API (`file_transfer_api_ext.py`)
 
 For uploads that should not touch local disk files, use the dedicated implementation in
-`src/py4heappe/heappe_v6/core/api/file_transfer_api_ext.py`.
+`src/py4heappe/heappe_v6/extensions/file_transfer_api_ext.py`.
 
 It provides `FileTransferApiExt.heappe_file_transfer_upload_file_objects_to_job_execution_dir_post`,
 which accepts byte-like payloads or file-like objects.
@@ -227,7 +238,7 @@ which accepts byte-like payloads or file-like objects.
 import io
 
 import py4heappe.heappe_v6.core as hp
-from py4heappe.heappe_v6.core.api.file_transfer_api_ext import (
+from py4heappe.heappe_v6.extensions.file_transfer_api_ext import (
     FileTransferApiExt,
     InMemoryUploadFile,
 )
@@ -353,6 +364,93 @@ finally:
     api_client.pool.join()
 ```
 
+### Asynchronous Python API Wrapper
+
+`heappe_v6` also ships an asyncio wrapper, `py4heappe.heappe_v6.core_async`, generated
+from the same OpenAPI definition with OpenAPI Generator's `asyncio` (aiohttp) library.
+It requires the optional extra: `pip install "py4heappe[async]"`.
+
+It differs from the synchronous wrapper in a few ways:
+
+- Every API method is a coroutine and must be awaited.
+- Methods use the generated snake_case signatures and request models
+  (for example `session_code=...`). The legacy `SessionCode`, `body=` and
+  `_preload_content=False` compatibility shim applies only to the synchronous wrapper.
+- Each operation comes in three variants: the plain method returns the deserialized
+  data, `..._with_http_info` returns an `ApiResponse` (status code, headers, data), and
+  `..._without_preload_content` returns the raw, unread response.
+- Close the client with `async with hpa.ApiClient(...)` or `await api_client.close()`.
+  The `api_client.pool` cleanup used by the synchronous wrapper does not apply.
+
+```python
+import asyncio
+
+import py4heappe.heappe_v6.core_async as hpa
+
+
+async def main():
+    configuration = hpa.Configuration(host="https://heappe.example.org")
+
+    async with hpa.ApiClient(configuration) as api_client:
+        session_code = await hpa.UserAndLimitationManagementApi(
+            api_client
+        ).heappe_user_and_limitation_management_authenticate_user_password_post(
+            authenticate_user_password_model=hpa.AuthenticateUserPasswordModel(
+                credentials=hpa.PasswordCredentialsExt(
+                    username="your-username", password="your-password"
+                )
+            )
+        )
+
+        # Independent requests run concurrently on one client.
+        version, clusters = await asyncio.gather(
+            hpa.ManagementApi(api_client).heappe_management_version_information_get(
+                session_code=session_code
+            ),
+            hpa.ClusterInformationApi(
+                api_client
+            ).heappe_cluster_information_list_available_clusters_get(
+                session_code=session_code
+            ),
+        )
+        print(version.version, [cluster.name for cluster in clusters])
+
+
+asyncio.run(main())
+```
+
+For in-memory uploads, use the async counterpart of `FileTransferApiExt`:
+
+```python
+from py4heappe.heappe_v6.extensions.file_transfer_api_ext_async import (
+    FileTransferApiExt,
+    InMemoryUploadFile,
+)
+
+await FileTransferApiExt(
+    api_client
+).heappe_file_transfer_upload_file_objects_to_job_execution_dir_post(
+    files=[InMemoryUploadFile("bytes-input.txt", b"hello from bytes")],
+    session_code=session_code,
+    job_id=12345,
+)
+```
+
+Besides bytes and regular file-like objects, the async extension accepts async file objects whose `read()` is awaited, such as [aiofiles](https://pypi.org/project/aiofiles/) handles. Regular file-like objects are read in a worker thread, so a large file never blocks the event loop:
+
+```python
+import aiofiles
+
+async with aiofiles.open("input.bin", "rb") as f:
+    await FileTransferApiExt(api_client).heappe_file_transfer_upload_file_objects_to_job_execution_dir_post(
+        files=[("input.bin", f)],
+        session_code=session_code,
+        job_id=12345,
+    )
+```
+
+A complete runnable example is in `docs/examples/example_async.py`.
+
 ## Running CLI tests
 
 The repository includes live CLI integration tests under `tests/` that require a reachable HEAppE instance and several environment variables.
@@ -370,6 +468,11 @@ Quick steps:
 - Optional: run with pytest (pytest can run unittest-style tests and offers improved output):
   - Install pytest: `python -m pip install -U pytest`
   - Run with pytest: `python -m pytest -q tests/test_cli_*.py`
+
+The `tests/` folder also contains two example scripts that upload in-memory files to a job with the sync and async `FileTransferApiExt`, as you would in your own code. They use the local sources in `src/`, are not run by unittest discovery, and read these values from `tests/.env`: `PY4HEAPPE_TEST_URL`, `PY4HEAPPE_TEST_SESSION_CODE` (for example from `py4heappe Auth UserPass`), `PY4HEAPPE_TEST_STREAM_JOB_ID` and, optionally, a single `PY4HEAPPE_TEST_STREAM_TASK_ID`. Run them from the repository root:
+
+- Sync: `python tests/example_file_transfer_api_ext.py`
+- Async (needs the `async` extra): `python tests/example_file_transfer_api_ext_async.py`
 
 Do NOT commit `tests/.env` with real credentials or session tokens.
 
