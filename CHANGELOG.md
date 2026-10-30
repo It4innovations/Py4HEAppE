@@ -16,6 +16,7 @@ Major release: the hand-written `heappe_v6` modules moved out of the generated `
 - Added `docs/examples/example_async.py`, which authenticates, runs requests concurrently with `asyncio.gather` and optionally uploads an in-memory file.
 - Added install instructions for the `async` extra and an "Asynchronous Python API Wrapper" section to `README.md`.
 - Added `Tools/APIWrapperGen/config_async.json` (`library: asyncio`) for generating the async wrapper.
+- Added `tests/example_file_transfer_api_ext.py` and `tests/example_file_transfer_api_ext_async.py`, simple scripts that upload in-memory files to a job on a live HEAppE instance with the sync and async `FileTransferApiExt`. They are named `example_*.py`, so unittest discovery does not run them.
 
 ### Changed
 - **Breaking:** Moved hand-written `heappe_v6` code out of the generated `core/` package into `src/py4heappe/heappe_v6/extensions/`, so regenerating the API wrapper no longer overwrites it:
@@ -24,10 +25,13 @@ Major release: the hand-written `heappe_v6` modules moved out of the generated `
   - The old import paths are removed. Update imports, for example:
     `from py4heappe.heappe_v6.extensions.file_transfer_api_ext import FileTransferApiExt, InMemoryUploadFile`.
 - Moved the in-memory upload types and helpers (`InMemoryUploadFile`, `UploadEntry`) into `src/py4heappe/heappe_v6/extensions/file_upload.py`, shared by the sync and async `FileTransferApiExt`. `InMemoryUploadFile` and `UploadEntry` are still importable from both extension modules.
+- In-memory uploads (sync and async) now validate every upload entry before reading any content, so an invalid entry no longer leaves earlier streams partly consumed.
+- The `publish_package` pipeline job no longer fails when the version already exists in the GitLab package registry (twine's `--skip-existing` is not supported there, so the job skips the upload itself). The PyPI upload uses `--skip-existing`, so pipeline reruns do not fail.
+- The `check_changelog` pipeline job now passes when `CHANGELOG.md` is modified in any of the commits pushed to `master`, not only in the last one.
 - The `API_client_generation` pipeline job now runs OpenAPI Generator once per variant (sync with `config.json`, async with `config_async.json`). It packages both into a single `APIWrapperGen.zip` with `sync/` and `async/` folders, and fails if either variant fails to generate.
-- Updated `Tools/APIWrapperGen/README.md` for the two-variant workflow: both config files, where to copy each folder from the artifact, local generation commands, and which hand-written code lives in `extensions/` (including the sync legacy shim that must be re-applied after regeneration).
+- Updated `Tools/APIWrapperGen/README.md` for the two-variant workflow: both config files, where to copy each folder from the artifact, local generation commands, which hand-written code lives in `extensions/` (including the sync legacy shim that must be re-applied after regeneration), and that the generated `py.typed` marker is not kept.
 - Ignored the local `_gen/` API wrapper generation output folder in `.gitignore`.
-- Updated `README.md` for release `5.0.0`: release number, a `5.0.X` row in the supported HEAppE versions table, and a note on the async wrapper and the `extensions/` package.
+- Updated `README.md` for release `5.0.0`: release number, a `5.0.X` row in the supported HEAppE versions table, a note on the async wrapper and the `extensions/` package, and how to run the `FileTransferApiExt` example scripts in `tests/`.
 
 ## 4.0.0
 

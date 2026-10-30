@@ -27,7 +27,7 @@ Each HEAppE version gets two generated wrappers, both built from the same `swagg
    async/py4heappe/heappe_vX/core_async/  ->  src/py4heappe/heappe_vX/core_async/
    ```
 
-   Copy only these two leaf packages. Do not copy the generated `py4heappe/__init__.py`, `py4heappe/heappe_vX/__init__.py`, `pyproject.toml`, `setup.py` or `requirements.txt`. The repository's own packaging files are used instead.
+   Copy only these two leaf packages. Do not copy the generated `py4heappe/__init__.py`, `py4heappe/heappe_vX/__init__.py`, `pyproject.toml`, `setup.py` or `requirements.txt`. The repository's own packaging files are used instead. Also delete the generated `py.typed` marker from the copied `core/` and `core_async/`, as the package does not ship one.
 9. Update affected CLI commands and imports for the selected HEAppE version, including `src/py4heappe_cli.py`, `docs/examples/example.py` and `docs/examples/example_async.py`.
 
 ## Generating locally

@@ -469,6 +469,11 @@ Quick steps:
   - Install pytest: `python -m pip install -U pytest`
   - Run with pytest: `python -m pytest -q tests/test_cli_*.py`
 
+The `tests/` folder also contains two example scripts that upload in-memory files to a job with the sync and async `FileTransferApiExt`, as you would in your own code. They use the local sources in `src/`, are not run by unittest discovery, and read these values from `tests/.env`: `PY4HEAPPE_TEST_URL`, `PY4HEAPPE_TEST_SESSION_CODE` (for example from `py4heappe Auth UserPass`), `PY4HEAPPE_TEST_STREAM_JOB_ID` and, optionally, a single `PY4HEAPPE_TEST_STREAM_TASK_ID`. Run them from the repository root:
+
+- Sync: `python tests/example_file_transfer_api_ext.py`
+- Async (needs the `async` extra): `python tests/example_file_transfer_api_ext_async.py`
+
 Do NOT commit `tests/.env` with real credentials or session tokens.
 
 ## Notes
