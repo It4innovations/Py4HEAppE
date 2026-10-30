@@ -12,7 +12,7 @@ Major release: the hand-written `heappe_v6` modules moved out of the generated `
 ### Added
 - Added an asyncio wrapper, `py4heappe.heappe_v6.core_async`, generated with OpenAPI Generator's `asyncio` (aiohttp) library from the same OpenAPI definition and templates as the synchronous `heappe_v6.core`. All API methods are coroutines and use the generated snake_case signatures. Each operation has plain, `_with_http_info` and `_without_preload_content` variants.
 - Added the optional `async` extra (`pip install "py4heappe[async]"`), which installs `aiohttp` and `aiohttp-retry`. Sync-only installs are unchanged.
-- Added an async `FileTransferApiExt` in `src/py4heappe/heappe_v6/extensions/file_transfer_api_ext_async.py` for in-memory uploads (bytes or file-like objects) with the async wrapper.
+- Added an async `FileTransferApiExt` in `src/py4heappe/heappe_v6/extensions/file_transfer_api_ext_async.py` for in-memory uploads with the async wrapper. It accepts bytes, file-like objects and async file objects such as `aiofiles` handles (their `read()` is awaited). Regular file-like objects are read in a worker thread, so the upload does not block the event loop.
 - Added `docs/examples/example_async.py`, which authenticates, runs requests concurrently with `asyncio.gather` and optionally uploads an in-memory file.
 - Added install instructions for the `async` extra and an "Asynchronous Python API Wrapper" section to `README.md`.
 - Added `Tools/APIWrapperGen/config_async.json` (`library: asyncio`) for generating the async wrapper.

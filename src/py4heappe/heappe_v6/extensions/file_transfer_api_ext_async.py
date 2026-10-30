@@ -4,7 +4,7 @@ from py4heappe.heappe_v6.core_async.api.file_transfer_api import FileTransferApi
 from py4heappe.heappe_v6.extensions.file_upload import (
     InMemoryUploadFile,
     UploadEntry,
-    _to_multipart_files,
+    _to_multipart_files_async,
 )
 
 __all__ = ["FileTransferApiExt", "InMemoryUploadFile", "UploadEntry"]
@@ -26,7 +26,7 @@ class FileTransferApiExt(FileTransferApi):
             session_code=session_code,
             job_id=job_id,
             task_id=task_id,
-            files=_to_multipart_files(files),
+            files=await _to_multipart_files_async(files),
             _request_timeout=_request_timeout,
         )
 
@@ -43,7 +43,7 @@ class FileTransferApiExt(FileTransferApi):
             session_code=session_code,
             job_id=job_id,
             task_id=task_id,
-            files=_to_multipart_files(files),
+            files=await _to_multipart_files_async(files),
             _request_timeout=_request_timeout,
         )
 
@@ -60,6 +60,6 @@ class FileTransferApiExt(FileTransferApi):
             session_code=session_code,
             job_id=job_id,
             task_id=task_id,
-            files=_to_multipart_files(files),
+            files=await _to_multipart_files_async(files),
             _request_timeout=_request_timeout,
         )

@@ -436,6 +436,19 @@ await FileTransferApiExt(
 )
 ```
 
+Besides bytes and regular file-like objects, the async extension accepts async file objects whose `read()` is awaited, such as [aiofiles](https://pypi.org/project/aiofiles/) handles. Regular file-like objects are read in a worker thread, so a large file never blocks the event loop:
+
+```python
+import aiofiles
+
+async with aiofiles.open("input.bin", "rb") as f:
+    await FileTransferApiExt(api_client).heappe_file_transfer_upload_file_objects_to_job_execution_dir_post(
+        files=[("input.bin", f)],
+        session_code=session_code,
+        job_id=12345,
+    )
+```
+
 A complete runnable example is in `docs/examples/example_async.py`.
 
 ## Running CLI tests
