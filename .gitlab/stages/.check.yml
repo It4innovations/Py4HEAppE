@@ -30,8 +30,14 @@ check_changelog:
       echo "Checking commits in ${RANGE} for CHANGELOG.md changes:"
       git log --oneline "${RANGE}"
 
-      if git log --format= --name-only "${RANGE}" | grep -qx "CHANGELOG.md"; then
-        echo "CHANGELOG.md was modified in the pushed commits."
+      # Let git filter by path instead of piping into `grep -q`: grep exits on the
+      # first match, git log then dies with SIGPIPE, and the runner's pipefail
+      # turns that into a failed check. --full-history keeps commits from merged
+      # branches that history simplification would otherwise skip.
+      CHANGELOG_COMMITS=$(git log --full-history --format="%h %s" "${RANGE}" -- CHANGELOG.md)
+      if [ -n "${CHANGELOG_COMMITS}" ]; then
+        echo "CHANGELOG.md was modified in the pushed commits:"
+        echo "${CHANGELOG_COMMITS}"
       else
         echo "CHANGELOG.md was not modified in any of the pushed commits."
         exit 1
